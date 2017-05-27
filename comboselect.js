@@ -1903,7 +1903,7 @@
 		/**
 		 * @private
 		 * @desc 多选模式下输入框根据输入内容调整输入框宽度
-		 * @param {Object} input - 输入框对象
+		 * @param {Object} self - 插件内部对象
 		 */
 		_inputResize: function(self){
 			if(!self.option.multiple) return;
