@@ -20,7 +20,6 @@
 	 */
 	var _defaults = {
 		lang : 'cn',                          //插件语言，默认中文
-		pluginType : 'combobox',              //插件类型，默认[combobox]，可选的有：combobox,simple,textarea
 		showField : 'name',                   //显示在列表中的数据字段，默认设置name字段，它必须在数据源里存在
 		keyField : 'id',                      //数据代码列，默认设置id字段
 		multiple : false,                    //是否为多选模式，默认为单选模式
@@ -55,9 +54,8 @@
 		                                      //返回结果：{'name':'aa','sex':1}
 		                                      //例如：params : function(){return {'name':'aa','sex':1};}
 		
-		callback : undefined                  //事件回调，响应项目被选中后的事件处理
-		                                      //参数：key，下拉列表对应keyField的值
-		                                      //      value，下拉列表对应showField对应的值
+		callback : undefined                 //事件回调，响应项目被选中后的事件处理
+		                                      //参数：data：选中行的原始JSON数据
 	};
 	
 	var bComboSelect = function(element,options){
@@ -97,13 +95,8 @@
 				auto_fill_result : p.autoFillResult ? true : false,
 				no_result_clean : p.noResultClean ? true : false,
 				format_item : p.formatItem
-			}).on('bComboSelect',function(){//项目被选中时的回调函数
-				if(p && p.callback && $.isFunction(p.callback)){
-					var mainBox = $(this).closest('div.cs_container');
-					var text = $('input.cs_input',$(mainBox));
-					var value = $('input.cs_hidden',$(mainBox));
-					p.callback($(value).val(),$(text).val());
-				}
+			}).on('bComboSelect',function(e,data){//项目被选中时的回调函数
+				if(p && p.callback && $.isFunction(p.callback)) p.callback(data);
 			});
 		}
 	};

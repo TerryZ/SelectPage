@@ -511,6 +511,7 @@
 			elem.container = $(elem.combo_input).parent().addClass(this.css_class.container);
 			//修复输入控件设置了input-block-level时，显示效果不正确的问题
 			if($(combo_input).hasClass('input-block-level')) $(elem.container).css('width','100%');
+			else $(elem.container).width($(combo_input).outerWidth());
 			//if(srcClass) $(elem.container).addClass(srcClass);
 			
 			elem.button = $('<div>').addClass(this.css_class.button);
@@ -568,11 +569,8 @@
 				$(elem.combo_input).addClass('cs_combo_input').before($(elem.element_box));
 				var li = $('<li>').addClass('input_box');
 				$(li).append($(elem.combo_input));
-				//$(elem.combo_input).css('width','100%');
 				$(elem.element_box).append($(li));
 				if($(elem.combo_input).attr('placeholder')) $(elem.combo_input).attr('placeholder_bak',$(elem.combo_input).attr('placeholder'));
-				//$(elem.element_box).prepend('<li class="selected_tag">bbbb<span class="tag_close">x</span></li>');
-				//$(elem.element_box).prepend('<li class="selected_tag">aaaaa<span class="tag_close">x</span></li>');
 			}
 
 			this.elem = elem;
@@ -606,8 +604,11 @@
 		 * @desc 为插件设置初始化的选中值（若有指定的话）
 		 */
 		_setInitRecord: function() {
-			if (this.option.init_record === false) return;
 			var self = this;
+			//初始化外框宽度
+			//$(self.elem.container).width($(self.elem.combo_input).outerWidth());
+			
+			if (this.option.init_record === false) return;
 			// 初始的KEY值放入隐藏域
 			$(self.elem.hidden).val(self.option.init_record);
 
@@ -1430,11 +1431,11 @@
 				if ($('li', $(pagebar)).size() == 0) {
 					$(pagebar).empty();
 					//处理当当前页码为1时，首页和上一页按钮不允许点击
-					var btnclass = '',isNewFontAwesome = false;
-					//判断是否使用了font-awesome4.X
+					var btnclass = '',isNewFontAwesome = true;
+					//判断是否使用了font-awesome3.2.1
 					$.each(document.styleSheets,function(i,n){
-						if(n && n.href && n.href.indexOf('font-awesome-4.6.3') != -1){
-							isNewFontAwesome = true;
+						if(n && n.href && n.href.indexOf('font-awesome-3.2.1') != -1){
+							isNewFontAwesome = false;
 							return false;
 						}
 					});
@@ -1542,6 +1543,8 @@
 				if ($.inArray(arr_primary_key[i].toString(),keyArr) != -1) {
 					$(list).addClass(self.css_class.selected);
 				}
+				//缓存原始行对象
+				$(list).data('dataObj',json.originalResult[i]);
 				$(self.elem.results).append(list);
 			}
 			//显示结果集列表并调整位置
@@ -1578,12 +1581,13 @@
 		      .show();
 		    */
 			$(self.elem.result_area).show(1,function(){
+				/*
+				//设置外框宽度，只需要初始化时设置即可，不需要在每次展开列表时进行设置，这里暂时屏蔽该功能
 				//单选模式下，设置外框与输入框尺寸一致
 				if(!self.option.multiple){
-					var w = $(self.elem.combo_input).outerWidth();
-					$(self.elem.container).width(w);
+					$(self.elem.container).width($(self.elem.combo_input).outerWidth());
 				}
-				
+				*/
 				if ($(self.elem.container).css('position') == 'static') {
 					// position: static
 					var offset = $(self.elem.combo_input).offset();
@@ -1610,7 +1614,7 @@
 						top = -listHeight;
 						$(self.elem.result_area).removeClass('shadowUp shadowDown').addClass('shadowUp');
 					}else{
-						top = $(self.elem.container).outerHeight();
+						top = self.option.multiple ? $(self.elem.container).innerHeight() : $(self.elem.container).outerHeight() - 1;
 						$(self.elem.result_area).removeClass('shadowUp shadowDown').addClass('shadowDown');
 					}
 					// position: relative, absolute, fixed
@@ -1822,12 +1826,14 @@
 				}
 
 				if (self.option.select_only) self._setButtonAttrDefault();
+				//回调函数触发
+				if (self.option.bind_to){
+					$(self.elem.combo_input).trigger(self.option.bind_to, $(current).data('dataObj'));
+				}
 				
 				self.prop.prev_value = $(self.elem.combo_input).val();
 				self._hideResults(self);
 			}
-			//回调函数触发
-			if (self.option.bind_to) $(self.elem.combo_input).trigger(self.option.bind_to, is_enter_key);
 			
 			//$(self.elem.combo_input).focus();
 			$(self.elem.combo_input).change();
@@ -1917,7 +1923,6 @@
 		    	self.elem.combo_input.css('width', width);
 		    	self.elem.combo_input.removeAttr('placeholder');
 		    };
-		    
 		    if($('li.selected_tag',$(self.elem.element_box)).size() == 0){
 		    	if(self.elem.combo_input.attr('placeholder_bak')){
 		    		if(!inputLi.hasClass('full_width')) inputLi.addClass('full_width');
