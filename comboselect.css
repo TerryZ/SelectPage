@@ -400,6 +400,7 @@ div.cs_result_area div.pagination>ul>li>a {
 	border-top: 0px;
 	border-bottom: 0px;
 	padding: 0px;
+	line-height: 24px;
 }
 
 div.cs_result_area div.pagination li.csFirstPage a,

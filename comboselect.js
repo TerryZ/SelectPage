@@ -56,6 +56,11 @@
  * 修改失去焦点的范围从document.body到document
  * 优化键盘输入捕捉的方式
  * 原列表有多页的情况下，再输入关键字，没有匹配到任何项目时，分页条的下一页，最后一页为可点击的样式，且分页信息的内容也不正确
+ * 2017.05
+ * 代码重构
+ * 增加多项选择东西，并以标签（Tag）的形式展现在输入框中
+ * 修正插件外框宽度问题
+ * 修改选中事件回调的入参从key,value改为选中行的原始数据对象，以便更灵活的数据处理
  */
 ;(function($){
 	"use strict";
@@ -246,8 +251,7 @@
 		 * @return {Array} - 处理后的排序字段内容
 		 */
 		_setOrderbyOption: function(arg_order, arg_field) {
-			var arr = [];
-			var orders = [];
+			var arr = [],orders = [];
 			if (typeof arg_order == 'object') {
 				for (var i = 0; i < arg_order.length; i++) {
 					orders = $.trim(arg_order[i]).split(' ');
@@ -506,7 +510,7 @@
 			// 1. 生成、替换DOM对象
 			var elem = {};//本体
 			//将原始输入框中，用户设置的样式提取，并放到最外层的容器中,'class':''
-			var srcClass = $(combo_input).attr('class');
+			//var srcClass = $(combo_input).attr('class');
 			elem.combo_input = $(combo_input).attr({'autocomplete':'off'}).addClass(this.css_class.input).wrap('<div>'); // This "div" is "container".
 			elem.container = $(elem.combo_input).parent().addClass(this.css_class.container);
 			//修复输入控件设置了input-block-level时，显示效果不正确的问题
@@ -756,7 +760,6 @@
 		 */
 		_ehWhole: function() {
 			var self = this;
-			var stop_hide = false;
 			//如果是点击了控件本身则不响应外部鼠标点击事件
 			$(self.elem.container).mousedown(function() {
 				var thisindex = $('div.cs_container').index(this);
@@ -1422,8 +1425,6 @@
 		 * @param {number} page_num - 当前页数
 		 */
 		_setNavi: function(self, cnt_whole, cnt_page, page_num) {
-			var num_page_top = self.option.per_page * (page_num - 1) + 1;
-			var num_page_end = num_page_top + cnt_page - 1;
 			/**
 			 * 生成分页条
 			 */
@@ -1602,7 +1603,6 @@
 					var offset = $(self.elem.container).offset();
 					var listWidth = $(self.elem.result_area).outerWidth();
 					//当前状态，列表并未被显示，数据未被填充，列表并未展现最终高度，所以只能使用默认一页显示10条数据的固定高度进行计算
-					//var listHeight = 208;//$(self.elem.result_area).outerHeight();
 					var listHeight = $(self.elem.result_area).outerHeight();
 					//默认方向的坐标，在多选模式下，因为外框架是DIV，所以需要向左靠一个像素
 					var defaultLeft = self.option.multiple ? -1 : 0;
@@ -1913,7 +1913,7 @@
 		 */
 		_inputResize: function(self){
 			if(!self.option.multiple) return;
-		    var width = '',needResize = true;
+		    var width = '';
 		    var inputLi = self.elem.combo_input.closest('li');
 		    //设置默认宽度
 		    var setDefaultSize = function(self,inputLi){
@@ -1939,9 +1939,8 @@
 		_nextLine: function(self) {
 			var obj = self._getCurrentLine(self);
 			var idx;
-			if (!obj) {
-				idx = -1;
-			} else {
+			if (!obj) idx = -1;
+			else {
 				idx = $(self.elem.results).children('li').index(obj);
 				$(obj).removeClass(self.css_class.select);
 			}
@@ -1950,9 +1949,7 @@
 				var next = $(self.elem.results).children('li').eq(idx);
 				$(next).addClass(self.css_class.select);
 				self._setCssFocusedResults(self);
-			} else {
-				self._setCssFocusedInput(self);
-			}
+			} else self._setCssFocusedInput(self);
 			self._scrollWindow(self, false);
 		},
 
@@ -1964,9 +1961,8 @@
 		_prevLine: function(self) {
 			var obj = self._getCurrentLine(self);
 			var idx;
-			if (!obj) {
-				idx = $(self.elem.results).children('li').length;
-			} else {
+			if (!obj) idx = $(self.elem.results).children('li').length;
+			else {
 				idx = $(self.elem.results).children('li').index(obj);
 				$(obj).removeClass(self.css_class.select);
 			}
@@ -1975,9 +1971,7 @@
 				var prev = $(self.elem.results).children('li').eq(idx);
 				$(prev).addClass(self.css_class.select);
 				self._setCssFocusedResults(self);
-			} else {
-				self._setCssFocusedInput(self);
-			}
+			} else self._setCssFocusedInput(self);
 			self._scrollWindow(self, false);
 		}
 	});
