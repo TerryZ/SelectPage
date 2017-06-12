@@ -148,8 +148,8 @@ div.cs_button {
 	color: black;
 	cursor : pointer;
 }
-
-.cs_results > li:nth-child(odd){
+/*odd奇数行，even偶数行*/
+.cs_results > li:nth-child(even){
 	/* background-color: #EEEEEE; */
 	background-color: #EBF2FC;
 }
