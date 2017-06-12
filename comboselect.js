@@ -1611,10 +1611,10 @@
 					var screenTop = offset.top - $(window).scrollTop();
 					var top = 0;
 					if((screenTop + $(self.elem.container).outerHeight() + listHeight) > browserHeight){
-						top = -listHeight;
+						top = -(listHeight+1);
 						$(self.elem.result_area).removeClass('shadowUp shadowDown').addClass('shadowUp');
 					}else{
-						top = self.option.multiple ? $(self.elem.container).innerHeight() : $(self.elem.container).outerHeight() - 1;
+						top = self.option.multiple ? $(self.elem.container).innerHeight() + 1 : $(self.elem.container).outerHeight();
 						$(self.elem.result_area).removeClass('shadowUp shadowDown').addClass('shadowDown');
 					}
 					// position: relative, absolute, fixed
