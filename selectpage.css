@@ -3,7 +3,7 @@
 /**
  * Container
  */
-.cs_container {
+.sp_container {
 	border: none;
 	margin: 0;
 	padding: 0;
@@ -11,7 +11,7 @@
 	position: relative;
 	vertical-align: middle;
 }
-.cs_input {
+.sp_input {
 	background-color: white;
 	border-radius: 4px 0 0 4px;
 	border-right: none;
@@ -38,14 +38,14 @@
 
 
 
-.cs_container_open .cs_input {
+.sp_container_open .sp_input {
 	border-radius: 0px 0px 0 0 !important;
 }
 
 /**
  * "Get all" button
  */
-div.cs_button {
+div.sp_button {
 	display: inline-block;
 	border: 1px solid #79b;
 	border-bottom-right-radius: 0px;
@@ -70,7 +70,7 @@ div.cs_button {
     top: 0px;
     right: 0px;
 }
-div.cs_button {
+div.sp_button {
     /* border: 1px solid #CCCCCC; */
     border: 0px;
     border-left: 0px;
@@ -85,11 +85,11 @@ div.cs_button {
     right: 0px;
 }
 
-.cs_container_open > .cs_button {
+.sp_container_open > .sp_button {
   border-bottom-right-radius: 0 !important;
 }
 
-.cs_button > img {
+.sp_button > img {
   top: 6px;
   left: 8px;
   height: 16px;
@@ -97,12 +97,12 @@ div.cs_button {
   width: 16px;
 }
 
-.cs_btn_out {
+.sp_btn_out {
   background: #bde;
   background-image: linear-gradient(to bottom, #eeffff, #99aabb);
 }
 
-.cs_btn_on {
+.sp_btn_on {
   background: #dee;
   background-image: linear-gradient(to bottom, #ffffff, #bbbbcc);
 }
@@ -110,7 +110,7 @@ div.cs_button {
 /**
  * Results
  */
-.cs_result_area {
+.sp_result_area {
 	/* background-color: transparent; */
 	background-color: white;
 	border-top: 0;
@@ -128,14 +128,14 @@ div.cs_button {
 	width: 300px;
 }
 
-.cs_results {
+.sp_results {
   background-color: white;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.cs_results > li {
+.sp_results > li {
 	height: auto !important;
 	line-height: 1;
 	margin: 0;
@@ -149,18 +149,18 @@ div.cs_button {
 	cursor : pointer;
 }
 /*odd奇数行，even偶数行*/
-.cs_results > li:nth-child(even){
+.sp_results > li:nth-child(even){
 	/* background-color: #EEEEEE; */
 	background-color: #EBF2FC;
 }
 
-ul.cs_results > li.cs_over {
+ul.sp_results > li.sp_over {
 	background-color: #53A4EA !important;
 	color: #fff !important;
 	cursor: pointer;
 }
 
-ul.cs_results > li.cs_selected {
+ul.sp_results > li.sp_selected {
 	background-color: #def;
 	font-weight: bold;
 	color: blue;
@@ -171,7 +171,7 @@ ul.cs_results > li.cs_selected {
 /**
  * 多选模式相关样式
  */
-div.cs_container_combo{
+div.sp_container_combo{
 	border: 1px solid #CCCCCC;
 	border-radius: 4px;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
@@ -179,14 +179,14 @@ div.cs_container_combo{
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-sizing: content-box;
 }
-div.cs_container_combo.cs_container_open{
+div.sp_container_combo.sp_container_open{
 	border-radius: 0px;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);
     border: 1px solid #75B9F0;
 }
-input.cs_combo_input{
+input.sp_combo_input{
 	border: 0px;
 	box-shadow: none;
 	background-color: transparent;
@@ -196,10 +196,10 @@ input.cs_combo_input{
 	line-height: 30px !important;
 	min-height: 30px !important;
 }
-input.cs_combo_input:focus {
+input.sp_combo_input:focus {
 	box-shadow: none;
 }
-ul.cs_element_box{
+ul.sp_element_box{
 	margin: 0px;
 	padding: 0px;
 	position: relative;
@@ -211,7 +211,7 @@ ul.cs_element_box{
 	list-style: none;
 	height: auto;
 }
-ul.cs_element_box > li{
+ul.sp_element_box > li{
 	list-style: none;
 	padding: 0px 5px;
 	margin-left: 5px;
@@ -222,13 +222,13 @@ ul.cs_element_box > li{
 	line-height: 21px;
 	position: relative;
 }
-ul.cs_element_box li.full_width {
+ul.sp_element_box li.full_width {
 	width: 100%;
 }
-ul.cs_element_box li.full_width input{
+ul.sp_element_box li.full_width input{
 	width: 100% !important;
 }
-ul.cs_element_box li.selected_tag {
+ul.sp_element_box li.selected_tag {
 	border: 1px solid #AAAAAA;
 	border-radius: 3px;
 	background-color: #EFEFEF;
@@ -236,14 +236,14 @@ ul.cs_element_box li.selected_tag {
 	max-width: 100%;
 	box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
 }
-ul.cs_element_box li.input_box {
+ul.sp_element_box li.input_box {
 	padding: 0px;
 	/* margin: 0px; */
 	margin-top: 0px;
 	height: 26px;
 	min-height: 26px;
 }
-ul.cs_element_box li.selected_tag span.tag_close {
+ul.sp_element_box li.selected_tag span.tag_close {
 	cursor: pointer;
 	margin-left: 5px;
 	font-size: 14px;
@@ -254,23 +254,23 @@ ul.cs_element_box li.selected_tag span.tag_close {
 /**
  * 加深颜色表示非选中
  */
-.cs_results_off {
+.sp_results_off {
   background: rgba(255, 255, 255, 0.8);
 }
 
-.cs_input_off {
+.sp_input_off {
   background: #eee;
   color: #555;
 }
 
-.cs_hide {
+.sp_hide {
   display: none;
 }
 
 /**
  * Navi
  */
-.cs_navi {
+.sp_navi {
   background: #eee;
   border-bottom: 1px solid #79b;
   font-size: 13px;
@@ -281,17 +281,17 @@ ul.cs_element_box li.selected_tag span.tag_close {
   text-align: right;
 }
 
-.cs_navi > p > a:link,
-.cs_navi > p > a:visited,
-.cs_navi > p > a:hover,
-.cs_navi > p > a:active {
+.sp_navi > p > a:link,
+.sp_navi > p > a:visited,
+.sp_navi > p > a:hover,
+.sp_navi > p > a:active {
   color: blue;
   font-weight: normal;
   margin: 0 4px;
   text-decoration: underline;
 }
 
-.cs_navi > p {
+.sp_navi > p {
   color: black;
   font-size: 15px;
   margin: 0;
@@ -299,13 +299,13 @@ ul.cs_element_box li.selected_tag span.tag_close {
   text-align: center;
 }
 
-.cs_navi > p > a >.current {
+.sp_navi > p > a >.current {
   color: #00c;
   font-size: 16px;
   font-weight: bold;
 }
 
-.cs_navi > p >.page_end {
+.sp_navi > p >.page_end {
   color: gray;
   font-weight: normal;
   margin: 0 4px;
@@ -319,7 +319,7 @@ ul.cs_element_box li.selected_tag span.tag_close {
   margin: auto 4px !important;
 }
 
-.cs_navi > .info {
+.sp_navi > .info {
   margin: 0 !important;
   padding: 0 !important;
 }
@@ -327,7 +327,7 @@ ul.cs_element_box li.selected_tag span.tag_close {
 /**
  * Select only
  */
-.cs_container > .cs_select_ng {
+.sp_container > .sp_select_ng {
   background: #fcc;
 }
 
@@ -338,7 +338,7 @@ ul.cs_element_box li.selected_tag span.tag_close {
 
 
 /*输入框设置了input-block-level样式时的特殊情况修复*/
-div.cs_container input.cs_input.input-block-level{
+div.sp_container input.sp_input.input-block-level{
 	box-sizing:border-box;
 	height: 30px;
 	line-height: 30px;
@@ -346,32 +346,32 @@ div.cs_container input.cs_input.input-block-level{
 	width: 100%;
 }
 
-div.cs_container_open .cs_input::-ms-clear{display:none;}
+div.sp_container_open .sp_input::-ms-clear{display:none;}
 /* 移除微软浏览器，在输入框输入文本后，会出现X的问题，but is look like not working */
 input::-ms-clear{display:none;}/*隐藏文本框叉子*/
 input::-ms-reveal{display:none;}/*隐藏密码框小眼睛*/
 
-div.cs_btn_out,div.cs_btn_on {
+div.sp_btn_out,div.sp_btn_on {
 	background: none;
 }
-div.cs_button span.caret {
+div.sp_button span.caret {
 	position: absolute;
 	top: 50%;
 	right: 12px;
 	margin-top: -1px;
     vertical-align: middle;
 }
-div.cs_result_area.shadowDown{
+div.sp_result_area.shadowDown{
 	box-shadow: 0px 5px 30px rgba(0,0,0,0.5);
 	-moz-box-shadow: 0px 5px 30px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 0px 5px 30px rgba(0,0,0,0.5);	
 }
-div.cs_result_area.shadowUp{
+div.sp_result_area.shadowUp{
 	box-shadow: 0px -5px 30px rgba(0,0,0,0.5);
 	-moz-box-shadow: 0px -5px 30px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 0px -5px 30px rgba(0,0,0,0.5);
 }
-div.cs_navi > p {
+div.sp_navi > p {
 	font-size: 12px;
 }
 
@@ -381,7 +381,7 @@ div.cs_navi > p {
 /**
  * 分页条样式（基于Bootstrap2的样式进行调整）
  */
-div.cs_result_area div.pagination {
+div.sp_result_area div.pagination {
 	margin: 0px;
 	padding: 0px;
 	height: 24px;
@@ -389,13 +389,13 @@ div.cs_result_area div.pagination {
 	width: 100%;
 	border-top: 1px solid #DDDDDD;
 }
-div.cs_result_area div.pagination ul {
+div.sp_result_area div.pagination ul {
 	width: 100%;
 }
-div.cs_result_area div.pagination li{
+div.sp_result_area div.pagination li{
 	text-align: center;
 }
-div.cs_result_area div.pagination>ul>li>a {
+div.sp_result_area div.pagination>ul>li>a {
 	margin: 0px;
 	border-radius: 0px;
 	border-top: 0px;
@@ -408,27 +408,27 @@ div.cs_result_area div.pagination>ul>li>a {
 	background-color: white;
 }
 
-div.cs_result_area div.pagination li.csFirstPage a,
-div.cs_result_area div.pagination li.csPreviousPage a,
-div.cs_result_area div.pagination li.csNextPage a,
-div.cs_result_area div.pagination li.csLastPage a {
+div.sp_result_area div.pagination li.csFirstPage a,
+div.sp_result_area div.pagination li.csPreviousPage a,
+div.sp_result_area div.pagination li.csNextPage a,
+div.sp_result_area div.pagination li.csLastPage a {
 	width: 30px;
 }
-div.cs_result_area div.pagination li.csFirstPage a{
+div.sp_result_area div.pagination li.csFirstPage a{
 	border-left: 0px;
 }
-div.cs_result_area div.pagination li.csLastPage a{
+div.sp_result_area div.pagination li.csLastPage a{
 	border-right: 0px;
 }
 
-div.cs_result_area div.pagination>ul>li.disabled>a:hover {
+div.sp_result_area div.pagination>ul>li.disabled>a:hover {
 	color: #999999;background-color: white;
 }
-div.cs_result_area div.pagination>ul>li>a:hover {
+div.sp_result_area div.pagination>ul>li>a:hover {
 	color: #005580; background-color: #F5F5F5;
 }
 
-div.cs_result_area div.pagination>ul>li.pageInfoBox>a {
+div.sp_result_area div.pagination>ul>li.pageInfoBox>a {
 	width: 176px;
 	text-align: center;
 	/* padding-left: 4px;
