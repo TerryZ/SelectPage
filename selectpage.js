@@ -1,6 +1,6 @@
 /**
  * @file jQuery Plugin: SelectPage
- * @version 0.1
+ * @version 1.0
  * @author TerryZeng
  * @license MIT License
  * 
@@ -128,8 +128,8 @@
 		this._setButtonAttrDefault();
 		this._setInitRecord();
 
-		this._ehButton();
-		this._ehComboInput();
+		this._eDropdownButton();
+		this._eInput();
 		this._ehWhole();
 
 		//缓存内部对象
@@ -687,7 +687,7 @@
 		 * @private
 		 * @desc 下拉按钮的事件处理
 		 */
-		_ehButton: function() {
+		_eDropdownButton: function() {
 			var self = this;
 			
 			$(self.elem.button).mouseup(function(ev) {
@@ -711,7 +711,7 @@
 		 * @private
 		 * @desc 输入框的事件绑定
 		 */
-		_ehComboInput: function() {
+		_eInput: function() {
 			var self = this;
 			$(self.elem.combo_input).keyup(function(ev) {
 				self._processKey(self, ev);
