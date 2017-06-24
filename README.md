@@ -9,6 +9,6 @@ plugin preview
 
 <ul>
 	<li>jQuery plugin</li>
-	<li>A item select plugin for bootstrap2(unsupport bootstrap3)</li>
+	<li>A item select plugin for bootstrap2、3</li>
 	<li>brower supper IE8+,chrome,firefox</li>
 </ul>
