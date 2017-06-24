@@ -1,6 +1,6 @@
 /**
  * @file jQuery Plugin: SelectPage
- * @version 1.0
+ * @version 1.1
  * @author TerryZeng
  * @license MIT License
  * 
@@ -9,7 +9,7 @@
  * 作者：Yuusaku Miyazaki <toumin.m7@gmail.com>(宮崎 雄策)
  * 
  * 基本要求：
- * 插件基于Bootstrap2版本进行开发，Bootstrap3后期进行适配
+ * 插件基于Bootstrap2、3版本进行开发
  * 
  * 基本功能：
  * 可实时搜索的下拉列表
@@ -65,6 +65,8 @@
  * 修复部分样式问题
  * 2017.06.13
  * 改名SelectPage
+ * 2017.06.24
+ * 增加Bootstrap3样式支持
  */
 ;(function($){
 	"use strict";

@@ -13,12 +13,15 @@
 }
 .sp_input {
 	background-color: white;
-	/* border-radius: 4px 0 0 4px; */
-	border-right: none;
-	/* border: 1px solid #79b; */
-	box-shadow:         1px 1px 1px rgba(0,0,0,0.2) inset;
-	-moz-box-shadow:    1px 1px 1px rgba(0,0,0,0.2) inset;
-	-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.2) inset;
+
+	border: 1px solid #ccc;
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+	box-shadow:         0px 1px 1px rgba(0,0,0,0.075) inset;
+	-moz-box-shadow:    0px 1px 1px rgba(0,0,0,0.075) inset;
+	-webkit-box-shadow: 0px 1px 1px rgba(0,0,0,0.075) inset;
 	margin: 0px !important;
 	/* width: 320px; */
 	
@@ -388,15 +391,32 @@ div.sp_result_area div.pagination {
 	line-height: 24px;
 	width: 100%;
 	border-top: 1px solid #DDDDDD;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    display: block;
 }
 div.sp_result_area div.pagination ul {
 	width: 100%;
+    display: inline-block;
+    margin-bottom: 0;
+    margin-left: 0;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    padding: 0px;
 }
 div.sp_result_area div.pagination li{
 	text-align: center;
+	display: inline;
+	box-sizing: border-box;
 }
 div.sp_result_area div.pagination>ul>li>a {
 	margin: 0px;
+	border: 1px solid #ddd;
 	border-radius: 0px;
 	border-top: 0px;
 	border-bottom: 0px;
@@ -406,6 +426,12 @@ div.sp_result_area div.pagination>ul>li>a {
 	-moz-box-shadow:    none;
 	-webkit-box-shadow: none;
 	background-color: white;
+	
+	float: left;
+    text-decoration: none;
+    
+    border-left-width: 0;
+    box-sizing: content-box;
 }
 
 div.sp_result_area div.pagination li.csFirstPage a,
@@ -420,7 +446,10 @@ div.sp_result_area div.pagination li.csFirstPage a{
 div.sp_result_area div.pagination li.csLastPage a{
 	border-right: 0px;
 }
-
+div.sp_result_area div.pagination>ul>li.disabled>a{
+	color: #999999;
+	cursor: default;
+}
 div.sp_result_area div.pagination>ul>li.disabled>a:hover {
 	color: #999999;background-color: white;
 }
