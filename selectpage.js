@@ -1,6 +1,6 @@
 /**
  * @file jQuery Plugin: SelectPage
- * @version 0.1
+ * @version 1.1
  * @author TerryZeng
  * @license MIT License
  * 
@@ -9,7 +9,7 @@
  * 作者：Yuusaku Miyazaki <toumin.m7@gmail.com>(宮崎 雄策)
  * 
  * 基本要求：
- * 插件基于Bootstrap2版本进行开发，Bootstrap3后期进行适配
+ * 插件基于Bootstrap2、3版本进行开发
  * 
  * 基本功能：
  * 可实时搜索的下拉列表
@@ -65,6 +65,8 @@
  * 修复部分样式问题
  * 2017.06.13
  * 改名SelectPage
+ * 2017.06.24
+ * 增加Bootstrap3样式支持
  */
 ;(function($){
 	"use strict";
@@ -128,8 +130,8 @@
 		this._setButtonAttrDefault();
 		this._setInitRecord();
 
-		this._ehButton();
-		this._ehComboInput();
+		this._eDropdownButton();
+		this._eInput();
 		this._ehWhole();
 
 		//缓存内部对象
@@ -687,7 +689,7 @@
 		 * @private
 		 * @desc 下拉按钮的事件处理
 		 */
-		_ehButton: function() {
+		_eDropdownButton: function() {
 			var self = this;
 			
 			$(self.elem.button).mouseup(function(ev) {
@@ -711,7 +713,7 @@
 		 * @private
 		 * @desc 输入框的事件绑定
 		 */
-		_ehComboInput: function() {
+		_eInput: function() {
 			var self = this;
 			$(self.elem.combo_input).keyup(function(ev) {
 				self._processKey(self, ev);
