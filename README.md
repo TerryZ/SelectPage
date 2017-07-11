@@ -13,6 +13,6 @@ plugin preview
 	<li>brower supper IE8+,chrome,firefox</li>
 </ul>
 
-## docs,example,useage
+## docs,example,guide
 
 Explorer on <a href="https://terryz.github.io/" target="_blank">TerryZ.github.io</a>
