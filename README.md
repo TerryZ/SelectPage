@@ -15,4 +15,4 @@ plugin preview
 
 ## docs,example,useage
 
-Explorer on [TerryZ.github.io](https://terryz.github.io/)
+Explorer on <a href="https://terryz.github.io/" target="_blank">TerryZ.github.io</a>
