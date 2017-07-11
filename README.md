@@ -12,3 +12,7 @@ plugin preview
 	<li>A item select plugin for bootstrap2、3</li>
 	<li>brower supper IE8+,chrome,firefox</li>
 </ul>
+
+## docs,example,useage
+
+Explorer on [TerryZ.github.io](https://terryz.github.io/)
