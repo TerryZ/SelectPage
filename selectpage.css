@@ -166,7 +166,20 @@ ul.sp_results > li.sp_selected {
 	color: blue;
 }
 
-
+.sp_control_box{
+	padding: 2px;
+	border-bottom: 1px solid #DCDCDC;
+}
+.sp_control_box button{
+	height: 24px;
+	line-height: 20px;
+	width: 33.3%;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px;
+    font-size: 13px !important;
+    padding: 1px 10px;
+}
 
 /**
  * 多选模式相关样式
@@ -177,7 +190,7 @@ div.sp_container_combo{
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-    box-sizing: content-box;
+    box-sizing: border-box;
 }
 div.sp_container_combo.sp_container_open{
 	border-radius: 0px;
@@ -201,30 +214,33 @@ input.sp_combo_input:focus {
 }
 ul.sp_element_box{
 	margin: 0px;
-	padding: 0px;
 	position: relative;
 	overflow: hidden;
 	clear: both;
 	cursor: text;
 	margin-right: 24px;
-	margin-bottom: 2px;
 	list-style: none;
 	height: auto;
+	padding: 4px 0px 0px 5px;
+	font-size: 14px;
+	min-height: 24px;
 }
 ul.sp_element_box > li{
 	list-style: none;
 	padding: 0px 5px;
-	margin-left: 5px;
-	margin-top: 3px;
+/* 	margin-left: 5px;
+	margin-top: 3px; */
 	/* margin-bottom: 2px; */
 	float: left;
-	height: 21px;
-	line-height: 21px;
+	height: 19px;
+	line-height: 19px;
 	position: relative;
+	margin: 0px;
+	box-sizing: content-box;
 }
 ul.sp_element_box li.full_width {
 	width: 100%;
-}
+};
 ul.sp_element_box li.full_width input{
 	width: 100% !important;
 }
@@ -235,13 +251,20 @@ ul.sp_element_box li.selected_tag {
 	cursor: pointer;
 	max-width: 100%;
 	box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+	margin-bottom: 2px;
+	margin-right: 5px;
 }
 ul.sp_element_box li.input_box {
 	padding: 0px;
 	/* margin: 0px; */
 	margin-top: 0px;
-	height: 26px;
-	min-height: 26px;
+ 	height: 21px;
+	min-height: 21px;
+}
+ul.sp_element_box li.input_box input {
+	height: 21px !important;
+	line-height: 21px !important;
+	min-height: 21px !important;
 }
 ul.sp_element_box li.selected_tag span.tag_close {
 	cursor: pointer;

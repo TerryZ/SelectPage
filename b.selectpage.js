@@ -5,10 +5,12 @@
  * created : 2016.03.26
  * 
  * 2016.04.20
- * 增加callback回调，统一返回当前被选中项的key和value
- * 
+ * 增加callback回调，统一返回当前被选中项的key和value * 
  * 2016.10.04
- * 增加autoSelectFirst、autoFillResult、noResultClean三个参数开放设置，增加对下拉列表的控制
+ * 增加autoSelectFirst、autoFillResult、noResultClean三个参数开放设置，增加对下拉列表的控制 * 
+ * 2017.08.08
+ * 增加multipleControlbar参数，控制多选模式下是否启用控制按钮区域，默认启用
+ * 增加ajaxSuccess参数，ajax请求模式，请求成功后的数据处理回调
  */
 
 !function ($) {
@@ -22,7 +24,8 @@
 		lang : 'cn',                          //插件语言，默认中文
 		showField : 'name',                   //显示在列表中的数据字段，默认设置name字段，它必须在数据源里存在
 		keyField : 'id',                      //数据代码列，默认设置id字段
-		multiple : false,                    //是否为多选模式，默认为单选模式
+		multiple : false,                     //是否为多选模式，默认为单选模式
+		multipleControlbar : true,            //是否启用多选模式的控制按钮区域,仅multiple: true模式下可用
 		searchField : undefined,              //查询字段，仅为使用URL(ajax)方式查询服务端时，设置后端查询的字段，不设置则默认使用showField设置的字段
 		
 		focusDropList : true,                 //是否在输入框获得焦点时，展开下拉窗口
@@ -51,10 +54,26 @@
 		params : undefined,                   //使用URL进行AJAX查询时，可传递查询参数
 		                                      //参数类型：function
 		                                      //返回结果：{'name':'aa','sex':1}
-		                                      //例如：params : function(){return {'name':'aa','sex':1};}
-		
-		callback : undefined                 //事件回调，响应项目被选中后的事件处理
-		                                      //参数：data：选中行的原始JSON数据
+											  //例如：params : function(){return {'name':'aa','sex':1};}
+
+		/**
+		 * ajax请求模式，请求成功后的数据处理回调
+		 * @type function
+		 * @param data {object} ajax服务端返回的json数据
+		 * @return {object} 函数返回的数据结构如下：
+		 * 
+		 * {
+		 *   list : [{name:'aa',sex:1},{name:'bb',sex:1}...],
+		 *   totalRow : 100
+		 * }
+		 */
+		ajaxSuccess : undefined,
+		/**
+		 * 事件回调，响应项目被选中后的事件处理
+		 * @type function
+		 * @param data {object} 选中行的原始JSON数据
+		 */
+		callback : undefined
 	};
 	
 	var bSelectPage = function(element,options){
@@ -82,11 +101,13 @@
 				//button_img : $webroot + 'js/jquery/jquery.ajax-combobox/btn.png',已修改成bootstrap风格的向下键，不再需要设置该参数
 				field : p.showField,
 				multiple : p.multiple,
+				multiple_controlbar : p.multipleControlbar,
 				primary_key : p.keyField,
 				search_field : p.searchField,
 				init_record : initCode,
 				per_page : p.pageSize,
 				params : p.params,
+				ajax_success : p.ajaxSuccess,
 				bind_to : 'bSelectPage',
 				focus_drop_list : p.focusDropList ? true : false,
 				auto_select_first : p.autoSelectFirst ? true : false,
