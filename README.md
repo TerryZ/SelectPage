@@ -4,6 +4,7 @@ A jQuery plugin include autocomplete,pagination,tags,keybord navigation function
 ## plugin preview
 
 ![SelectPage](https://terryz.github.io/image/SelectPage.png)
+![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
 
 
 ## Key Features
