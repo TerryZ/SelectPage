@@ -155,7 +155,7 @@ div.sp_button {
 /*odd奇数行，even偶数行*/
 .sp_results > li:nth-child(even){
 	/* background-color: #EEEEEE; */
-	background-color: #EBF2FC;
+	/* background-color: #EBF2FC; */
 }
 
 ul.sp_results > li.sp_over {
@@ -171,11 +171,12 @@ ul.sp_results > li.sp_selected {
 }
 
 .sp_control_box{
-	padding: 2px;
-	border-bottom: 1px solid #DCDCDC;
+	padding: 0px;
+	/* border-bottom: 1px solid #DCDCDC; */
+	height: 26px;
 }
 .sp_control_box button{
-	height: 24px;
+	height: 26px;
 	line-height: 20px;
 	width: 33.3%;
     -webkit-border-radius: 0px;
@@ -183,8 +184,12 @@ ul.sp_results > li.sp_selected {
     border-radius: 0px;
     font-size: 13px !important;
     padding: 1px 10px;
+    border: 0px;
+    background-color: #E8E8E8;
 }
-
+.sp_control_box button:hover{
+	background-color: #D8D8D8;
+}
 /**
  * 多选模式相关样式
  */
@@ -236,8 +241,6 @@ ul.sp_element_box > li{
 	margin-bottom: 3px;
 	/* margin-bottom: 2px; */
 	float: left;
-	height: 22px;
-	line-height: 22px;
 	position: relative;
 	box-sizing: content-box;
 }
@@ -254,6 +257,8 @@ ul.sp_element_box li.selected_tag {
 	cursor: pointer;
 	max-width: 100%;
 	box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+	height: 20px;
+	line-height: 20px;
 }
 ul.sp_element_box li.input_box {
 	padding: 0px;
@@ -408,10 +413,10 @@ div.sp_navi > p {
 div.sp_result_area div.pagination {
 	margin: 0px;
 	padding: 0px;
-	height: 24px;
-	line-height: 24px;
+	height: 26px;
+	line-height: 26px;
 	width: 100%;
-	border-top: 1px solid #DDDDDD;
+	/* border-top: 1px solid #DDDDDD; */
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
@@ -425,9 +430,9 @@ div.sp_result_area div.pagination ul {
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
-    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+/*     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
     -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05); */
     padding: 0px;
 }
 div.sp_result_area div.pagination li{
@@ -437,12 +442,11 @@ div.sp_result_area div.pagination li{
 }
 div.sp_result_area div.pagination>ul>li>a {
 	margin: 0px;
-	border: 1px solid #ddd;
+	/* border: 1px solid #ddd; */
 	border-radius: 0px;
 	border-top: 0px;
 	border-bottom: 0px;
 	padding: 0px;
-	line-height: 24px;
 	box-shadow:         none;
 	-moz-box-shadow:    none;
 	-webkit-box-shadow: none;
@@ -453,6 +457,10 @@ div.sp_result_area div.pagination>ul>li>a {
     
     border-left-width: 0;
     box-sizing: content-box;
+    color: #666666;
+    font-size: 20px;
+    height: 26px;
+    line-height: 26px;
 }
 
 div.sp_result_area div.pagination li.csFirstPage a,
@@ -467,20 +475,28 @@ div.sp_result_area div.pagination li.csFirstPage a{
 div.sp_result_area div.pagination li.csLastPage a{
 	border-right: 0px;
 }
+
+div.sp_result_area div.pagination>ul>li>a:hover {
+	color: #000000; background-color: #E8E8E8;
+}
 div.sp_result_area div.pagination>ul>li.disabled>a{
-	color: #999999;
+	color: #DDDDDD;
 	cursor: default;
 }
 div.sp_result_area div.pagination>ul>li.disabled>a:hover {
-	color: #999999;background-color: white;
-}
-div.sp_result_area div.pagination>ul>li>a:hover {
-	color: #005580; background-color: #F5F5F5;
+	color: #DDDDDD;background-color: white;
 }
 
 div.sp_result_area div.pagination>ul>li.pageInfoBox>a {
-	width: 176px;
+	width: 180px;
 	text-align: center;
 	/* padding-left: 4px;
 	padding-right: 4px; */
+	color: #666666;
+	font-size: 14px;
+}
+div.sp_result_area div.pagination>ul>li.pageInfoBox>a:hover {
+	background-color: inherit;
+	color: #666666;
+	cursor: default;
 }
