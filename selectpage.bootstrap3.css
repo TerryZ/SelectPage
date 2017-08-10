@@ -110,6 +110,13 @@ div.sp_button {
   background: #dee;
   background-image: linear-gradient(to bottom, #ffffff, #bbbbcc);
 }
+.sp_message_box {
+	height: 30px !important;
+	line-height: 30px !important;
+	text-align: center !important;
+	box-sizing: content-box;
+	font-size: 14px !important;
+}
 
 /**
  * Results
@@ -444,8 +451,6 @@ div.sp_result_area div.pagination>ul>li>a {
 	margin: 0px;
 	/* border: 1px solid #ddd; */
 	border-radius: 0px;
-	border-top: 0px;
-	border-bottom: 0px;
 	padding: 0px;
 	box-shadow:         none;
 	-moz-box-shadow:    none;
@@ -455,7 +460,7 @@ div.sp_result_area div.pagination>ul>li>a {
 	float: left;
     text-decoration: none;
     
-    border-left-width: 0;
+    border: 0px;
     box-sizing: content-box;
     color: #666666;
     font-size: 20px;

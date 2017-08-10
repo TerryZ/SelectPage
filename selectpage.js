@@ -5,7 +5,7 @@
  * @version     1.2
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
- * @license MIT License
+ * @license     MIT License
  * 
  * 插件的部分功能使用、借鉴了
  * jQuery Plugin: jquery.ajax-combobox
@@ -75,7 +75,11 @@
  * 增加多选模式下的控制按钮区域，功能：“全选本页”、“取消本页”、“清空全部”
  * 修复最大宽度下超出父容器的宽度问题
  * 修复ajax模式报错的问题
- * 增加ajax_success请求成功后的数据处理回调
+ * 增加eAjaxSuccess请求成功后的数据处理回调
+ * 2017.08.10
+ * 修改默认样式，使用更简洁的风格
+ * 增加maxSelectLimit参数，设置多选模式下最大选择个数限制
+ * 增加eTagRemove回调函数，在多选模式下，移除标签时触发的回调
  */
 ;(function($){
 	"use strict";
@@ -143,16 +147,21 @@
 			source: source,
 			lang: 'cn',
 			/**
-			 * 是否为多选模式（标签模式）
+			 * @desc 是否为多选模式（标签模式）
 			 * @type boolean 默认值false
 			 */
 			multiple: false,
 			/**
-			 * 是否启用多选模式的控制按钮区域
+			 * @desc 是否启用多选模式的控制按钮区域
 			 * 仅multiple: true模式下可用
 			 * @type boolean 默认值true
 			 */
 			multiple_controlbar: true,
+			/**
+			 * @desc 多选模式下最大选择个数，0为不限制
+			 * @type number 默认0
+			 */
+			maxSelectLimit: 0,
 			init_record: false,
 			db_table: 'tbl',
 			field: 'name',
@@ -205,7 +214,13 @@
 			 *   totalRow : 100
 			 * }
 			 */
-			ajax_success: undefined
+			eAjaxSuccess: undefined,
+			/**
+			 * 多选模式下，关闭标签是的回调函数
+			 * @type function
+			 * @param removeCount 被移除的个数
+			 */
+			eTagRemove: undefined,
 		},option);
 	};
 
@@ -463,6 +478,7 @@
 			select_ok: 'sp_select_ok',
 			select_ng: 'sp_select_ng',
 			input_off: 'sp_input_off',
+			message_box: 'sp_message_box',
 			
 			button: 'sp_button',
 			btn_on: 'sp_btn_on',
@@ -541,7 +557,6 @@
 		//elem.navi_p      = $('<p>');
 		elem.results = $('<ul>').addClass(this.css_class.results);
 		
-		
 		/**
 		 * 将原输入框的Name交换到Hidden中，因为具体需要保存传递到后端的是ID，而非Title
 		 */
@@ -613,6 +628,8 @@
 		}
 		$(this.elem.button).attr('title', this.message.get_all_btn);
 		//$(this.elem.img).attr('src', this.option.button_img);
+		//按钮的title属性修改
+		$(this.elem.button).attr('title', this.message.close_btn);
 	};
 
 	/**
@@ -721,6 +738,12 @@
 	 */
 	SelectPage.prototype.eInput = function() {
 		var self = this;
+		var showList = function(){
+			self.prop.page_move = false;
+			self.prop.is_suggest = false;
+			self.suggest(self);
+			self.setCssFocusedInput(self);
+		};
 		$(self.elem.combo_input).keyup(function(ev) {
 			self.processKey(self, ev);
 		}).focus(function(e) {
@@ -728,12 +751,7 @@
 			if ($(self.elem.result_area).is(':hidden')) {
 				e.stopPropagation();
 				self.prop.first_show = true;
-				self.prop.page_move = false;
-				//self.checkValue(self);
-				self.prop.is_suggest = false;
-				self.suggest(self);
-				self.setCssFocusedInput(self);
-				//self.prop.first_show = false;
+				showList();
 			}
 		});
 		if(self.option.multiple){
@@ -760,6 +778,9 @@
 			$(self.elem.element_box).on('click.SelectPage','span.tag_close',function(){
 				var li = $(this).closest('li');
 				self.removeTag(self,li);
+				showList();
+				if(self.option.eAjaxSuccess && $.isFunction(self.option.eAjaxSuccess))
+					self.option.eAjaxSuccess(1);
 			});
 			self.inputResize(self);
 		}
@@ -995,7 +1016,6 @@
 			//if (self.option.plugin_type != 'textarea') $(self.elem.hidden).val('');
 
 			if (self.option.select_only) self.setButtonAttrDefault();
-			
 
 			//重置页数
 			self.prop.page_suggest = 1;
@@ -1144,7 +1164,7 @@
 	 * @param {number} which_page_num - 目标页
 	 */
 	SelectPage.prototype.searchForDb = function(self, q_word, which_page_num) {
-		if(!self.option.ajax_success && $.isFunction(self.option.ajax_success)) self.hideResults(self);
+		if(!self.option.eAjaxSuccess && $.isFunction(self.option.eAjaxSuccess)) self.hideResults(self);
 		/**
 		 * 增加自定义查询参数
 		 */
@@ -1179,7 +1199,7 @@
 					self.ajaxErrorNotify(self, errorThrown);
 					return;
 				}
-				var data = self.option.ajax_success(returnData);
+				var data = self.option.eAjaxSuccess(returnData);
 				//数据结构处理
 				var json = {};
 				json.originalResult = data.gridResult.list;
@@ -1535,6 +1555,19 @@
 	 */
 	SelectPage.prototype.displayResults = function(self, json, is_query) {
 		$(self.elem.results).empty();
+		if(self.option.multiple && $.type(self.option.maxSelectLimit) == 'number' && self.option.maxSelectLimit > 0){
+			var selectedSize = $('li.selected_tag',self.elem.element_box).size();
+			if(selectedSize > 0 && selectedSize >= self.option.maxSelectLimit){
+				var msgLi = '<li class="sp_message_box"><i class="fa fa-exclamation-triangle"></i> 最多只能选择 '+self.option.maxSelectLimit+' 个项目</li>';
+				$(self.elem.results).append(msgLi);
+				self.calcWidthResults(self);
+				$(self.elem.container).addClass(self.css_class.container_open);
+				$(self.elem.control).hide();
+				$(self.elem.navi).hide();
+				return;
+			}
+		}
+
 		var arr_candidate = json.candidate;
 		var arr_primary_key = json.primary_key;
 		var keystr = $(self.elem.hidden).val();
@@ -1562,17 +1595,16 @@
 			$(list).data('dataObj',json.originalResult[i]);
 			$(self.elem.results).append(list);
 		}
+		$(self.elem.control).show();
+		$(self.elem.navi).show();
 		//显示结果集列表并调整位置
 		self.calcWidthResults(self);
-
 		$(self.elem.container).addClass(self.css_class.container_open);
 		
 		//结果集列表事件绑定
 		self.ehResults();
 		//若是键盘输入关键字进行查询且有内容时，列表自动选中第一行(auto_select_first为true时)
 		if (is_query && arr_candidate.length > 0 && self.option.auto_select_first) self.nextLine(self);
-		//按钮的title属性修改
-		$(self.elem.button).attr('title', self.message.close_btn);
 	};
 
 	/**
@@ -1812,12 +1844,15 @@
 	 * @param {Object} self - 插件内部对象
 	 */
 	SelectPage.prototype.unselectAllLine = function(self){
+		var size = $('li',self.elem.results).size();
 		$('li',self.elem.results).each(function(i,row){
 			var key = $(row).attr('pkey');
 			var tag = $('li.selected_tag[itemvalue="'+key+'"]',self.elem.element_box);
 			self.removeTag(self,tag);
 		});
 		self.afterAction(self);
+		if(self.option.eAjaxSuccess && $.isFunction(self.option.eAjaxSuccess))
+			self.option.eAjaxSuccess(size);
 	};
 	/**
 	 * @private
@@ -1825,9 +1860,12 @@
 	 * @param {Object} self - 插件内部对象
 	 */
 	SelectPage.prototype.clearAll = function(self){
+		var size = $('li.selected_tag',self.elem.element_box).size();
 		$('li.selected_tag',self.elem.element_box).remove();
 		$(self.elem.hidden).val('');
 		self.afterAction(self);
+		if(self.option.eAjaxSuccess && $.isFunction(self.option.eAjaxSuccess))
+			self.option.eAjaxSuccess(size);
 	};
 
 	/**

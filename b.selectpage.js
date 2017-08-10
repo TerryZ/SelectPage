@@ -11,6 +11,9 @@
  * 2017.08.08
  * 增加multipleControlbar参数，控制多选模式下是否启用控制按钮区域，默认启用
  * 增加ajaxSuccess参数，ajax请求模式，请求成功后的数据处理回调
+ * 2017.08.10
+ * 增加maxSelectLimit参数，设置多选模式下最大选择个数限制
+ * 增加eTagRemove回调函数，在多选模式下，移除标签时触发的回调
  */
 
 !function ($) {
@@ -26,6 +29,7 @@
 		keyField : 'id',                      //数据代码列，默认设置id字段
 		multiple : false,                     //是否为多选模式，默认为单选模式
 		multipleControlbar : true,            //是否启用多选模式的控制按钮区域,仅multiple: true模式下可用
+		maxSelectLimit : 0,                   //多选模式下最大选择个数，0为不限制
 		searchField : undefined,              //查询字段，仅为使用URL(ajax)方式查询服务端时，设置后端查询的字段，不设置则默认使用showField设置的字段
 		
 		focusDropList : true,                 //是否在输入框获得焦点时，展开下拉窗口
@@ -67,7 +71,13 @@
 		 *   totalRow : 100
 		 * }
 		 */
-		ajaxSuccess : undefined,
+		eAjaxSuccess : undefined,
+		/**
+		 * 多选模式下，关闭标签是的回调函数
+		 * @type function
+		 * @param removeCount 被移除的个数
+		 */
+		eTagRemove : undefined,
 		/**
 		 * 事件回调，响应项目被选中后的事件处理
 		 * @type function
@@ -102,12 +112,14 @@
 				field : p.showField,
 				multiple : p.multiple,
 				multiple_controlbar : p.multipleControlbar,
+				maxSelectLimit : p.maxSelectLimit,
 				primary_key : p.keyField,
 				search_field : p.searchField,
 				init_record : initCode,
 				per_page : p.pageSize,
 				params : p.params,
-				ajax_success : p.ajaxSuccess,
+				eAjaxSuccess : p.eAjaxSuccess,
+				eTagRemove : p.eTagRemove,
 				bind_to : 'bSelectPage',
 				focus_drop_list : p.focusDropList ? true : false,
 				auto_select_first : p.autoSelectFirst ? true : false,
