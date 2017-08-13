@@ -149,6 +149,7 @@ ul.sp_results > li.sp_selected {
 	padding: 0px;
 	/* border-bottom: 1px solid #DCDCDC; */
 	height: 26px;
+	background-color: #E8E8E8;
 }
 .sp_control_box button{
 	height: 26px;
