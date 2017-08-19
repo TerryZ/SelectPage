@@ -95,6 +95,11 @@
  * 初始化入口从原来的$('').bSelectPage({})修改为$('').selectPage({})
  * 重新调整参数名称
  * 修正Bootstrap3下控件宽度、高度应用的BUG
+ * 2017.08.19
+ * 增加为原始输入框的value属性设置初始化值，以初始化插件选中项目
+ * 修复多选模式下关闭标签出错的问题
+ * 修复输入查询关键字后失去焦点，再次获得焦点时，插件没有根据已存在的关键进行过滤
+ * 增加inputDelay配置项目，设置ajax数据源模式下，延迟输入查询的时间，避免在单位时间内连续输入发起的连续ajax查询，单位：秒，默认值：0.5
  */
 ;(function($){
 	"use strict";
@@ -167,6 +172,13 @@
 		 * @type string 默认为'AND'
 		 */
 		andOr: 'AND',
+        /**
+         * @desc 数据排序方式
+         * @type array 若不设置则默认对showField指定的字段进行排序
+         * @example
+         * orderBy : ['id desc']//对ID字段进行降序排序
+         */
+        orderBy: undefined,
 		/**
 		 * @desc 每页显示的记录数
 		 * @type number
@@ -214,6 +226,11 @@
 		 * @type boolean
 		 */
 		selectOnly: false,
+        /**
+         * @desc 输入关键字查询延迟（仅ajax数据源模式下可用）
+         * @type number 默认值：0.5秒
+         */
+        inputDelay: 0.5,
 		/**
 		 * -----------------------------------------事件回调--------------------------------------------
 		 */
@@ -269,7 +286,7 @@
 	/**
 	 * 插件版本号
 	 */
-	SelectPage.version = '2.0';
+	SelectPage.version = '2.2';
 	/**
 	 * 插件缓存内部对象的KEY
 	 */
@@ -293,7 +310,9 @@
 		
 		//统一大写
 		option.andOr = option.andOr.toUpperCase();
+		if(option.andOr!=='AND' && option.andOr!=='OR') option.andOr = 'AND';
 
+		//将参数内容从使用","分隔的字符串转换为数组
 		var arr = ['searchField'];
 		for (var i = 0; i < arr.length; i++) {
 			option[arr[i]] = this.strToArray(option[arr[i]]);
@@ -312,8 +331,11 @@
 			option.autoSelectFirst = false;
 		}
 
-		if($.type(option.init) != 'undefined') option.initRecord = String(option.init);
+		if($.type(option.data) === 'string'){
+		    option.autoSelectFirst = false;
+        }
 
+		if($.type(option.init) != 'undefined') option.initRecord = String(option.init);
 		this.option = option;
 	};
 
@@ -530,7 +552,6 @@
 			container: 'sp_container',
 			// SelectPage最外层DIV的打开状态
 			container_open: 'sp_container_open',
-			selected: 'sp_selected',
 			re_area: 'sp_result_area',
 			control_box: 'sp_control_box',
 			//标签及输入框的
@@ -543,6 +564,7 @@
 			select: 'sp_over',
 			select_ok: 'sp_select_ok',
 			select_ng: 'sp_select_ng',
+            selected: 'sp_selected',
 			input_off: 'sp_input_off',
 			message_box: 'sp_message_box',
 			
@@ -577,7 +599,11 @@
 			//使用键盘进行选择
 			key_select: false,
 			//上一个选择的项目值
-			prev_value: ''
+			prev_value: '',
+            //选中项目的文本内容
+            selected_text : '',
+			//上一次键盘输入的时间
+			last_input_time: undefined
 		};
 		this.template = {
 			tag : {
@@ -592,12 +618,11 @@
 	 * @private
 	 * @desc 插件HTML结构生成
 	 * @param {Object} combo_input - 输入框源对象
+     * @param {Object} option - 插件参数
 	 */
 	SelectPage.prototype.setElem = function(combo_input,option) {
 		// 1. 生成、替换DOM对象
 		var elem = {};//本体
-		//将原始输入框中，用户设置的样式提取，并放到最外层的容器中,'class':''
-		//var srcClass = $(combo_input).attr('class');
 		var orgWidth = $(combo_input).outerWidth();
 		//修复输入控件设置了input-block-level时，显示效果不正确的问题
 		//if($(combo_input).hasClass('input-block-level')) $(elem.container).css('width','100%');
@@ -608,8 +633,6 @@
 
 		$(elem.container).width(orgWidth);
 
-		//if(srcClass) $(elem.container).addClass(srcClass);
-		
 		elem.button = $('<div>').addClass(this.css_class.button);
 		//bootstrap风格的向下三角箭头
 		elem.dropdown = $('<span class="bs-caret"><span class="caret"></span></span>');
@@ -623,8 +646,6 @@
 		//elem.navi        = $('<div>').addClass(this.css_class.navi);
 		//使用Bootstrap分页风格
 		elem.navi = $('<div>').addClass('pagination').append('<ul>');
-		//elem.navi_info   = $('<div>').addClass('info');
-		//elem.navi_p      = $('<p>');
 		elem.results = $('<ul>').addClass(this.css_class.results);
 		
 		/**
@@ -652,6 +673,15 @@
 			name: input_name,
 			id: input_id
 		});
+
+		//若在输入框中放入了初始化值，则将它放到隐藏域中进行选中项目初始化
+        //若输入框设置了初始值，同时又设置了data-init属性，那么以data-init属性为优先选择
+		if(!option.initRecord){
+		    if($(elem.combo_input).val()){
+                option.initRecord = $(elem.combo_input).val();
+                $(elem.combo_input).val('');
+            }
+        }else $(elem.combo_input).val('');
 
 		// 2. DOM内容放置
 		$(elem.container).append(elem.button).append(elem.result_area).append(elem.hidden);
@@ -703,15 +733,15 @@
 
 	/**
 	 * @private
-	 * @desc 为插件设置初始化的选中值（若有指定的话）
+	 * @desc 为插件设置初始化的选中值（若有指定的话），执行第一步，数据匹配
 	 */
 	SelectPage.prototype.setInitRecord = function(refresh) {
 		var self = this;
-		if((refresh && $(self.elem.hidden).val()) || $.type(self.option.initRecord) == 'string'){
+		if((refresh && $(self.elem.hidden).val()) || $.type(self.option.initRecord) === 'string'){
 			// 初始的KEY值放入隐藏域
 			if(!refresh) $(self.elem.hidden).val(self.option.initRecord);
 			//将初始值放入控件
-			if (typeof self.option.data == 'object') {
+			if (typeof self.option.data === 'object') {//json数据源模式
 				var data = new Array();
 				var keyarr = refresh ? $(self.elem.hidden).val().split(',') : self.option.initRecord.split(',');
 				$.each(keyarr,function(index,row){
@@ -725,17 +755,21 @@
 				//在单选模式下，若使用了多选模式的初始化值（“key1,key2,...”多选方式），则不进行初始化选中操作
 				if(!self.option.multiple && data.length > 1) data = null;
 				self.afterInit(self, data);
-			} else {
+			} else {//ajax数据源模式
 				$.ajax({
 					dataType: 'json',
+                    type: 'POST',
 					url: self.option.data,
 					data: {
-						db_table: self.option.dbTable,
-						pkey_name: self.option.keyField,
-						pkey_val: self.option.initRecord
+						searchTable: self.option.dbTable,
+						searchKey: self.option.keyField,
+						searchValue: self.option.initRecord
 					},
 					success: function(json) {
-						self.afterInit(self, json);
+					    var d = null;
+					    if(self.option.eAjaxSuccess && $.isFunction(self.option.eAjaxSuccess))
+					        d = self.option.eAjaxSuccess(json);
+						self.afterInit(self, d.list);
 					},
 					error: function(jqXHR, textStatus, errorThrown) {
 						self.ajaxErrorNotify(self, errorThrown);
@@ -747,7 +781,7 @@
 
 	/**
 	 * @private
-	 * @desc 初始化后的处理
+	 * @desc 匹配后的数据在插件中进行展示
 	 * @param {Object} self - 插件的内部对象
 	 * @param {Object} data - 列表数据
 	 */
@@ -768,6 +802,7 @@
 			$(self.elem.combo_input).val(row[self.option.showField]);
 			$(self.elem.hidden).val(row[self.option.keyField]);
 			self.prop.prev_value = row[self.option.showField];
+            self.prop.selected_text = row[self.option.showField];
 			if (self.option.selectOnly) {
 				$(self.elem.combo_input).attr('title', self.message.select_ok).removeClass(self.css_class.select_ng).addClass(self.css_class.select_ok);
 			}
@@ -780,16 +815,13 @@
 	 */
 	SelectPage.prototype.eDropdownButton = function() {
 		var self = this;
-		
 		$(self.elem.button).mouseup(function(ev) {
 			if ($(self.elem.result_area).is(':hidden') && !$(self.elem.combo_input).prop('disabled')) {
 				//self.prop.is_suggest = false;
 				//self.checkValue(self);
 				//self.suggest(self);
 				$(self.elem.combo_input).focus();
-			} else {
-				self.hideResults(self);
-			}
+			} else self.hideResults(self);
 			ev.stopPropagation();
 		}).mouseover(function() {
 			$(self.elem.button).addClass(self.css_class.btn_on).removeClass(self.css_class.btn_out);
@@ -810,8 +842,8 @@
 			self.suggest(self);
 			self.setCssFocusedInput(self);
 		};
-		$(self.elem.combo_input).keyup(function(ev) {
-			self.processKey(self, ev);
+		$(self.elem.combo_input).keyup(function(e) {
+			self.processKey(self, e);
 		}).focus(function(e) {
 			//增加输入框获得焦点后，显示数据列表
 			if ($(self.elem.result_area).is(':hidden')) {
@@ -845,8 +877,8 @@
 				var li = $(this).closest('li');
 				self.removeTag(self,li);
 				showList();
-				if(self.option.eAjaxSuccess && $.isFunction(self.option.eAjaxSuccess))
-					self.option.eAjaxSuccess(1);
+				if(self.option.eTagRemove && $.isFunction(self.option.eTagRemove))
+					self.option.eTagRemove(1);
 			});
 			self.inputResize(self);
 		}
@@ -862,11 +894,10 @@
 		$(self.elem.container).mousedown(function() {
 			var thisindex = $('div.sp_container').index(this);
 			var lastindex = $(document.body).data(SelectPage.objStatusIndex);
-			if(lastindex != undefined && thisindex != lastindex){
+			if(lastindex != undefined && thisindex != lastindex)
 				$(document.body).data(SelectPage.objStatusKey,false);
-			}else{
+			else
 				$(document.body).data(SelectPage.objStatusKey,true);
-			}
 			$(document.body).data(SelectPage.objStatusIndex,thisindex);
 		});
 		//控件外部的鼠标点击事件处理
@@ -877,6 +908,7 @@
 				var cleanContent = function(obj){
 					$(obj.elem.combo_input).val('');
 					if(!obj.option.multiple) $(obj.elem.hidden).val('');
+					obj.prop.selected_text = '';
 				};
 				//列表是打开的状态
 				$('div.' + self.css_class.container + '.' + self.css_class.container_open).each(function(){
@@ -909,9 +941,7 @@
 									//self.nextLine(self);
 									d.selectCurrentLine(d, true);
 								}
-							}else{
-								d.hideResults(d);
-							}
+							}else d.hideResults(d);
 						}else d.hideResults(d);
 					} else {
 						//无匹配项目时，自动清空用户输入的关键词
@@ -919,7 +949,6 @@
 						else{
 							if(!d.option.multiple) $(d.elem.hidden).val('');
 						}
-						
 						d.hideResults(d);
 					}
 				});
@@ -956,7 +985,6 @@
 	/**
 	 * @private
 	 * @desc 分页导航按钮的事件处理
-	 * @param {Object} self - 插件内部对象
 	 */
 	SelectPage.prototype.ehNaviPaging = function() {
 		var self = this;
@@ -971,20 +999,6 @@
 			ev.preventDefault();
 			self.prevPage(self);
 		});
-
-		// the number of page
-		/*
-		$(self.elem.navi).find('.navi_page').mouseup(function(ev) {
-			$(self.elem.combo_input).focus();
-			ev.preventDefault();
-		
-			if (!self.prop.is_suggest) self.prop.page_all     = parseInt($(this).text(), 10);
-			else                       self.prop.page_suggest = parseInt($(this).text(), 10);
-		
-			self.prop.is_paging = true;
-			self.suggest(self);
-		});
-		*/
 
 		$('li.csNextPage', $(self.elem.navi)).off('click').on('click',function(ev) {
 			$(self.elem.combo_input).focus();
@@ -1003,7 +1017,7 @@
 	 * @private
 	 * @desc Ajax请求失败的处理
 	 * @param {Object} self - 插件内部对象
-	 * @errorThrom {string} errorThrown - Ajax的错误输出内容
+	 * @param {string} errorThrown - Ajax的错误输出内容
 	 */
 	SelectPage.prototype.ajaxErrorNotify = function(self, errorThrown) {
 		self.showMessage(self.message.ajax_error);
@@ -1011,6 +1025,7 @@
 	
 	/**
 	 * @desc 交互消息显示
+	 * @param {Object} self - 插件内部对象
 	 * @param msg {string} 需要提示的文本
 	 */
 	SelectPage.prototype.showMessage = function(self,msg){
@@ -1051,10 +1066,7 @@
 			} else if (target_top > scroll_bottom) {
 				//向下滚动
 				gap = target_top - scroll_bottom;
-			} else {
-				//不进行滚动
-				return;
-			}
+			} else return; //不进行滚动
 		} else if (target_top < scroll_top) gap = target_top - scroll_top;
 		window.scrollBy(0, gap);
 	};
@@ -1089,9 +1101,6 @@
 		if (now_value != self.prop.prev_value) {
 			self.prop.prev_value = now_value;
 			self.prop.first_show = false;
-
-			//原来的设计是在值变化时，都会清空隐藏域的内容，目前去除该功能
-			//if (self.option.plugin_type != 'textarea') $(self.elem.hidden).val('');
 
 			if (self.option.selectOnly) self.setButtonAttrDefault();
 
@@ -1166,7 +1175,15 @@
 		} else {
 			if(e.keyCode != 16) self.setCssFocusedInput(self); // except Shift(16)
 			self.inputResize(self);
-			self.checkValue(self);
+			if($.type(self.option.data) === 'string'){
+                self.prop.last_input_time = e.timeStamp;
+                setTimeout(function(){
+                    if((e.timeStamp - self.prop.last_input_time) === 0)
+                        self.checkValue(self);
+                },self.option.inputDelay * 1000);
+            }else{
+                self.checkValue(self);
+            }
 		}
 	};
 
@@ -1193,7 +1210,13 @@
 		
 		//q_word = (self.prop.is_suggest) ? $.trim($(self.elem.combo_input).val()) : '';
 		//q_word = $.trim($(self.elem.combo_input).val());
-		q_word = (self.prop.first_show) ? '' : $.trim($(self.elem.combo_input).val());
+		//q_word = (self.prop.first_show) ? '' : $.trim($(self.elem.combo_input).val());
+        var val = $.trim($(self.elem.combo_input).val());
+        if(self.option.multiple) q_word = val;
+        else{
+            if(val && val === self.prop.selected_text) q_word = '';
+            else q_word = val;
+        }
 		/*
 		//取消在输入状态时，判断到输入框里内容为空时，隐藏下拉列表的操作
 		if (q_word.length < 1 && self.prop.is_suggest) {
@@ -1227,7 +1250,6 @@
 	 */
 	SelectPage.prototype.setLoading = function(self) {
 		//加载中的状态提示
-		//$(self.elem.navi_info).text(self.message.loading);
 		if ($(self.elem.results).html() === '') {
 			//self.calcWidthResults(self);
 			$(self.elem.container).addClass(self.css_class.container_open);
@@ -1258,7 +1280,7 @@
 			pageSize: self.option.pageSize,
 			andOr: self.option.andOr,
 			orderBy: self.option.orderBy,
-			db_table: self.option.dbTable
+			searchTable: self.option.dbTable
 		};
 		_orgParams[searchKey] = q_word[0];
 		if (_paramsFunc && $.isFunction(_paramsFunc)) {
@@ -1345,7 +1367,7 @@
 			esc_q[i] = q_word[i].replace(/\W/g, '\\$&').toString();
 			arr_reg[i] = new RegExp(esc_q[i], 'gi');
 			i++;
-		} while ( i < q_word . length );
+		} while ( i < q_word.length );
 
 		// SELECT * FROM data WHERE field LIKE q_word;
 		for (i = 0; i < self.option.data.length; i++) {
@@ -1380,9 +1402,11 @@
 		var matched2 = [];
 		var matched3 = [];
 		for (i = 0; i < matched.length; i++) {
-			if (matched[i][self.option.orderBy[0][0]].match(reg1)) {
+		    var orderField = self.option.orderBy[0][0];
+            var orderValue = String(matched[i][orderField]);
+			if (orderValue.match(reg1)) {
 				matched1.push(matched[i]);
-			} else if (matched[i][self.option.orderBy[0][0]].match(reg2)) {
+			} else if (orderValue.match(reg2)) {
 				matched2.push(matched[i]);
 			} else {
 				matched3.push(matched[i]);
@@ -1455,26 +1479,30 @@
 
 	/**
 	 * @private
-	 * @desc 升充排序
+	 * @desc 升序排序
 	 * @param {Object} self - 插件内部对象
 	 * @param {Array} arr - 结果集数组
 	 */
 	SelectPage.prototype.sortAsc = function(self, arr) {
 		arr.sort(function(a, b) {
-			return a[self.option.orderBy[0][0]].localeCompare(b[self.option.orderBy[0][0]]);
+		    var valA = a[self.option.orderBy[0][0]];
+		    var valB = b[self.option.orderBy[0][0]];
+            return $.type(valA) === 'number' ? valA - valB : String(valA).localeCompare(String(valB));
 		});
 		return arr;
 	};
 
 	/**
 	 * @private
-	 * @desc 降充排序
+	 * @desc 降序排序
 	 * @param {Object} self - 插件内部对象
 	 * @param {Array} arr - 结果集数组
 	 */
 	SelectPage.prototype.sortDesc = function(self, arr) {
 		arr.sort(function(a, b) {
-			return b[self.option.orderBy[0][0]].localeCompare(a[self.option.orderBy[0][0]]);
+            var valA = a[self.option.orderBy[0][0]];
+            var valB = b[self.option.orderBy[0][0]];
+            return $.type(valA) === 'number' ? valB - valA : String(valB).localeCompare(String(valA));
 		});
 		return arr;
 	};
@@ -1485,8 +1513,6 @@
 	 * @param {Object} self - 插件内部对象
 	 */
 	SelectPage.prototype.notFoundSearch = function(self) {
-		$(self.elem.navi_info).text(self.message.not_found);
-		$(self.elem.navi_p).hide();
 		$(self.elem.results).empty();
 		self.calcWidthResults(self);
 		$(self.elem.container).addClass(self.css_class.container_open);
@@ -1517,13 +1543,15 @@
 		if (q_word && q_word.length > 0 && q_word[0]) is_query = true;
 		//显示结果列表
 		self.displayResults(self, json, is_query);
+		/*
 		if (self.prop.is_paging === false) self.setCssFocusedInput(self);
 		else {
 			//修复单选模式下如果有选择项，则高亮选中项，而不是高亮第一项
 			if(!self.option.multiple){
 				var liSelected = $('li.sp_selected', $(self.elem.results));
-				if ($(liSelected).size() == 0) {
+				if ($(liSelected).size() === 0) {
 					var idx = self.prop.is_paging;
+					alert(idx);
 					var limit = $(self.elem.results).children('li').length - 1;
 					if (idx > limit) idx = limit;
 					var obj = $(self.elem.results).children('li').eq(idx);
@@ -1534,6 +1562,7 @@
 			self.prop.is_paging = false; //重置参数，为下次做准备
 			self.setCssFocusedResults(self);
 		}
+		*/
 	};
 
 	/**
@@ -1607,7 +1636,7 @@
 		var next = $('li.csNextPage', $(pagebar));
 		var last = $('li.csLastPage', $(pagebar));
 		//处理首页，上一页按钮样式
-		if (page_num == 1 || page_num == 0) {
+		if (page_num === 1 || page_num === 0) {
 			if (!$(first).hasClass(dClass)) $(first).addClass(dClass);
 			if (!$(previous).hasClass(dClass)) $(previous).addClass(dClass);
 		} else {
@@ -1642,7 +1671,7 @@
 	 */
 	SelectPage.prototype.displayResults = function(self, json, is_query) {
 		$(self.elem.results).empty();
-		if(self.option.multiple && $.type(self.option.maxSelectLimit) == 'number' && self.option.maxSelectLimit > 0){
+		if(self.option.multiple && $.type(self.option.maxSelectLimit) === 'number' && self.option.maxSelectLimit > 0){
 			var selectedSize = $('li.selected_tag',self.elem.element_box).size();
 			if(selectedSize > 0 && selectedSize >= self.option.maxSelectLimit){
 				self.showMessage(self,'最多只能选择 '+self.option.maxSelectLimit+' 个项目');
@@ -1653,7 +1682,7 @@
 		var arr_candidate = json.candidate;
 		var arr_primary_key = json.keyField;
 		var keystr = $(self.elem.hidden).val();
-		var keyArr = keystr ? keyArr = keystr.split(',') : new Array();
+		var keyArr = keystr ? keystr.split(',') : new Array();
 		for (var i = 0; i < arr_candidate.length; i++) {
 			var itemText = '';
 			if(self.option.formatItem && $.isFunction(self.option.formatItem)){
@@ -1670,7 +1699,8 @@
 				title: itemText
 			});
 
-			if ($.inArray(arr_primary_key[i].toString(),keyArr) != -1) {
+			//选中项目设置高亮样式
+			if ($.inArray(arr_primary_key[i].toString(),keyArr) !== -1) {
 				$(list).addClass(self.css_class.selected);
 			}
 			//缓存原始行对象
@@ -1696,7 +1726,7 @@
 	 */
 	SelectPage.prototype.calcWidthResults = function(self) {
 		$(self.elem.result_area).show(1,function(){
-			if ($(self.elem.container).css('position') == 'static') {
+			if ($(self.elem.container).css('position') === 'static') {
 				// position: static
 				var offset = $(self.elem.combo_input).offset();
 				$(self.elem.result_area).css({
@@ -1828,7 +1858,7 @@
 	 * @param {number} page 目标页数
 	 */
 	SelectPage.prototype.goPage = function(self,page){
-		if(typeof(page) == 'undefined') page = 1;
+		if(typeof(page) === 'undefined') page = 1;
 		if (self.prop.page_all < self.prop.max_all) {
 			self.prop.page_all = page;
 			self.prop.is_paging = true;
@@ -1848,8 +1878,7 @@
 			if(self.option.selectToCloseList){
 				self.hideResults(self);
 				$(self.elem.combo_input).blur();
-			}
-			else{
+			}else{
 				self.suggest(self);
 				$(self.elem.combo_input).focus();
 			}
@@ -1890,6 +1919,7 @@
 				self.option.eSelect($(current).data('dataObj'));
 			
 			self.prop.prev_value = $(self.elem.combo_input).val();
+			self.prop.selected_text = $(self.elem.combo_input).val();
 		}		
 		self.afterAction(self);
 	};
@@ -1944,7 +1974,6 @@
 
 	/**
 	 * @desc 在所有状态下清除选中的项目，该function为API接口使用
-	 * @param self {object} 插件内部对象
 	 */
 	SelectPage.prototype.clearAllSelect = function(){
 		var self = this;
@@ -2035,7 +2064,7 @@
 			var result = new Array();
 			$.each(tags,function(i,li){
 				var v = $(li).attr('itemvalue');
-				if($.type(v)!='undefined') result.push(v);
+				if($.type(v)!=='undefined') result.push(v);
 			});
 			if(result.length > 0){
 				$(self.elem.hidden).val(result.join(','));
@@ -2060,7 +2089,7 @@
 			self.elem.combo_input.css('width', width);
 			self.elem.combo_input.removeAttr('placeholder');
 		};
-		if($('li.selected_tag',$(self.elem.element_box)).size() == 0){
+		if($('li.selected_tag',$(self.elem.element_box)).size() === 0){
 			if(self.elem.combo_input.attr('placeholder_bak')){
 				if(!inputLi.hasClass('full_width')) inputLi.addClass('full_width');
 				self.elem.combo_input.attr('placeholder',self.elem.combo_input.attr('placeholder_bak'));
@@ -2124,7 +2153,7 @@
 		return this.each(function(){
 			var $this = $(this),
 				data = $this.data(SelectPage.dataKey),
-				params = $.extend({}, defaults, $this.data(), data && data.option ,typeof option == 'object' && option);
+				params = $.extend({}, defaults, $this.data(), data && data.option ,typeof option === 'object' && option);
 			if(!data) $this.data(SelectPage.dataKey,(data =  new SelectPage(this,params)));
 		});
 	}
@@ -2165,7 +2194,7 @@
 	/**
 	 * 修改插件数据源
 	 * 仅在json数据源模式有效
-	 * @param {array} 
+	 * @param {array} data
 	 * @example
 	 * [{name:'aa',sex:1},{name:'bb',sex:0},{...}]
 	 */
