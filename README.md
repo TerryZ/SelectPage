@@ -12,6 +12,7 @@ A jQuery plugin include autocomplete,pagination,tags,keybord navigation function
 <ul>
 	<li>jQuery plugin</li>
 	<li>A item select plugin for bootstrap2、3</li>
+	<li>Compatible with no UI framework of the program, but it is recommended to use at least normalize.css</li>
 	<li>quick search item by input autocomplete</li>
 	<li>use keybord to quick pagination</li>
 	<li>multiple select by tag form</li>
