@@ -2,17 +2,18 @@
  * @summary     SelectPage
  * @desc        基于jQuery及使用Bootstrap环境开发的，下拉列表带输入快速查找及结果分页展示的多功能选择器
  * @file        selectpage.js
- * @version     2.0
+ * @version     2.3
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
- * 
+ *
  * 插件的部分功能使用、借鉴了
  * jQuery Plugin: jquery.ajax-combobox
  * 作者：Yuusaku Miyazaki <toumin.m7@gmail.com>(宮崎 雄策)
  * 
- * 基本要求：
- * 插件基于Bootstrap2、3版本进行开发
+ * 插件依赖：
+ * jQuery1.x
+ * font-awesome(图标库)
  * 
  * 基本功能：
  * 可实时搜索的下拉列表
@@ -101,6 +102,11 @@
  * 修复输入查询关键字后失去焦点，再次获得焦点时，插件没有根据已存在的关键进行过滤
  * 增加inputDelay配置项目，设置ajax数据源模式下，延迟输入查询的时间，避免在单位时间内连续输入发起的连续ajax查询，单位：秒，默认值：0.5
  * 修正对数字类型的列进行排序时，仍然以字符串的方式进行排序
+ * 2017.08.23
+ * 修复在查询关键字状态下，分页数据没有被更新，导致分页按钮功能不正常问题
+ * 清理整理内部对象
+ * 修复多选模式下，若设置了最大选中项目个数，点击“全选本页”按钮时，仅选中指定的最大数量
+ * 增加selectpage.base.css兼容无UI框架的方案，但建议要至少使用normalize.css
  */
 ;(function($){
 	"use strict";
@@ -287,7 +293,7 @@
 	/**
 	 * 插件版本号
 	 */
-	SelectPage.version = '2.2';
+	SelectPage.version = '2.3';
 	/**
 	 * 插件缓存内部对象的KEY
 	 */
@@ -583,15 +589,10 @@
 	 */
 	SelectPage.prototype.setProp = function() {
 		this.prop = {
-			is_suggest: false,
 			//当前页
-			page_all: 1,
-			page_suggest: 1,
+			current_page: 1,
 			//总页数
-			max_all: 1,
-			max_suggest: 1,
-			//正在分页状态
-			is_paging: false,
+			max_page: 1,
 			//是否正在Ajax请求
 			is_loading: false,
 			xhr: false,
@@ -817,13 +818,10 @@
 	SelectPage.prototype.eDropdownButton = function() {
 		var self = this;
 		$(self.elem.button).mouseup(function(ev) {
+            ev.stopPropagation();
 			if ($(self.elem.result_area).is(':hidden') && !$(self.elem.combo_input).prop('disabled')) {
-				//self.prop.is_suggest = false;
-				//self.checkValue(self);
-				//self.suggest(self);
 				$(self.elem.combo_input).focus();
 			} else self.hideResults(self);
-			ev.stopPropagation();
 		}).mouseover(function() {
 			$(self.elem.button).addClass(self.css_class.btn_on).removeClass(self.css_class.btn_out);
 		}).mouseout(function() {
@@ -839,7 +837,6 @@
 		var self = this;
 		var showList = function(){
 			self.prop.page_move = false;
-			self.prop.is_suggest = false;
 			self.suggest(self);
 			self.setCssFocusedInput(self);
 		};
@@ -917,7 +914,7 @@
 					
 					//若控件已有选中的的项目，而文本输入框中清空了关键字，则清空控件已选中的项目
 					if(!$(d.elem.combo_input).val() && $(d.elem.hidden).val() && !d.option.multiple){
-						d.prop.page_all = 1;//重置当前页为1
+						d.prop.current_page = 1;//重置当前页为1
 						cleanContent(d);
 						d.hideResults(d);
 						return true;
@@ -990,25 +987,25 @@
 	SelectPage.prototype.ehNaviPaging = function() {
 		var self = this;
 		$('li.csFirstPage', $(self.elem.navi)).off('click').on('click',function(ev) {
-			$(self.elem.combo_input).focus();
+			//$(self.elem.combo_input).focus();
 			ev.preventDefault();
 			self.firstPage(self);
 		});
 
 		$('li.csPreviousPage', $(self.elem.navi)).off('click').on('click',function(ev) {
-			$(self.elem.combo_input).focus();
+			//$(self.elem.combo_input).focus();
 			ev.preventDefault();
 			self.prevPage(self);
 		});
 
 		$('li.csNextPage', $(self.elem.navi)).off('click').on('click',function(ev) {
-			$(self.elem.combo_input).focus();
+			//$(self.elem.combo_input).focus();
 			ev.preventDefault();
 			self.nextPage(self);
 		});
 
 		$('li.csLastPage', $(self.elem.navi)).off('click').on('click',function(ev) {
-			$(self.elem.combo_input).focus();
+			//$(self.elem.combo_input).focus();
 			ev.preventDefault();
 			self.lastPage(self);
 		});
@@ -1105,10 +1102,7 @@
 
 			if (self.option.selectOnly) self.setButtonAttrDefault();
 
-			//重置页数
-			self.prop.page_suggest = 1;
-			self.prop.is_suggest = true;
-			self.suggest(self);				
+			self.suggest(self);
 		}
 	};
 
@@ -1149,10 +1143,7 @@
 				if ($(self.elem.results).children('li').length) {
 					self.prop.key_select = true;
 					self.nextLine(self);
-				} else {
-					self.prop.is_suggest = false;
-					self.suggest(self);
-				}
+				} else self.suggest(self);
 				break;
 
 			case 9:
@@ -1208,36 +1199,16 @@
 	SelectPage.prototype.suggest = function(self) {
 		//搜索关键字
 		var q_word;
-		
-		//q_word = (self.prop.is_suggest) ? $.trim($(self.elem.combo_input).val()) : '';
-		//q_word = $.trim($(self.elem.combo_input).val());
-		//q_word = (self.prop.first_show) ? '' : $.trim($(self.elem.combo_input).val());
         var val = $.trim($(self.elem.combo_input).val());
         if(self.option.multiple) q_word = val;
         else{
             if(val && val === self.prop.selected_text) q_word = '';
             else q_word = val;
         }
-		/*
-		//取消在输入状态时，判断到输入框里内容为空时，隐藏下拉列表的操作
-		if (q_word.length < 1 && self.prop.is_suggest) {
-			self.hideResults(self);
-			return;
-		}
-		*/
 		q_word = q_word.split(/[\s　]+/);
 		self.abortAjax(self);
 		self.setLoading(self);
-		if (self.prop.is_paging) {
-			var obj = self.getCurrentLine(self);
-			self.prop.is_paging = (obj) ? $(self.elem.results).children('li').index(obj) : -1;
-		} else if (!self.prop.is_suggest) {
-			self.prop.is_paging = 0;
-		}
-		//var which_page_num = (self.prop.is_suggest) ? self.prop.page_suggest: self.prop.page_all;
-		//var which_page_num = (q_word == '' && !self.prop.page_move) ? 1 : self.prop.page_all;
-		//var which_page_num = (self.prop.first_show) ? 1 : self.prop.page_all;
-		var which_page_num = self.prop.page_all;
+		var which_page_num = self.prop.current_page;
 		
 		// 数据查询
 		if (typeof self.option.data == 'object') self.searchForJson(self, q_word, which_page_num);
@@ -1441,14 +1412,14 @@
 					});
 					which_page_num = Math.ceil(index / self.option.pageSize);
 					if(which_page_num < 1) which_page_num = 1;
-					self.prop.page_all = which_page_num;
+					self.prop.current_page = which_page_num;
 				}
 			}
 		}else{
 			//过滤后的数据个数不足一页显示的个数时，强制设置页码
 			if(sorted.length <= ((which_page_num - 1) * self.option.pageSize)){
 				which_page_num = 1;
-				self.prop.page_all = 1;
+				self.prop.current_page = 1;
 			}
 		}
 		
@@ -1544,26 +1515,6 @@
 		if (q_word && q_word.length > 0 && q_word[0]) is_query = true;
 		//显示结果列表
 		self.displayResults(self, json, is_query);
-		/*
-		if (self.prop.is_paging === false) self.setCssFocusedInput(self);
-		else {
-			//修复单选模式下如果有选择项，则高亮选中项，而不是高亮第一项
-			if(!self.option.multiple){
-				var liSelected = $('li.sp_selected', $(self.elem.results));
-				if ($(liSelected).size() === 0) {
-					var idx = self.prop.is_paging;
-					alert(idx);
-					var limit = $(self.elem.results).children('li').length - 1;
-					if (idx > limit) idx = limit;
-					var obj = $(self.elem.results).children('li').eq(idx);
-					$(obj).addClass(self.css_class.select);
-				} else $(liSelected).addClass(self.css_class.select);
-			}
-
-			self.prop.is_paging = false; //重置参数，为下次做准备
-			self.setCssFocusedResults(self);
-		}
-		*/
 	};
 
 	/**
@@ -1624,6 +1575,8 @@
 			if(last_page < page_num) page_num = last_page;
 			else if(page_num==0) page_num = 1;
 		}
+		self.prop.current_page = page_num;//更新当前页参数
+        self.prop.max_page = last_page;//更新总页数参数
 		buildPageNav(self, pagebar, page_num, last_page);
 		//刷新分页信息
 		var pageInfoBox = $('li.pageInfoBox', $(pagebar));
@@ -1653,14 +1606,7 @@
 			if ($(last).hasClass(dClass)) $(last).removeClass(dClass);
 		}
 
-		if (last_page > 1) {
-			if (self.prop.is_suggest) self.prop.max_suggest = last_page;
-			else self.prop.max_all = last_page;
-
-			self.ehNaviPaging(); // 导航按钮的事件设置
-		} else {
-			//$(self.elem.navi).hide();
-		}
+		if (last_page > 1) self.ehNaviPaging(); //导航按钮的事件设置
 	};
 
 	/**
@@ -1803,9 +1749,8 @@
 	 * @param {Object} self - 插件内部对象
 	 */
 	SelectPage.prototype.firstPage = function(self) {
-		if (self.prop.page_all > 1) {
-			self.prop.page_all = 1;
-			self.prop.is_paging = true;
+		if (self.prop.current_page > 1) {
+			self.prop.current_page = 1;
 			self.prop.page_move = true;
 			self.suggest(self);
 		}
@@ -1817,9 +1762,8 @@
 	 * @param {Object} self - 插件内部对象
 	 */
 	SelectPage.prototype.prevPage = function(self) {
-		if (self.prop.page_all > 1) {
-			self.prop.page_all--;
-			self.prop.is_paging = true;
+		if (self.prop.current_page > 1) {
+			self.prop.current_page--;
 			self.prop.page_move = true;
 			self.suggest(self);
 		}
@@ -1831,9 +1775,8 @@
 	 * @param {Object} self - 插件内部对象
 	 */
 	SelectPage.prototype.nextPage = function(self) {
-		if (self.prop.page_all < self.prop.max_all) {
-			self.prop.page_all++;
-			self.prop.is_paging = true;
+		if (self.prop.current_page < self.prop.max_page) {
+			self.prop.current_page++;
 			self.prop.page_move = true;
 			self.suggest(self);
 		}
@@ -1845,9 +1788,9 @@
 	 * @param {Object} self - 插件内部对象
 	 */
 	SelectPage.prototype.lastPage = function(self) {
-		if (self.prop.page_all < self.prop.max_all) {
-			self.prop.page_all = self.prop.max_all;
-			self.prop.is_paging = true;
+	    console.log(self);
+		if (self.prop.current_page < self.prop.max_page) {
+			self.prop.current_page = self.prop.max_page;
 			self.prop.page_move = true;
 			self.suggest(self);
 		}
@@ -1860,9 +1803,8 @@
 	 */
 	SelectPage.prototype.goPage = function(self,page){
 		if(typeof(page) === 'undefined') page = 1;
-		if (self.prop.page_all < self.prop.max_all) {
-			self.prop.page_all = page;
-			self.prop.is_paging = true;
+		if (self.prop.current_page < self.prop.max_page) {
+			self.prop.current_page = page;
 			self.prop.page_move = true;
 			self.suggest(self);
 		}
@@ -1938,6 +1880,12 @@
 				self.tagValuesSet(self);
 			}
 			jsonarr.push($(row).data('dataObj'));
+			//若有最大选择数量限制，则添加最大个数后，不再添加
+			if($.type(self.option.maxSelectLimit) === 'number' &&
+                self.option.maxSelectLimit > 0 &&
+                self.option.maxSelectLimit === jsonarr.length){
+			    return false;
+            }
 		});
 		if(self.option.eSelect && $.isFunction(self.option.eSelect))
 			self.option.eSelect(jsonarr);
@@ -2227,12 +2175,12 @@
 
 	var old = $.fn.selectPage;
 
-	$.fn.selectPage             = Plugin;
+	$.fn.selectPage              = Plugin;
 	$.fn.selectPage.Constructor = SelectPage;
-	$.fn.selectPageClear        = ClearSelected;
-	$.fn.selectPageRefresh      = SelectedRefresh;
-	$.fn.selectPageData         = ModifyDataSource;
-	$.fn.selectPageText         = GetInputText;
+	$.fn.selectPageClear         = ClearSelected;
+	$.fn.selectPageRefresh       = SelectedRefresh;
+	$.fn.selectPageData          = ModifyDataSource;
+	$.fn.selectPageText          = GetInputText;
 	
 	// 处理新旧版本冲突
 	// =================
