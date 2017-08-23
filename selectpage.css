@@ -228,7 +228,7 @@ ul.sp_element_box > li{
 }
 ul.sp_element_box li.full_width {
 	width: 100%;
-};
+}
 ul.sp_element_box li.full_width input{
 	width: 100% !important;
 }

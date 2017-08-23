@@ -373,6 +373,17 @@ div.sp_button span.caret {
 	margin-top: -1px;
     vertical-align: middle;
 }
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    /*vertical-align: middle;*/
+    border-top: 4px dashed;
+    /*border-top: 4px solid\9;*/
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
 div.sp_result_area.shadowDown{
 	box-shadow: 0px 5px 30px rgba(0,0,0,0.5);
 	-moz-box-shadow: 0px 5px 30px rgba(0,0,0,0.5);
