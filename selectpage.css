@@ -271,10 +271,10 @@ ul.sp_element_box li.input_box input {
 	min-height: 21px !important;
 }
 ul.sp_element_box li.selected_tag span.tag_close {
-	cursor: pointer;
-	margin-left: 5px;
-	font-size: 14px;
-	font-weight: bold;
+    cursor: pointer;
+    margin-left: 5px;
+    font-size: 15px;
+    font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
 }
 
 

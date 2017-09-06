@@ -625,7 +625,7 @@
 		};
 		this.template = {
 			tag : {
-				content : '<li class="selected_tag" itemvalue="#item_value#">#item_text#<span class="tag_close">x</span></li>',
+				content : '<li class="selected_tag" itemvalue="#item_value#">#item_text#<span class="tag_close">×</span></li>',
 				textKey : '#item_text#',
 				valueKey : '#item_value#'
 			}
