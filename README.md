@@ -59,11 +59,16 @@ MIT
 - **lang** `string`  
   default : 'cn'  
   plugin language ('ja', 'en', 'es', 'pt-br')  
-  
-| 一个普通标题 | 一个普通标题 | 一个普通标题 |
-| ------ | ------ | ------ |
-| 短文本 | 中等文本 | 稍微长一点的文本 |
-| 稍微长一点的文本 | 短文本 | 中等文本 |
+
+| code | language |
+| ------ | ------ |
+| cn | chinese |
+| en | english |
+| de | german |
+| es | spanish |
+| ja | japanse |
+| pt-br | Brazilian Portuguese |
+| de | german |
 
 - **multiple** `boolean`  
   default : false  
