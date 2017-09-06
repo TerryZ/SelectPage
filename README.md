@@ -138,8 +138,8 @@ MIT
 - **formatItem** `function`  
   default : undefined  
   **param**  
-  data `object` 行数据object格式  
-  return : string  
+  *data* `object` 行数据object格式  
+  *return* : string  
   列表项目显示内容格式化  
   **example**  
   ```js
@@ -176,14 +176,14 @@ MIT
 - **eSelect** `function`  
   default : undefined  
   **param**  
-  data `object | array` selected row or rows data(json)
+  *data* `object | array` selected row or rows data(json)
 
 - **eAjaxSuccess** `function`  
   default : undefined  
   in server side mode,this is the callback function when request success,the role of the callback is used to custom processing of the return  data  
   **param**  
-  data `object` server side return data(json)  
-  return `object` convert to SelectPage required data format  
+  *data* `object` server side return data(json)  
+  *return* `object` convert to SelectPage required data format  
   **return data format**  
   ```js
   {
@@ -196,7 +196,7 @@ MIT
   default : undefined    
   this callback function is used to close tag, when `multiple : true`  
   **param**  
-  removeCount `number` removed tag count
+  *removeCount* `number` removed tag count
 
 ## API
 - **selectPageClear**
