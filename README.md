@@ -54,7 +54,7 @@ MIT
   data source (String：ajax search URL | Object：JSON format array)  
   **example**  
   *string* : serverside request url address  
-  *object* : JSON format array，format like : [{a:1,b:2,c:3},{...}]
+  *object* : JSON format array，format like : `[{a:1,b:2,c:3},{...}]`
 
 - **lang** `string`  
   default : 'cn'  
