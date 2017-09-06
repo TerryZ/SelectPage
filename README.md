@@ -199,9 +199,26 @@ MIT
   *removeCount* `number` removed tag count
 
 ## API
-- **selectPageClear**
-- **selectPageRefresh**
-- **selectPageData**
+- **selectPageClear**  
+  clear all select items
+
+  ```js
+  $('#selectpage').selectPageClear();
+  ```
+- **selectPageRefresh**  
+  refresh plugin selected items info
+  ```js
+  $('#selectpage').val(20);//modify selected by id used javascript
+  $('#selectpage').selectPageRefresh();//refresh selection item info
+  ```
+- **selectPageData**  
+  change plugin data source,only work on json data source mode  
+  **param**  
+  *data* `array` new json data,the data format is same to plugin data source
+  ```js
+  var newdata = [{a:1,b:11,c:111},{a:2,b:22,c:222},{...}];
+  $('#selectpage').selectPageData(newdata);
+  ```
 - **selectPageText**
 
 ## Thank you for read and sorry
