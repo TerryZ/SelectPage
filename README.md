@@ -130,15 +130,15 @@ That's why SelectPage exists.
 
 - **listSize** `number`  
   default : 10  
-  列表显示的项目个数，其它的项目以滚动条滚动方式展现,it only work on `pagination : false`
+  the list shows the number of items, and the other items are displayed in a scroll bar,it only work on `pagination : false`
 
 - **multipleControlbar** `boolean`  
   default : true  
-  是否启用多选模式的控制按钮区域,仅multiple: true模式下可用
+  whether to enable the multi-select mode control button area,only work on `multiple: true`
 
 - **maxSelectLimit** `number`  
   default : 0  
-  多选模式下最大选择个数，0 is unlimited
+  maximum number of selections in multi-select mode，0 is unlimited
 
 - **selectToCloseList** `boolean`  
   default : true  
@@ -146,23 +146,23 @@ That's why SelectPage exists.
 
 - **initRecord** `string`  
   default : undefined  
-  插件初始值指定，该值会与option.keyField字段进行匹配，若匹配到，则自动设置选中并高亮
+  the initial value of the plugin, The value will match the option.keyField field, and if it matches, it will be automatically selected and highlighted
 
 - **dbTable** `string`  
   default : 'tbl'  
-  使用ajax方式获取数据时，使用该参数设置对应的数据表名
+  use this parameter to set the corresponding data table name in server side(ajax) mode
 
 - **keyField** `string`  
   default : 'id'  
-  值字段，通常该字段的内容会自动保存在隐藏域中
+  value field, usually the contents of the field will be automatically saved in the hidden domain
 
 - **showField** `string`  
   default : 'name'  
-  结果集中用于显示的属性名
+  the result is used to display the name of the attribute
 
 - **searchField** `string`  
   default : undefined  
-  查询字段，仅为使用URL(ajax)方式查询服务端时，设置后端查询的字段，不设置则默认使用showField设置的字段
+  query field, set server side query field when data source is server side mode, if not set default use of option.showField
 
 - **andOr** `string`  
   default : 'AND'  
@@ -176,7 +176,7 @@ That's why SelectPage exists.
 
 - **pageSize** `number`  
   default : 10  
-  每页显示的记录数
+  the number of records per page
 
 - **params** `function`  
   default : undefined  
@@ -188,9 +188,9 @@ That's why SelectPage exists.
 - **formatItem** `function`  
   default : undefined  
   **param**  
-  *data* `object` 行数据object格式  
+  *data* `object` row data object format  
   *return* : string  
-  列表项目显示内容格式化  
+  list item display content formatting  
   **example**  
   ```js
   formatItem : function(data){
@@ -205,11 +205,11 @@ That's why SelectPage exists.
 
 - **autoSelectFirst** `boolean`  
   default : true  
-  是否自动选择列表中的第一项内容(输入关键字查询模式，直接使用鼠标下拉并不触发)
+  whether to automatically select the first item in the list (enter the keyword query mode, use the mouse directly does not trigger)
 
 - **autoFillResult** `boolean`  
   default : true  
-  是否自动填充内容,若有列表项目被高亮显示，在焦点离开控件后，自动设置该项为选中内容
+  whether to automatically fill the content, if the list item is highlighted, in the focus away from the control, automatically set the item for the selected content
 
 - **noResultClean** `boolean`  
   default : true  
