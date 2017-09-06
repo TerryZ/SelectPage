@@ -43,7 +43,7 @@ SelectPage is a jquery library Multifunction drop list paging selector, as a pow
 
 - **data** `string | object`  
   defaut : undefined
-  数据源(String：Ajax查询的URL|Object：JSON格式的数据源)
+  数据源(String：Ajax查询的URL|Object：JSON格式的数据源)  
   **example**  
   *string* : 服务端请求的URL地址  
   *object* : JSON格式数组，format like : [{a:1,b:2,c:3},{...}]
@@ -163,7 +163,7 @@ SelectPage is a jquery library Multifunction drop list paging selector, as a pow
   data `object` ajax服务端返回的json数据  
   return `object` convert to SelectPage required data format  
   **return data format**  
-  ```
+  ```json
   {
 	  list : [{name:'aa',sex:1},{name:'bb',sex:1}...],
 	  totalRow : 100
@@ -178,7 +178,7 @@ SelectPage is a jquery library Multifunction drop list paging selector, as a pow
 
 ## Docs、Demo、Guide
 
-Explorer on [TerryZ.github.io](TerryZ.github.io)
+Explorer on [TerryZ.github.io](https://TerryZ.github.io)
 
 ## Thank you
 terrible english by [TerryZ](https://github.com/TerryZ)
