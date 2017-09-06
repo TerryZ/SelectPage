@@ -26,9 +26,9 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 ### Key Features
 
 <ul>
-	<li>jQuery plugin</li>
-	<li>A item select plugin for bootstrap2、3</li>
-	<li>Compatible with no UI framework of the program, but it is recommended to use at least normalize.css</li>
+	<li>a jQuery plugin</li>
+	<li>a item select plugin for bootstrap2、3</li>
+	<li>compatible with no UI framework of the program, but it is recommended to use at least normalize.css</li>
 	<li>quick search item by input autocomplete</li>
 	<li>use keybord to quick pagination</li>
 	<li>multiple select by tag form</li>
@@ -42,10 +42,14 @@ MIT
 
 ## Why
 
+Sometimes we need to have a plugin, it can enter the keyword for quick search(autocomplete), can pull down to choose(dropdown list), can display large amounts of data use pagination display, can support multiple language, can use the keyboard shotcut for quick operation, can fix to any UI framework, can be customized , and all this really appears in the real requirement of the web project
+
+That's why SelectPage exists.
+
 ## How
 
 ### Install  
-  download SelectPage plugin zip file on master branch, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage
+  download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage
 ### Usage
   As you can see in the [Demo Page](https://terryz.github.io/demo.html), you will need to include:
   - [jQuery library](jquery.com) (1.6.0+) unsupport jquery2.x & 3.x
@@ -118,7 +122,7 @@ MIT
 
 - **multiple** `boolean`  
   default : false  
-  是否为多选模式（标签模式）
+  whether it is multi-select mode（use tags mode）
 
 - **pagination** `boolean`  
   default : true  
