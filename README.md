@@ -32,6 +32,10 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 	<li>brower supper IE8+,chrome,firefox</li>
 </ul>
 
+### License
+
+**MIT**
+
 ## Why
 
 ## How
