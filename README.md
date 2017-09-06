@@ -60,9 +60,9 @@ MIT
   <!-- jQuery library 1.6+ -->
   <script type="text/javascript" src="jquery.min.js" >< /script>
 
-  <!-- include for Bootstrap 2.x -->
+  <!-- include for Bootstrap2.x -->
   <link rel="stylesheet" href="selectpage.css" type="text/css">
-  <!-- include for Bootstrap 3.x -->
+  <!-- include for Bootstrap3.x -->
   <link rel="stylesheet" href="selectpage.bootstrap3.css" type="text/css">
   <!-- include for no css framework -->
   <link rel="stylesheet" href="selectpage.base.css" type="text/css">
