@@ -58,7 +58,7 @@ MIT
 
 - **lang** `string`  
   default : 'cn'  
-  plugin language ('ja', 'en', 'es', 'pt-br')  
+  plugin language  
 
 | code | language |
 | ------ | ------ |
