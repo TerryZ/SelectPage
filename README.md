@@ -17,7 +17,7 @@
 
 ## What
 
-SelectPage is a jquery library Multifunction drop list paging selector, as a powerful one form element, it will have a lot of shortcoming, welcome to submit your suggestions to the project,let's make SelectPage better ~~
+SelectPage is a jquery library Multifunction drop list paging selector, as a powerful one form element, it will have a lot of shortcoming, welcome to submit your suggestions to the project,let's make SelectPage better
 
 ### Key Features
 
