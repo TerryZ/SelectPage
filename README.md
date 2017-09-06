@@ -127,8 +127,12 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
   data `object` 行数据object格式  
   return : string  
   列表项目显示内容格式化  
-  **example**
-  `formatItem : function(data){return data.a + '(' + data.b + ')';}`
+  **example**  
+  ```js
+  formatItem : function(data){
+	  return data.a + '(' + data.b + ')';
+  }
+  ```
 
 
 - **focusDropList** `boolean`  
