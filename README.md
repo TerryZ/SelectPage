@@ -59,11 +59,10 @@ MIT
 - **lang** `string`  
   default : 'cn'  
   plugin language ('ja', 'en', 'es', 'pt-br')  
-  dog | bird | cat
-  ----|------|----
-  foo | foo  | foo
-  bar | bar  | bar
-  baz | baz  | baz
+| 一个普通标题 | 一个普通标题 | 一个普通标题 |
+| ------| ------ | ------ |
+| 短文本 | 中等文本 | 稍微长一点的文本 |
+| 稍微长一点的文本 | 短文本 | 中等文本 |
 
 - **multiple** `boolean`  
   default : false  
