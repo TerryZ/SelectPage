@@ -50,7 +50,7 @@ MIT
 ## Options
 
 - **data** `string | object`  
-  default : undefined
+  default : undefined  
   data source (String：ajax search URL | Object：JSON format array)  
   **example**  
   *string* : serverside request url address  
