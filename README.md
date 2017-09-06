@@ -6,7 +6,12 @@
 
 ## Plugin Preview
 
+*Multiple Select Tags Mode*
+
 ![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
+
+*Normal Select Mode(single select)*
+
 ![SelectPage](https://terryz.github.io/image/SelectPage.png)
 
 
