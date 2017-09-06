@@ -44,9 +44,14 @@ MIT
 
 ## How
 
-### Install
+### Install  
+  download SelectPage plugin zip file on master branch, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage
 ### Usage
-
+  As you can see in the [Demo Page](https://terryz.github.io/demo.html), you will need to include:
+  - [jQuery library](jquery.com) (1.6.0+) unsupport jquery2.x & 3.x
+  - The JavaScript file `selectpage.js` (or its minified version selectpage.min.js)
+  - The css file `selectpage.bootstrap3.css` for bootstrap3.x,`selectpage.css` for bootstrap2.x,`selectpage.base.css` for no css framework
+  
 ## Options
 
 - **data** `string | object`  
