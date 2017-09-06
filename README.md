@@ -17,7 +17,7 @@
 
 ## What
 
-SelectPage is a jquery library Multifunction drop list paging selector, as a powerful one form element, it will have a lot of shortcoming, welcome to submit your suggestions to the project,let's make SelectPage better
+SelectPage is a jquery library multifunction drop list paging selector, as a powerful one form element, it will have a lot of shortcoming, welcome to submit your suggestions to the project,let's make SelectPage better
 
 ### Key Features
 
@@ -43,14 +43,14 @@ SelectPage is a jquery library Multifunction drop list paging selector, as a pow
 
 - **data** `string | object`  
   defaut : undefined
-  数据源(String：Ajax查询的URL|Object：JSON格式的数据源)  
+  data source (String：ajax search URL | Object：JSON format array)  
   **example**  
-  *string* : 服务端请求的URL地址  
-  *object* : JSON格式数组，format like : [{a:1,b:2,c:3},{...}]
+  *string* : serverside request url address  
+  *object* : JSON format array，format like : [{a:1,b:2,c:3},{...}]
 
 - **lang** `string`  
   default : 'cn'  
-  插件显示语言 ('ja', 'en', 'es', 'pt-br'等)
+  插件显示语言 ('ja', 'en', 'es', 'pt-br')
 
 - **multiple** `boolean`  
   default : false  
@@ -62,7 +62,7 @@ SelectPage is a jquery library Multifunction drop list paging selector, as a pow
 
 - **listSize** `number`  
   default : 10  
-  关闭分页的状态下，列表显示的项目个数，其它的项目以滚动条滚动方式展现
+  列表显示的项目个数，其它的项目以滚动条滚动方式展现,it only work on `pagination : false`
 
 - **multipleControlbar** `boolean`  
   default : true  
@@ -74,7 +74,7 @@ SelectPage is a jquery library Multifunction drop list paging selector, as a pow
 
 - **selectToCloseList** `boolean`  
   default : true  
-  选中项目后关闭列表,only work on `multiple:true`
+  is close list after item select,it only work on `multiple:true`
 
 - **initRecord** `string`  
   default : undefined  
