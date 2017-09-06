@@ -14,6 +14,10 @@
 
 ![SelectPage](https://terryz.github.io/image/SelectPage.png)
 
+## Docs、Demo、Guide
+
+Explorer on [TerryZ.github.io](https://TerryZ.github.io)
+
 
 ## What
 
@@ -184,9 +188,11 @@ MIT
   **param**  
   removeCount `number` removed tag count
 
-## Docs、Demo、Guide
+## API
+- **selectPageClear**
+- **selectPageRefresh**
+- **selectPageData**
+- **selectPageText**
 
-Explorer on [TerryZ.github.io](https://TerryZ.github.io)
-
-## Thank you
+## Thank you for read and sorry
 terrible english by [TerryZ](https://github.com/TerryZ)
