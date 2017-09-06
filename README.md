@@ -58,7 +58,12 @@ MIT
 
 - **lang** `string`  
   default : 'cn'  
-  插件显示语言 ('ja', 'en', 'es', 'pt-br')
+  plugin language ('ja', 'en', 'es', 'pt-br')  
+  dog | bird | cat
+  ----|------|----
+  foo | foo  | foo
+  bar | bar  | bar
+  baz | baz  | baz
 
 - **multiple** `boolean`  
   default : false  
