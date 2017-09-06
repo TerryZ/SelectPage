@@ -219,7 +219,11 @@ MIT
   var newdata = [{a:1,b:11,c:111},{a:2,b:22,c:222},{...}];
   $('#selectpage').selectPageData(newdata);
   ```
-- **selectPageText**
+- **selectPageText**  
+  get plugin selected items text
+  ```js
+  alert($('#selectpage').selectPageText());
+  ```
 
 ## Thank you for read and sorry
 terrible english by [TerryZ](https://github.com/TerryZ)
