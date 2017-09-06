@@ -46,7 +46,7 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 ## Options
 
 - **data** `string | object`  
-  defaut : undefined
+  default : undefined
   data source (String：ajax search URL | Object：JSON format array)  
   **example**  
   *string* : serverside request url address  
@@ -102,13 +102,13 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 
 - **andOr** `string`  
   default : 'AND'  
-  查询方式 ('AND' or 'OR')
+  multiple keywords search type ('AND' or 'OR')
 
 - **orderBy** `array`  
   default : undefined  
-  数据排序方式,若不设置则默认对showField指定的字段进行排序  
+  result data sort type, default use showField specified field  
   **example**  
-  `orderBy : ['id desc']//对ID字段进行降序排序`
+  `orderBy : ['id desc']//use id field sort desc`
 
 - **pageSize** `number`  
   default : 10  
@@ -117,7 +117,7 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 - **params** `function`  
   default : undefined  
   return : object  
-  使用URL进行AJAX查询时，可传递查询参数  
+  send request params for server side data source(ajax)  
   **example**  
   `params : function(){return {'name':'aa','sex':1};}`
 
@@ -133,7 +133,7 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 
 - **focusDropList** `boolean`  
   default : true  
-  是否在输入框获得焦点时，展开下拉窗口
+  when input box get focus,drop the list
 
 - **autoSelectFirst** `boolean`  
   default : true  
@@ -145,15 +145,15 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 
 - **noResultClean** `boolean`  
   default : true  
-  是否清空输入关键字,在输入框中输入内容进行查询，但没有匹配的内容返回，在焦点离开控件后，自动清空输入框输入的内容
+  enter the keyword to query and no item match,when focus leave plugin,whether to clear enter keywords
 
 - **selectOnly** `boolean`  
   default : false  
-  只选择模式
+  select only mode,the input box can not enter any word
 
 - **inputDelay** `number`  
   default : 0.5(second)  
-  输入关键字查询延迟（仅ajax数据源模式下可用）
+  enter the keyword query delay, work on server side(ajax) mode
 
 - **eSelect** `function`  
   default : undefined  
@@ -162,9 +162,9 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 
 - **eAjaxSuccess** `function`  
   default : undefined  
-  ajax请求模式，请求成功后的数据处理回调,回调的功能用于自定义处理服务端返回的数据  
+  in server side mode,this is the callback function when request success,the role of the callback is used to custom processing of the return  data  
   **param**  
-  data `object` ajax服务端返回的json数据  
+  data `object` server side return data(json)  
   return `object` convert to SelectPage required data format  
   **return data format**  
   ```js
@@ -175,10 +175,10 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
   ```
 
 - **eTagRemove** `function`  
-  default : undefined  
-  多选模式下，关闭标签是的回调函数
+  default : undefined    
+  this callback function is used to close tag, when `multiple : true`  
   **param**  
-  removeCount `number` 被移除的个数
+  removeCount `number` removed tag count
 
 ## Docs、Demo、Guide
 
