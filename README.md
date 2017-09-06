@@ -4,7 +4,7 @@
 
 [简体中文文档](README-CN.md)
 
-## plugin preview
+## Plugin Preview
 
 ![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
 ![SelectPage](https://terryz.github.io/image/SelectPage.png)
@@ -24,6 +24,6 @@
 	
 </ul>
 
-## docs,example,guide
+## Docs、Demo、Guide
 
-Explorer on <a href="https://terryz.github.io/" target="_blank">TerryZ.github.io</a>
+Explorer on [TerryZ.github.io](TerryZ.github.io)
