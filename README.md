@@ -49,9 +49,50 @@ MIT
 ### Usage
   As you can see in the [Demo Page](https://terryz.github.io/demo.html), you will need to include:
   - [jQuery library](jquery.com) (1.6.0+) unsupport jquery2.x & 3.x
+  - [Font Awesome](http://fontawesome.io/) (4.x) The iconic font and CSS toolkit
   - The JavaScript file `selectpage.js` (or its minified version selectpage.min.js)
-  - The css file `selectpage.bootstrap3.css` for bootstrap3.x,`selectpage.css` for bootstrap2.x,`selectpage.base.css` for no css framework
+  - The css file `selectpage.bootstrap3.css` for bootstrap3.x , `selectpage.css` for bootstrap2.x , `selectpage.base.css` for no css framework
   
+  **Including files**  
+  ```html
+  <!-- SelectPage depend on font-awesome icon -->
+  <link rel="stylesheet" href="font-awesome.min.css" type="text/css">
+  <!-- jQuery library 1.6+ -->
+  <script type="text/javascript" src="jquery.min.js" >< /script>
+
+  <!-- include for Bootstrap 2.x -->
+  <link rel="stylesheet" href="selectpage.css" type="text/css">
+  <!-- include for Bootstrap 3.x -->
+  <link rel="stylesheet" href="selectpage.bootstrap3.css" type="text/css">
+  <!-- include for no css framework -->
+  <link rel="stylesheet" href="selectpage.base.css" type="text/css">
+  <!-- Above the css file under your css framework choose one of them to include -->
+  
+  <script type="text/javascript" src="selectpage.js" >< /script>
+  ```
+
+  **HTML input element set**  
+  the SelectPage plugin just need put a input tag in the page  
+  ```html
+  <input type="text" id="selectpage" >
+  ```
+
+  **Javascript init plugin**
+  ```js
+  //defined a array, the data returned at the server side is also used that format：Array[{Object},{...}]
+  var data = [
+      {id:1 ,name:'Chicago Bulls',desc:'芝加哥公牛'},
+      {id:2 ,name:'Cleveland Cavaliers',desc:'克里夫兰骑士'},
+      {id:3 ,name:'Detroit Pistons',desc:'底特律活塞'},
+      {id:4 ,name:'Indiana Pacers',desc:'印第安纳步行者'}
+  ];
+  //init SelectPage
+  $('#selectpage').selectPage({
+      showField : 'desc',
+      keyField : 'id',
+      data : data
+  });
+  ```
 ## Options
 
 - **data** `string | object`  
