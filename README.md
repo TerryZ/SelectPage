@@ -1,6 +1,6 @@
 # SelectPage
 
-> A jQuery plugin include autocomplete,pagination,tags,keybord navigation functions
+> A jQuery plugin including autocomplete,pagination,tags,keyboard navigation functions
 
 [简体中文文档](README-CN.md)
 
