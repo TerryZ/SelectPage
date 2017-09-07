@@ -32,6 +32,8 @@
 
 ## 什么是SelectPage
 
+SelectPage是一个基于jQuery开发的多功能下拉分页选择器，作为一个功能强大的表单控件，它一定会有很多缺点和不足，欢迎您 [提交](https://github.com/TerryZ/SelectPage/issues) 对项目的意见和建议，让我们一起让SelectPage变得更好
+
 ### 功能特点
 
 
