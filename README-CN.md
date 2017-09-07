@@ -25,7 +25,7 @@
 [https://terryz.github.io](https://terryz.github.io)
 
 
-## 如果您觉得项目还不错，还请给项目（ [Github](https://github.com/TerryZ/SelectPage) / [码云](https://gitee.com/TerryZ/selectpage) ）加个Star，同时欢迎Follow [Github个人主页](https://github.com/TerryZ)
+### 如果您觉得项目还不错，还请给项目（ [Github](https://github.com/TerryZ/SelectPage) / [码云](https://gitee.com/TerryZ/selectpage) ）加个Star，同时欢迎Follow [Github个人主页](https://github.com/TerryZ)
 
 
 ## 什么是SelectPage
