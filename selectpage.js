@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        基于jQuery及使用Bootstrap环境开发的，下拉列表带输入快速查找及结果分页展示的多功能选择器
  * @file        selectpage.js
- * @version     2.4
+ * @version     2.5
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -116,6 +116,9 @@
  * 增加单选模式下，选中项目后，自动显示清空按钮
  * 修复多选模式下，移除本页和清除所有两个按钮点击后，回调出错的问题
  * 增加搜索无结果时显示提示信息
+ * 2017.09.07（v2.5）
+ * 修复多选模式下，初始化项目的显示文本没有使用formatItem回调进行格式化
+ * 修复ajax数据源模式下，输入查询关键字时，翻页始终为第一页的问题
  */
 ;(function($){
 	"use strict";
@@ -311,7 +314,7 @@
 	/**
 	 * 插件版本号
 	 */
-	SelectPage.version = '2.4';
+	SelectPage.version = '2.5';
 	/**
 	 * 插件缓存内部对象的KEY
 	 */
@@ -809,7 +812,13 @@
 		if(self.option.multiple){//多选模式初始化
 			$(self.elem.combo_input).val('');
 			$.each(data,function(i,row){
-				var item = {text:row[self.option.showField],value:row[self.option.keyField]};
+			    var text = row[self.option.showField];
+			    if(self.option.formatItem && $.isFunction(self.option.formatItem)){
+			        try{
+			            text = self.option.formatItem(row);
+                    }catch(e){}
+                }
+				var item = {text:text,value:row[self.option.keyField]};
 				if(!self.isAlreadySelected(self,item)) self.addNewTag(self,item);
 			});
 			self.tagValuesSet(self);
@@ -1256,7 +1265,7 @@
 		//原始参数
 		var searchKey = self.option.searchField;
 		//若有查询关键字，则重置当前页码为1
-		if(q_word.length > 0 && q_word[0]) which_page_num = 1;
+		if(q_word.length > 0 && q_word[0] && q_word[0] !== self.prop.prev_value) which_page_num = 1;
 		var _orgParams = {
 			q_word: q_word,
 			pageNumber: which_page_num,
