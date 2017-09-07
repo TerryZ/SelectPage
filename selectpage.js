@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        基于jQuery及使用Bootstrap环境开发的，下拉列表带输入快速查找及结果分页展示的多功能选择器
  * @file        selectpage.js
- * @version     2.5
+ * @version     2.6
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -119,6 +119,10 @@
  * 2017.09.07（v2.5）
  * 修复多选模式下，初始化项目的显示文本没有使用formatItem回调进行格式化
  * 修复ajax数据源模式下，输入查询关键字时，翻页始终为第一页的问题
+ * 2017.09.07（v2.6）
+ * 修复单选模式下初始化项目的显示文本没有使用formatItem回调格式化的问题
+ * 修复单选模式存在初始化项目时，再打开下拉列表时，仅显示匹配的项目一条数据的问题
+ * 修复多选模式下，动态修改选中值selectPageRefresh功能无效
  */
 ;(function($){
 	"use strict";
@@ -314,7 +318,7 @@
 	/**
 	 * 插件版本号
 	 */
-	SelectPage.version = '2.5';
+	SelectPage.version = '2.6';
 	/**
 	 * 插件缓存内部对象的KEY
 	 */
@@ -365,7 +369,6 @@
         if(!option.pagination) option.pageSize = 200;
 		if($.type(option.listSize) !== 'number' || option.listSize < 0) option.listSize = 10;
 
-		if($.type(option.init) != 'undefined') option.initRecord = String(option.init);
 		this.option = option;
 	};
 
@@ -694,15 +697,6 @@
 			id: input_id
 		});
 
-		//若在输入框中放入了初始化值，则将它放到隐藏域中进行选中项目初始化
-        //若输入框设置了初始值，同时又设置了data-init属性，那么以data-init属性为优先选择
-		if(!option.initRecord){
-		    if($(elem.combo_input).val()){
-                option.initRecord = $(elem.combo_input).val();
-                $(elem.combo_input).val('');
-            }
-        }else $(elem.combo_input).val('');
-
 		// 2. DOM内容放置
 		$(elem.container).append(elem.button).append(elem.result_area).append(elem.hidden);
 		$(elem.button).append(elem.dropdown);
@@ -758,6 +752,13 @@
 	 */
 	SelectPage.prototype.setInitRecord = function(refresh) {
 		var self = this;
+        if($.type($(self.elem.combo_input).data('init')) != 'undefined')
+            self.option.initRecord = String($(self.elem.combo_input).data('init'));
+        //若在输入框中放入了初始化值，则将它放到隐藏域中进行选中项目初始化
+        //若输入框设置了初始值，同时又设置了data-init属性，那么以data-init属性为优先选择
+        if(!self.option.initRecord)
+            if($(self.elem.combo_input).val()) self.option.initRecord = $(self.elem.combo_input).val();
+        $(self.elem.combo_input).val('');
 		if((refresh && $(self.elem.hidden).val()) || $.type(self.option.initRecord) === 'string'){
 			// 初始的KEY值放入隐藏域
 			if(!refresh) $(self.elem.hidden).val(self.option.initRecord);
@@ -784,7 +785,7 @@
 					data: {
 						searchTable: self.option.dbTable,
 						searchKey: self.option.keyField,
-						searchValue: self.option.initRecord
+						searchValue: refresh ? $(self.elem.hidden).val() : self.option.initRecord
 					},
 					success: function(json) {
 					    var d = null;
@@ -808,27 +809,31 @@
 	SelectPage.prototype.afterInit = function(self, data) {
 		if(!data) return;
 		if(!$.isArray(data)) data = [data];
+
+		var getText = function(row){
+            var text = row[self.option.showField];
+            if(self.option.formatItem && $.isFunction(self.option.formatItem)){
+                try{
+                    text = self.option.formatItem(row);
+                }catch(e){}
+            }
+            return text;
+        };
 		
 		if(self.option.multiple){//多选模式初始化
-			$(self.elem.combo_input).val('');
+			self.clearAll(self);
 			$.each(data,function(i,row){
-			    var text = row[self.option.showField];
-			    if(self.option.formatItem && $.isFunction(self.option.formatItem)){
-			        try{
-			            text = self.option.formatItem(row);
-                    }catch(e){}
-                }
-				var item = {text:text,value:row[self.option.keyField]};
+				var item = {text:getText(row),value:row[self.option.keyField]};
 				if(!self.isAlreadySelected(self,item)) self.addNewTag(self,item);
 			});
 			self.tagValuesSet(self);
 			self.inputResize(self);
 		}else{//单选模式初始化
 			var row = data[0];
-			$(self.elem.combo_input).val(row[self.option.showField]);
+			$(self.elem.combo_input).val(getText(row));
 			$(self.elem.hidden).val(row[self.option.keyField]);
-			self.prop.prev_value = row[self.option.showField];
-            self.prop.selected_text = row[self.option.showField];
+			self.prop.prev_value = getText(row);
+            self.prop.selected_text = getText(row);
 			if (self.option.selectOnly) {
 				$(self.elem.combo_input).attr('title', self.message.select_ok).removeClass(self.css_class.select_ng).addClass(self.css_class.select_ok);
 			}
@@ -2123,7 +2128,8 @@
 	 * @returns 
 	 */
 	function getPlugin(obj){
-		return $(obj).siblings('input.sp_input');
+	    var container = $(obj).closest('div.sp_container');
+		return $('input.sp_input',container);
 	}
 
 	/**
