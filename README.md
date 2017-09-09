@@ -52,7 +52,7 @@ That's why SelectPage exists.
   download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage
 ### Usage
   As you can see in the [Demo Page](https://terryz.github.io/demo.html), you will need to include:
-  - [jQuery library](jquery.com) (1.6.0+) unsupport jquery2.x & 3.x
+  - [jQuery library](http://jquery.com) (1.6.0+) unsupport jquery2.x & 3.x
   - [Font Awesome](http://fontawesome.io/) (4.x) The iconic font and CSS toolkit
   - The JavaScript file `selectpage.js` (or its minified version selectpage.min.js)
   - The css file `selectpage.bootstrap3.css` for bootstrap3.x , `selectpage.css` for bootstrap2.x , `selectpage.base.css` for no css framework
