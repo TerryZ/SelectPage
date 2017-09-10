@@ -25,16 +25,14 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 
 ### Key Features
 
-<ul>
-	<li>a jQuery plugin</li>
-	<li>a item select plugin for bootstrap2、3</li>
-	<li>compatible with no UI framework of the program, but it is recommended to use at least normalize.css</li>
-	<li>quick search item by input autocomplete</li>
-	<li>use keybord to quick pagination</li>
-	<li>multiple select by tag form</li>
-	<li>The result list automatically determines the edge of the screen to avoid content beyond the visible range</li>
-	<li>brower supper IE8+,chrome,firefox</li>
-</ul>
+- a jQuery plugin
+- a item select plugin for bootstrap2、3
+- compatible with no UI framework of the program, but it is recommended to use at least normalize.css
+- quick search item by input autocomplete
+- use keybord to quick pagination
+- multiple select by tag form
+- The result list automatically determines the edge of the screen to avoid content beyond the visible range
+- brower supper IE8+,chrome,firefox
 
 ### License
 
@@ -275,5 +273,3 @@ That's why SelectPage exists.
   alert($('#selectpage').selectPageText());
   ```
 
-## Thank you for read and sorry
-terrible english by [TerryZ](https://github.com/TerryZ)
