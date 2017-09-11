@@ -18,6 +18,10 @@
 
 Explorer on [TerryZ.github.io](https://TerryZ.github.io)
 
+### If you think the project is also good, please add a Star to the project to support the work of the author, Thank you
+
+<br><br>
+
 
 ## What
 
@@ -38,11 +42,15 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 
 MIT
 
+<br><br>
+
 ## Why
 
 Sometimes we need to have a plugin, it can enter the keyword for quick search(autocomplete), can pull down to choose(dropdown list), can display large amounts of data use pagination display, can support multiple language, can use the keyboard shotcut for quick operation, can fix to any UI framework, can be customized , and all this really appears in the real requirement of the web project
 
 That's why SelectPage exists.
+
+<br><br>
 
 ## How
 
