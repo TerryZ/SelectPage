@@ -16,7 +16,7 @@
 
 ## Docs、Demo、Guide
 
-Explorer on [TerryZ.github.io](https://TerryZ.github.io)
+Explorer on [https://TerryZ.github.io/selectpage/index.html](https://TerryZ.github.io/selectpage/index.html)
 
 ### If you think the project is also good, please add a Star to the project to support the work of the author, Thank you
 
