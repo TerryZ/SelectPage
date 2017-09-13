@@ -124,7 +124,6 @@ That's why SelectPage exists.
 | es | spanish |
 | ja | japanse |
 | pt-br | Brazilian Portuguese |
-| de | german |
 
 - **multiple** `boolean`  
   default : false  
