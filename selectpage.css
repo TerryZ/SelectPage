@@ -192,6 +192,13 @@ div.sp_container_combo{
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-sizing: border-box;
 }
+/* 多选模式的禁用状态样式 */
+div.sp_container_combo.sp_disabled,
+div.sp_container_combo.sp_disabled ul.sp_element_box,
+div.sp_container_combo.sp_disabled .sp_input{
+    background-color: #eeeeee;
+    cursor: not-allowed !important;
+}
 div.sp_container_combo.sp_container_open{
 	border-radius: 0px;
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);

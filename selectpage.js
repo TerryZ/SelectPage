@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        基于jQuery及使用Bootstrap环境开发的，下拉列表带输入快速查找及结果分页展示的多功能选择器
  * @file        selectpage.js
- * @version     2.6
+ * @version     2.7
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -123,6 +123,9 @@
  * 修复单选模式下初始化项目的显示文本没有使用formatItem回调格式化的问题
  * 修复单选模式存在初始化项目时，再打开下拉列表时，仅显示匹配的项目一条数据的问题
  * 修复多选模式下，动态修改选中值selectPageRefresh功能无效
+ * 2017.09.12（v2.7）
+ * 增加eClear回调，单选模式下，清除按钮的功能回调
+ * 单选，多选模式下，输入框禁用或只读状态，不显示清除按钮
  */
 ;(function($){
 	"use strict";
@@ -291,7 +294,12 @@
 		 * @type function
 		 * @param removeCount 被移除的个数
 		 */
-		eTagRemove : undefined
+		eTagRemove : undefined,
+        /**
+         * 单选模式下，选中项目后的清除按钮功能回调
+         * @type function
+         */
+        eClear : undefined
 	};
 
 
@@ -318,7 +326,7 @@
 	/**
 	 * 插件版本号
 	 */
-	SelectPage.version = '2.6';
+	SelectPage.version = '2.7';
 	/**
 	 * 插件缓存内部对象的KEY
 	 */
@@ -596,6 +604,8 @@
             selected: 'sp_selected',
 			input_off: 'sp_input_off',
 			message_box: 'sp_message_box',
+            // 多选模式的禁用状态样式
+            disabled: 'sp_disabled',
 			
 			button: 'sp_button',
 			btn_on: 'sp_btn_on',
@@ -651,7 +661,13 @@
 		elem.combo_input = $(combo_input).attr({'autocomplete':'off'}).addClass(this.css_class.input).wrap('<div>');
 		//只选择模式设置输入框为只读状态
 		if(option.selectOnly) $(elem.combo_input).prop('readonly',true);
-		elem.container = $(elem.combo_input).parent().addClass(this.css_class.container);
+        elem.container = $(elem.combo_input).parent().addClass(this.css_class.container);
+		if($(elem.combo_input).prop('disabled')) {
+		    if(option.multiple) $(elem.container).addClass(this.css_class.disabled);
+            else $(elem.combo_input).addClass(this.css_class.input_off);
+        }
+
+
 
 		$(elem.container).width(orgWidth);
 
@@ -878,6 +894,7 @@
             e.stopPropagation();
             self.clearAll(self);
             $(self.elem.clear_btn).remove();
+            if(self.option.eClear && $.isFunction(self.option.eClear)) self.option.eClear();
         });
 		if(self.option.multiple){
 			if(self.option.multipleControlbar){
@@ -1899,7 +1916,7 @@
      * 单选模式下选中项目后，显示清空按钮
      */
 	SelectPage.prototype.putClearButton = function(){
-        if(!this.option.multiple) $(this.elem.container).append(this.elem.clear_btn);
+        if(!this.option.multiple && !$(this.elem.combo_input).prop('disabled')) $(this.elem.container).append(this.elem.clear_btn);
     };
 	/**
 	 * @desc 全选当前页的行
@@ -1994,10 +2011,12 @@
 	 */
 	SelectPage.prototype.addNewTag = function(self,item){
 		if(!self.option.multiple || !item) return;
-		var tmp = self.template.tag.content;
+		var tmp = self.template.tag.content,tag;
 		tmp = tmp.replace(self.template.tag.textKey,item.text);
 		tmp = tmp.replace(self.template.tag.valueKey,item.value);
-		$(self.elem.combo_input).closest('li').before($(tmp));
+		tag = $(tmp);
+		if($(self.elem.combo_input).prop('disabled')) $('span.tag_close',tag).hide();
+		$(self.elem.combo_input).closest('li').before(tag);
 	};
 	/**
 	 * @desc 多选模式下移除一个标签
