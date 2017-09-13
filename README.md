@@ -16,7 +16,11 @@
 
 ## Docs、Demo、Guide
 
-Explorer on [TerryZ.github.io](https://TerryZ.github.io)
+Explorer on [https://TerryZ.github.io/selectpage/index.html](https://TerryZ.github.io/selectpage/index.html)
+
+### If you think the project is also good, please add a Star to the project to support the work of the author, Thank you
+
+<br><br>
 
 
 ## What
@@ -38,18 +42,22 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 
 MIT
 
+<br><br>
+
 ## Why
 
 Sometimes we need to have a plugin, it can enter the keyword for quick search(autocomplete), can pull down to choose(dropdown list), can display large amounts of data use pagination display, can support multiple language, can use the keyboard shotcut for quick operation, can fix to any UI framework, can be customized , and all this really appears in the real requirement of the web project
 
 That's why SelectPage exists.
 
+<br><br>
+
 ## How
 
 ### Install  
   download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage
 ### Usage
-  As you can see in the [Demo Page](https://terryz.github.io/demo.html), you will need to include:
+  As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html), you will need to include:
   - [jQuery library](http://jquery.com) (1.6.0+) unsupport jquery2.x & 3.x
   - [Font Awesome](http://fontawesome.io/) (4.x) The iconic font and CSS toolkit
   - The JavaScript file `selectpage.js` (or its minified version selectpage.min.js)
