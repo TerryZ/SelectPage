@@ -126,6 +126,13 @@
  * 2017.09.12（v2.7）
  * 增加eClear回调，单选模式下，清除按钮的功能回调
  * 单选，多选模式下，输入框禁用或只读状态，不显示清除按钮
+ * 2017.09.23（v2.8）
+ * 调整部分样式
+ * 修复可视区域高度较小时，列表始终会向上展开的问题
+ * 分离键盘事件处理，对键盘输入精准控制
+ * 优化区域外点击处理
+ * 优化数据展示渲染效率
+ * 优化列表位置定位的准确性
  */
 ;(function($){
 	"use strict";
@@ -882,7 +889,9 @@
 		};
 		$(self.elem.combo_input).keyup(function(e) {
 			self.processKey(self, e);
-		}).focus(function(e) {
+		}).keydown(function(e) {
+            self.processControl(self, e);
+        }).focus(function(e) {
 			//增加输入框获得焦点后，显示数据列表
 			if ($(self.elem.result_area).is(':hidden')) {
 				e.stopPropagation();
@@ -929,10 +938,11 @@
 	};
 
 	/**
-	 * @desc 插件整体的事件处理
+	 * 插件之外区域的事件处理
 	 */
 	SelectPage.prototype.eWhole = function() {
 		var self = this;
+		/*
 		//如果是点击了控件本身则不响应外部鼠标点击事件
 		$(self.elem.container).mousedown(function() {
 			var thisindex = $('div.sp_container').index(this);
@@ -943,8 +953,64 @@
 				$(document.body).data(SelectPage.objStatusKey,true);
 			$(document.body).data(SelectPage.objStatusIndex,thisindex);
 		});
+		*/
 		//控件外部的鼠标点击事件处理
 		$(document).off('mousedown.selectPage').on('mousedown.selectPage',function(e) {
+            var ele = e.target || e.srcElement;
+            var sm = $(ele).closest('div.' + self.css_class.container);
+
+            //清除内容
+            var cleanContent = function(obj){
+                $(obj.elem.combo_input).val('');
+                if(!obj.option.multiple) $(obj.elem.hidden).val('');
+                obj.prop.selected_text = '';
+            };
+
+            //列表是打开的状态
+            $('div.' + self.css_class.container + '.' + self.css_class.container_open).each(function(){
+                if(this == sm[0]) return;
+                var d = $('input.'+self.css_class.input,this).data(SelectPage.dataKey);
+
+
+                //若控件已有选中的的项目，而文本输入框中清空了关键字，则清空控件已选中的项目
+                if(!$(d.elem.combo_input).val() && $(d.elem.hidden).val() && !d.option.multiple){
+                    d.prop.current_page = 1;//重置当前页为1
+                    cleanContent(d);
+                    d.hideResults(d);
+                    return true;
+                }
+                //匹配项且高亮时，下拉分页控件失去焦点后，自动选择该项目
+                if ($('li', $(d.elem.results)).size() > 0) {
+                    if(d.option.autoFillResult) {//打开自动内容填充功能
+                        //若已有选中项目，则直接隐藏列表
+                        if ($('li.sp_selected', $(d.elem.results)).size() > 0) {
+                            d.hideResults(d);
+                        }else if($('li.sp_over', $(d.elem.results)).size() > 0){
+                            //若控件已有选中的值，则忽略高亮的项目
+                            if($(d.elem.hidden).val()) d.hideResults(d);
+                            //若没有已选中的项目，且列表中有高亮项目时，选中当前高亮的行
+                            else d.selectCurrentLine(d, true);
+                        }else if(d.option.autoSelectFirst){
+                            //若控件已有选中的值，则忽略自动选择第一项的功能
+                            if($(d.elem.hidden).val()) d.hideResults(d);
+                            else{
+                                //对于没有选中，没有高亮的情况，若插件设置了自动选中第一项时，则选中第一项
+                                d.nextLine(d);
+                                //self.nextLine(self);
+                                d.selectCurrentLine(d, true);
+                            }
+                        }else d.hideResults(d);
+                    }else d.hideResults(d);
+                } else {
+                    //无匹配项目时，自动清空用户输入的关键词
+                    if (d.option.noResultClean) cleanContent(d);
+                    else{
+                        if(!d.option.multiple) $(d.elem.hidden).val('');
+                    }
+                    d.hideResults(d);
+                }
+            });
+		    /*
 			if ($(document.body).data(SelectPage.objStatusKey)) $(document.body).data(SelectPage.objStatusKey,false);
 			else {
 				//清除内容
@@ -996,6 +1062,7 @@
 					}
 				});
 			}
+			*/
 		});
 	};
 
@@ -1152,12 +1219,33 @@
 		}
 	};
 
+    /**
+     * @desc 文本输入框键盘事件处理（普通字符输入处理）
+     * @param {Object} self - 插件内部对象
+     * @param {Object} e - 事件event对象
+     */
+    SelectPage.prototype.processKey = function(self, e) {
+        if($.inArray(e.keyCode, [37, 38, 39, 40, 27, 9, 13]) === -1){
+            if(e.keyCode != 16) self.setCssFocusedInput(self); // except Shift(16)
+            self.inputResize(self);
+            if($.type(self.option.data) === 'string'){
+                self.prop.last_input_time = e.timeStamp;
+                setTimeout(function(){
+                    if((e.timeStamp - self.prop.last_input_time) === 0)
+                        self.checkValue(self);
+                },self.option.inputDelay * 1000);
+            }else{
+                self.checkValue(self);
+            }
+        }
+    }
+
 	/**
-	 * @desc 文本输入框键盘事件处理
+	 * @desc 文本输入框键盘事件处理（控制键处理）
 	 * @param {Object} self - 插件内部对象
 	 * @param {Object} e - 事件event对象
 	 */
-	SelectPage.prototype.processKey = function(self, e) {
+	SelectPage.prototype.processControl = function(self, e) {
 		if (($.inArray(e.keyCode, [37, 38, 39, 40, 27, 9]) > -1 && $(self.elem.result_area).is(':visible')) || 
 			($.inArray(e.keyCode, [13, 9]) > -1 && self.getCurrentLine(self))) {
 			e.preventDefault();
@@ -1209,18 +1297,6 @@
 				self.hideResults(self);
 				break;
 			}
-		} else {
-			if(e.keyCode != 16) self.setCssFocusedInput(self); // except Shift(16)
-			self.inputResize(self);
-			if($.type(self.option.data) === 'string'){
-                self.prop.last_input_time = e.timeStamp;
-                setTimeout(function(){
-                    if((e.timeStamp - self.prop.last_input_time) === 0)
-                        self.checkValue(self);
-                },self.option.inputDelay * 1000);
-            }else{
-                self.checkValue(self);
-            }
 		}
 	};
 
@@ -1278,7 +1354,7 @@
 	 * @param {number} which_page_num - 目标页
 	 */
 	SelectPage.prototype.searchForDb = function(self, q_word, which_page_num) {
-		if(!self.option.eAjaxSuccess && $.isFunction(self.option.eAjaxSuccess)) self.hideResults(self);
+		if(!self.option.eAjaxSuccess || !$.isFunction(self.option.eAjaxSuccess)) self.hideResults(self);
 		/**
 		 * 增加自定义查询参数
 		 */
@@ -1315,13 +1391,8 @@
 					self.ajaxErrorNotify(self, errorThrown);
 					return;
 				}
-				var data;
-				if(self.option.eAjaxSuccess && $.isFunction(self.option.eAjaxSuccess)){
-					data = self.option.eAjaxSuccess(returnData);
-				}else{
-					data = returnData;
-				}
-				
+				var data = self.option.eAjaxSuccess(returnData);
+
 				//数据结构处理
 				var json = {};
 				json.originalResult = data.list;
@@ -1568,7 +1639,7 @@
 		 */
 		var buildPageNav = function(self, pagebar, page_num, last_page) {
 			if ($('li', $(pagebar)).size() == 0) {
-				$(pagebar).empty();
+				$(pagebar).hide().empty();
 				//处理当当前页码为1时，首页和上一页按钮不允许点击
 				var btnclass = '',isNewFontAwesome = true;
 				//判断是否使用了font-awesome3.2.1
@@ -1602,6 +1673,7 @@
 				$(pagebar).append('<li class="csNextPage' + btnclass + '" title="' + self.message.next_title + '" ><a href="javascript:void(0);"><i class="'+iconNext+'"></i></a></li>');
 				//上一页
 				$(pagebar).append('<li class="csLastPage' + btnclass + '" title="' + self.message.last_title + '" ><a href="javascript:void(0);"> <i class="'+iconLast+'"></i> </a></li>');
+                $(pagebar).show();
 			}
 		};
 
@@ -1653,7 +1725,7 @@
 	 * @param {boolean} is_query - 是否是通过关键字搜索（用于区分是鼠标点击下拉还是输入框输入关键字进行查找）
 	 */
 	SelectPage.prototype.displayResults = function(self, json, is_query) {
-		$(self.elem.results).empty();
+		$(self.elem.results).hide().empty();
 		if(self.option.multiple && $.type(self.option.maxSelectLimit) === 'number' && self.option.maxSelectLimit > 0){
 			var selectedSize = $('li.selected_tag',self.elem.element_box).size();
 			if(selectedSize > 0 && selectedSize >= self.option.maxSelectLimit){
@@ -1695,6 +1767,7 @@
 		    var li = '<li class="sp_message_box"><i class="fa fa-exclamation-triangle"></i> ' + self.message.not_found + '</li>';
             $(self.elem.results).append(li);
         }
+        $(self.elem.results).show();
 
         if(self.option.multiple && self.option.multipleControlbar) $(self.elem.control).show();
 		if(self.option.pagination) $(self.elem.navi).show();
@@ -1713,16 +1786,16 @@
 	 * @param {Object} self - 插件内部对象
 	 */
 	SelectPage.prototype.calcResultsSize = function(self) {
-		$(self.elem.result_area).show(1,function(){
-			if ($(self.elem.container).css('position') === 'static') {
-				// position: static
-				var offset = $(self.elem.combo_input).offset();
-				$(self.elem.result_area).css({
-					top: offset.top + $(self.elem.combo_input).outerHeight() + 'px',
-					left: offset.left + 'px'
-				});
-			} else {
-			    if(!self.option.pagination){
+	    var rePosition = function(){
+            if ($(self.elem.container).css('position') === 'static') {
+                // position: static
+                var offset = $(self.elem.combo_input).offset();
+                $(self.elem.result_area).css({
+                    top: offset.top + $(self.elem.combo_input).outerHeight() + 'px',
+                    left: offset.left + 'px'
+                });
+            } else {
+                if(!self.option.pagination){
                     var itemHeight = $('li:first',self.elem.results).outerHeight(true);
                     var listHeight = itemHeight * self.option.listSize;
                     $(self.elem.results).css({
@@ -1731,44 +1804,59 @@
                     });
                 }
 
-				//在展示下拉列表时，判断默认与输入框左对齐的列表是否会超出屏幕边界，是则右对齐，否则默认左对齐
-				var docWidth = $(document).width();
-				var docHeight = $(document).height();//文档全部高度
-				var viewHeight = $(window).height();//可视区域高度
-				var offset = $(self.elem.container).offset();
-				var screenScrollTop = $(window).scrollTop();
-				var listWidth = $(self.elem.result_area).outerWidth();
-				//当前状态，列表并未被显示，数据未被填充，列表并未展现最终高度，所以只能使用默认一页显示10条数据的固定高度进行计算
-				var listHeight = $(self.elem.result_area).outerHeight();
-				//默认方向的坐标，在多选模式下，因为外框架是DIV，所以需要向左靠一个像素
-				var defaultLeft = self.option.multiple ? -1 : 0;
-				//输入框高度
-				var inputHeight = $(self.elem.container).outerHeight();
-				var left = (offset.left + listWidth) > docWidth ? -(listWidth - $(self.elem.container).outerWidth()) : defaultLeft;
-				//控件在当前可视区域中的高度
-				var screenTop = offset.top;//$(self.elem.container).scrollTop();//offset.top - screenScrollTop;
+                //在展示下拉列表时，判断默认与输入框左对齐的列表是否会超出屏幕边界，是则右对齐，否则默认左对齐
+                var docWidth = $(document).width();
+                var docHeight = $(document).height();//文档全部高度
+                var viewHeight = $(window).height();//可视区域高度
+                var offset = $(self.elem.container).offset();
+                var screenScrollTop = $(window).scrollTop();
+                var listWidth = $(self.elem.result_area).outerWidth();
+                //当前状态，列表并未被显示，数据未被填充，列表并未展现最终高度，所以只能使用默认一页显示10条数据的固定高度进行计算
+                var listHeight = $(self.elem.result_area).outerHeight();
+                //默认方向的坐标，在多选模式下，因为外框架是DIV，所以需要向左靠一个像素
+                var defaultLeft = self.option.multiple ? -1 : 0;
+                //输入框高度
+                var inputHeight = $(self.elem.container).outerHeight();
+                var left = (offset.left + listWidth) > docWidth ? -(listWidth - $(self.elem.container).outerWidth()) : defaultLeft;
+                //控件在全文档范围中的实际TOP（非当前可视区域中的相对TOP）
+                var screenTop = offset.top;//$(self.elem.container).scrollTop();//offset.top - screenScrollTop;
                 var top = 0,dist = 5;//设置偏移量，让列表与输入框有5px的间距
-				//列表展开后的坐标高度
+                //列表展开后的坐标高度
                 var listBottom = screenTop + inputHeight + listHeight + dist;
-				var hasOverflow = docHeight > viewHeight;
+                var hasOverflow = docHeight > viewHeight;
 
-				if((hasOverflow && listBottom > (viewHeight + screenScrollTop)) || (!hasOverflow && listBottom > viewHeight)){
-					//控件当前位置+控件高度+列表高度超过实际body高度
-					//列表则需要向上展示
-					top = -(listHeight+1) - dist;
-					$(self.elem.result_area).removeClass('shadowUp shadowDown').addClass('shadowUp');
-				}else{
-					//列表正常向下展示
-					top = self.option.multiple ? $(self.elem.container).innerHeight() + 1 : $(self.elem.container).outerHeight();
-					$(self.elem.result_area).removeClass('shadowUp shadowDown').addClass('shadowDown');
-					top += dist;
-				}
-				$(self.elem.result_area).css({
-					top : top + 'px',
-					left: left + 'px'
-				});
-			}
-		});
+                if((screenTop - screenScrollTop - dist > listHeight) &&
+                    (hasOverflow && listBottom > (viewHeight + screenScrollTop)) ||
+                    (!hasOverflow && listBottom > viewHeight)){
+                    //控件当前位置+控件高度+列表高度超过实际body高度
+                    //列表则需要向上展示
+                    top = -(listHeight+1) - dist;
+                    $(self.elem.result_area).removeClass('shadowUp shadowDown').addClass('shadowUp');
+                }else{
+                    //列表正常向下展示
+                    top = self.option.multiple ? $(self.elem.container).innerHeight() + 1 : $(self.elem.container).outerHeight();
+                    $(self.elem.result_area).removeClass('shadowUp shadowDown').addClass('shadowDown');
+                    top += dist;
+                }
+                /*
+                $(self.elem.result_area).css({
+                    top : top + 'px',
+                    left: left + 'px'
+                });
+                */
+                return {
+                    top : top + 'px',
+                    left: left + 'px'
+                };
+            }
+        };
+        if($(self.elem.result_area).is(':visible')){
+            $(self.elem.result_area).css(rePosition());
+        }else{
+            $(self.elem.result_area).show(1,function(){
+                $(this).css(rePosition());
+            });
+        }
 	};
 
 	/**
