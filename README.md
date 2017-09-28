@@ -14,6 +14,9 @@
 
 ![SelectPage](https://terryz.github.io/image/SelectPage.png)
 
+*List Mode(pagination bar close, can't be enter)*
+![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
+
 ## Docs、Demo、Guide
 
 Explorer on [https://TerryZ.github.io/selectpage/index.html](https://TerryZ.github.io/selectpage/index.html)
