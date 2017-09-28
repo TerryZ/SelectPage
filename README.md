@@ -14,7 +14,7 @@
 
 ![SelectPage](https://terryz.github.io/image/SelectPage.png)
 
-*List Mode(pagination bar close, can not enter, select only)*
+*List Mode ( pagination bar close, can not enter, select only )*
 
 ![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
 
