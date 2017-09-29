@@ -928,10 +928,11 @@
 			//关闭同时需要将该标签的key从已保存的隐藏域中删除
 			$(self.elem.element_box).on('click.SelectPage','span.tag_close',function(){
 				var li = $(this).closest('li');
+				var id=li.attr('itemvalue');
 				self.removeTag(self,li);
 				showList();
 				if(self.option.eTagRemove && $.isFunction(self.option.eTagRemove))
-					self.option.eTagRemove(1);
+					self.option.eTagRemove(id);
 			});
 			self.inputResize(self);
 		}
