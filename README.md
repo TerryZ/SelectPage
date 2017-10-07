@@ -4,6 +4,16 @@
 
 [简体中文文档](README-CN.md)
 
+## Docs、Demo、Guide
+
+Explorer on 
+
+[English official site](https://TerryZ.github.io/selectpage/index.html)（translation unfinished）
+
+[中文官网](https://terryz.oschina.io/selectpage/index.html)
+
+### If you think the project is also good, please add a Star to the project to support the work of the author, Thank you
+
 ## Plugin Preview
 
 *Multiple Select Tags Mode*
@@ -17,12 +27,6 @@
 *List Mode ( pagination bar close, can not enter, select only )*
 
 ![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
-
-## Docs、Demo、Guide
-
-Explorer on [https://TerryZ.github.io/selectpage/index.html](https://TerryZ.github.io/selectpage/index.html)
-
-### If you think the project is also good, please add a Star to the project to support the work of the author, Thank you
 
 <br><br>
 
