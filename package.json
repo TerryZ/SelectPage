@@ -18,7 +18,12 @@
 	"autocomplete",
 	"keyboard-navigation",
 	"i18n",
-	"jquery-plugin"
+	"jquery-plugin",
+	"ui",
+	"jquery",
+	"form",
+	"input",
+	"ajax"
   ],
   "author": "TerryZ",
   "license": "MIT",
