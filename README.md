@@ -63,7 +63,11 @@ That's why SelectPage exists.
 ## How
 
 ### Install  
-  download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage
+  download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage  
+  or use **NPM**
+  ```
+  npm install selectpage
+  ```
 ### Usage
   As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html), you will need to include:
   - [jQuery library](http://jquery.com) (1.6.0+) unsupport jquery2.x & 3.x
