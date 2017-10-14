@@ -1,0 +1,29 @@
+{
+  "name": "selectpage",
+  "version": "2.8.0",
+  "description": "A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n, keyboard navigation functions",
+  "main": "selectpage.js",
+  "scripts": {
+    "test": "make test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TerryZ/SelectPage.git"
+  },
+  "keywords": [
+    "select",
+    "pagination",
+    "tags",
+	"remote-data",
+	"autocomplete",
+	"keyboard-navigation",
+	"i18n",
+	"jquery-plugin"
+  ],
+  "author": "TerryZ",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TerryZ/SelectPage/issues"
+  },
+  "homepage": "https://github.com/TerryZ/SelectPage#readme"
+}
