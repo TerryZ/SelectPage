@@ -289,10 +289,10 @@ That's why SelectPage exists.
   var newdata = [{a:1,b:11,c:111},{a:2,b:22,c:222},{...}];
   $('#selectpage').selectPageData(newdata);
   ```
-- **selectPageDisabled**
+- **selectPageDisabled**  
   get plugin disabled status and set to `disabled` / `enabled`  
-  **param**
-  *disabled* `boolean` set disabled stauts. `true` to disabled, `false` to enabled
+  **param**  
+  *disabled* `boolean` set disabled stauts. `true` to disabled, `false` to enabled  
   ```js
   if($('#selectpage').selectPageDisabled()){//get plugin disabled stuats
       $('#selectpage').selectPageDisabled(false);//set plugin to enabled 
