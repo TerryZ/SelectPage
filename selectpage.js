@@ -154,16 +154,16 @@
 		 * @type boolean 默认值false
 		 */
 		multiple: false,
-        /**
-         * @desc 是否分页
-         * @type boolean 默认值 true
-         */
-        pagination: true,
-        /**
-         * @desc 关闭分页的状态下，列表显示的项目个数，其它的项目以滚动条滚动方式展现
-         * @type number 默认值 10
-         */
-        listSize : 10,
+		/**
+		 * @desc 是否分页
+		 * @type boolean 默认值 true
+		 */
+		pagination: true,
+		/**
+		 * @desc 关闭分页的状态下，列表显示的项目个数，其它的项目以滚动条滚动方式展现
+		 * @type number 默认值 10
+		 */
+		listSize : 10,
 		/**
 		 * @desc 是否启用多选模式的控制按钮区域
 		 * 仅multiple: true模式下可用
@@ -211,13 +211,13 @@
 		 * @type string 默认为'AND'
 		 */
 		andOr: 'AND',
-        /**
-         * @desc 数据排序方式
-         * @type array 若不设置则默认对showField指定的字段进行排序
-         * @example
-         * orderBy : ['id desc']//对ID字段进行降序排序
-         */
-        orderBy: undefined,
+		/**
+		 * @desc 数据排序方式
+		 * @type array 若不设置则默认对showField指定的字段进行排序
+		 * @example
+		 * orderBy : ['id desc']//对ID字段进行降序排序
+		 */
+		orderBy: undefined,
 		/**
 		 * @desc 每页显示的记录数
 		 * @type number
@@ -265,11 +265,11 @@
 		 * @type boolean
 		 */
 		selectOnly: false,
-        /**
-         * @desc 输入关键字查询延迟（仅ajax数据源模式下可用）
-         * @type number 默认值：0.5秒
-         */
-        inputDelay: 0.5,
+                /**
+                * @desc 输入关键字查询延迟（仅ajax数据源模式下可用）
+                * @type number 默认值：0.5秒
+                */
+                inputDelay: 0.5,
 		/**
 		 * -----------------------------------------事件回调--------------------------------------------
 		 */
@@ -298,11 +298,16 @@
 		 * @param removeCount 被移除的个数
 		 */
 		eTagRemove : undefined,
-        /**
-         * 单选模式下，选中项目后的清除按钮功能回调
-         * @type function
-         */
-        eClear : undefined
+                /**
+		 * 单选模式下，选中项目后的清除按钮功能回调
+		 * @type function
+		 */
+		eClear : undefined
+		/**
+		 * @desc 控件元素容器本身
+		 * @type object
+		 */
+		container: {}
 	};
 
 
@@ -667,16 +672,16 @@
 
 		elem.combo_input = $(combo_input).attr({'autocomplete':'off'}).addClass(this.css_class.input).wrap('<div>');
 		//只选择模式设置输入框为只读状态
-		if(option.selectOnly) $(elem.combo_input).prop('readonly',true);
-        elem.container = $(elem.combo_input).parent().addClass(this.css_class.container);
-		if($(elem.combo_input).prop('disabled')) {
-		    if(option.multiple) $(elem.container).addClass(this.css_class.disabled);
-            else $(elem.combo_input).addClass(this.css_class.input_off);
+		if(option.selectOnly) elem.combo_input.prop('readonly',true);
+        elem.container = elem.combo_input.parent().addClass(this.css_class.container);
+		if(elem.combo_input.prop('disabled')) {
+		    if(option.multiple) elem.container.addClass(this.css_class.disabled);
+            else elem.combo_input.addClass(this.css_class.input_off);
         }
 
 
 
-		$(elem.container).width(orgWidth);
+		elem.container.width(orgWidth);
 
 		elem.button = $('<div>').addClass(this.css_class.button);
 		//bootstrap风格的向下三角箭头
@@ -699,8 +704,8 @@
 		 */
 		var namePrefix = '_text';
 		//将keyField的值放入"input:hidden"
-		var input_id = ($(elem.combo_input).attr('id') !== undefined) ? $(elem.combo_input).attr('id') : $(elem.combo_input).attr('name');
-		var input_name = ($(elem.combo_input).attr('name') !== undefined) ? $(elem.combo_input).attr('name') : 'selectPage';
+		var input_id = (elem.combo_input.attr('id') !== undefined) ? elem.combo_input.attr('id') : elem.combo_input.attr('name');
+		var input_name = (elem.combo_input.attr('name') !== undefined) ? elem.combo_input.attr('name') : 'selectPage';
 		var hidden_name = input_name,
 		hidden_id = input_id;
 
@@ -715,34 +720,34 @@
 			name: hidden_name,
 			id: hidden_id
 		}).val('');
-		$(elem.combo_input).attr({
+		elem.combo_input.attr({
 			name: input_name,
 			id: input_id
 		});
 
 		// 2. DOM内容放置
-		$(elem.container).append(elem.button).append(elem.hidden);
+		elem.container.append(elem.button).append(elem.hidden);
 		$(document.body).append(elem.result_area);
-		$(elem.button).append(elem.dropdown);
-		$(elem.result_area).append(elem.results);
-        if(option.pagination) $(elem.result_area).append(elem.navi);
+		elem.button.append(elem.dropdown);
+		elem.result_area.append(elem.results);
+        if(option.pagination) elem.result_area.append(elem.navi);
 		
 		//多选模式下的特殊处理
 		if(option.multiple){
 			if(option.multipleControlbar){
-				$(elem.control).append('<button type="button" class="btn btn-default sp_select_all" ><i class="iconfont if-select-all"></i> 全选本页</button>');
-				$(elem.control).append('<button type="button" class="btn btn-default sp_unselect_all" ><i class="iconfont if-unselect-all"></i> 取消本页</button>');
-				$(elem.control).append('<button type="button" class="btn btn-default sp_clear_all" ><i class="iconfont if-clear"></i> 清除全部</button>');
-				$(elem.result_area).prepend(elem.control);
+				elem.control.append('<button type="button" class="btn btn-default sp_select_all" ><i class="iconfont if-select-all"></i> 全选本页</button>');
+				elem.control.append('<button type="button" class="btn btn-default sp_unselect_all" ><i class="iconfont if-unselect-all"></i> 取消本页</button>');
+				elem.control.append('<button type="button" class="btn btn-default sp_clear_all" ><i class="iconfont if-clear"></i> 清除全部</button>');
+				elem.result_area.prepend(elem.control);
 			}				
-			$(elem.container).addClass('sp_container_combo');
-			$(elem.combo_input).addClass('sp_combo_input').before($(elem.element_box));
+			elem.container.addClass('sp_container_combo');
+			elem.combo_input.addClass('sp_combo_input').before(elem.element_box);
 			var li = $('<li>').addClass('input_box');
-			$(li).append($(elem.combo_input));
-			$(elem.element_box).append($(li));
-			if($(elem.combo_input).attr('placeholder')) $(elem.combo_input).attr('placeholder_bak',$(elem.combo_input).attr('placeholder'));
+			li.append(elem.combo_input);
+			elem.element_box.append(li);
+			if(elem.combo_input.attr('placeholder')) elem.combo_input.attr('placeholder_bak',elem.combo_input.attr('placeholder'));
 		}
-
+		option.container = elem.container;
 		this.elem = elem;
 	};
 
