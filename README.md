@@ -17,6 +17,8 @@ Explorer on
 
 [![npm version](https://img.shields.io/npm/v/selectpage.svg)](https://www.npmjs.com/package/selectpage)
 
+[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/)
+
 ## Plugin Preview
 
 *Multiple Select Tags Mode*
