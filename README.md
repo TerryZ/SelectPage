@@ -1,6 +1,6 @@
 # SelectPage
 
-> A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n, keyboard navigation functions
+> A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n, keyboard navigation features
 
 [简体中文文档](README-CN.md)
 
