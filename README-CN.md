@@ -1,3 +1,4 @@
+![SelectPageLogo](https://terryz.github.io/image/logo/SelectPage.png)
 # SelectPage
 
 > 支持autocomplete、键盘操作、分页、标签多选等多功能的选择器插件
