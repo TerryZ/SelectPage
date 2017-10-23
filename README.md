@@ -16,6 +16,7 @@ Explorer on
 
 ## Status
 
+[![travis ci](https://travis-ci.org/TerryZ/SelectPage.svg?branch=master)](https://travis-ci.org/TerryZ/SelectPage)
 [![npm version](https://img.shields.io/npm/v/selectpage.svg)](https://www.npmjs.com/package/selectpage)
 [![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/)
 
