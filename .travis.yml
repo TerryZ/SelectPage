@@ -1,0 +1,6 @@
+sudo: false
+language: node_js
+node_js:
+  - stable
+script:
+  - npm install -g grunt-cli

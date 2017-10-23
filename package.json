@@ -3,8 +3,11 @@
   "version": "2.9.0",
   "description": "A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n, keyboard navigation functions",
   "main": "selectpage.js",
+  "dependencies": {
+	"jquery": "^1.10.2"
+  },
   "scripts": {
-    "test": "make test"
+    "test": "grunt eslint"
   },
   "repository": {
     "type": "git",
