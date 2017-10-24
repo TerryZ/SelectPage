@@ -21,15 +21,15 @@ Explorer on
 
 ## Plugin Preview
 
-*Multiple Select Tags Mode*
+*Multiple Select by Tags mode*
 
 ![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
 
-*Normal Select Mode ( single select )*
+*Normal select mode ( single select )*
 
 ![SelectPage](https://terryz.github.io/image/SelectPage.png)
 
-*List Mode ( pagination bar close, can not enter, select only )*
+*List only mode ( pagination bar close, disable typing to quick search, select only )*
 
 ![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
 
@@ -38,18 +38,18 @@ Explorer on
 
 ## What
 
-SelectPage is a jquery library multifunction drop list paging selector, as a powerful one form element, it will have a lot of shortcoming, welcome to submit your suggestions to the project,let's make SelectPage better
+SelectPage is a jquery library multifunction drop list paging selector, as a powerful one form element, it will have a lot of shortcoming, welcome to submit your suggestions to the project, let's make SelectPage better
 
 ### Key Features
 
 - a jQuery plugin
-- a item select plugin for bootstrap2、3
+- a item selection plugin for bootstrap2、3
 - compatible with no UI framework of the program, but it is recommended to use at least normalize.css
 - quick search item by input autocomplete
-- use keybord to quick pagination
+- use keybord to quick navigate
 - multiple select by tag form
 - The result list automatically determines the edge of the screen to avoid content beyond the visible range
-- brower supper IE8+,chrome,firefox
+- brower support IE8+, chrome, firefox
 
 ### License
 
