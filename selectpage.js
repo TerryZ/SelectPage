@@ -566,17 +566,11 @@
 		 * 将原输入框的Name交换到Hidden中，因为具体需要保存传递到后端的是ID，而非Title
 		 */
 		var namePrefix = '_text',
-		//将keyField的值放入"input:hidden"
+		    //将keyField的值放入"input:hidden"
 		    input_id = (elem.combo_input.attr('id') !== undefined) ? elem.combo_input.attr('id') : elem.combo_input.attr('name'),
 		    input_name = (elem.combo_input.attr('name') !== undefined) ? elem.combo_input.attr('name') : 'selectPage',
 		    hidden_name = input_name,
 		    hidden_id = input_id;
-
-		// data[search][user] -> data[search][user_primary_key]
-		if (input_name.match(/\]$/)) input_name = input_name.replace(/\]?$/, namePrefix);
-		else input_name += namePrefix;
-		if (input_id.match(/\]$/)) input_id = input_id.replace(/\]?$/, namePrefix);
-		else input_id += namePrefix;
 
 		//将输入框的Name与Hidden的Name进行交换，使得可以将项目的具体ID被保存到后端进行处理
 		elem.hidden = $('<input type="hidden" class="sp_hidden" />').attr({
@@ -584,8 +578,8 @@
 			id: hidden_id
 		}).val('');
 		elem.combo_input.attr({
-			name: input_name,
-			id: input_id
+			name: input_name + namePrefix,
+			id: input_id + namePrefix
 		});
 
 		// 2. DOM element put
@@ -634,7 +628,7 @@
 			}
 		}
 		*/
-		this.elem.button.attr('title', this.message.get_all_btn);
+		//this.elem.button.attr('title', this.message.get_all_btn);
 		this.elem.button.attr('title', this.message.close_btn);
 	};
 
@@ -671,7 +665,7 @@
 				//在单选模式下，若使用了多选模式的初始化值（“key1,key2,...”多选方式），则选用第一项
 				if(!p.multiple && data.length > 1) data = [data[0]];
 				self.afterInit(self, data);
-			} else {//ajax数据源模式
+			} else {//ajax data source mode to init selected item
 				$.ajax({
 					dataType: 'json',
                     type: 'POST',
@@ -746,7 +740,7 @@
 			if (self.elem.result_area.is(':hidden') && !self.elem.combo_input.prop('disabled')) {
 				self.elem.combo_input.focus();
 			} else self.hideResults(self);
-		}).mouseout(); // default: mouseout
+		}).mouseout();
 	};
 
 	/**
@@ -909,15 +903,15 @@
 	    var self = this, css = this.css_class;
 	    $(window).on('scroll.SelectPage',function(e){
             $('div.' + css.container + '.' + css.container_open).each(function(){
-                var $this = $(this), d = $this.find('input.'+css.input).data(SelectPage.dataKey);
-                var offset = d.elem.result_area.offset();
-                var screenScrollTop = $(window).scrollTop();
-                var docHeight = $(document).height();
-                var viewHeight = $(window).height();
-                var listHeight = d.elem.result_area.outerHeight();
-                var listBottom = offset.top + listHeight;
-                var hasOverflow = docHeight > viewHeight;
-                var down = d.elem.result_area.hasClass('shadowDown');
+                var $this = $(this), d = $this.find('input.'+css.input).data(SelectPage.dataKey),
+                    offset = d.elem.result_area.offset(),
+                    screenScrollTop = $(window).scrollTop(),
+                    docHeight = $(document).height(),
+                    viewHeight = $(window).height(),
+                    listHeight = d.elem.result_area.outerHeight(),
+                    listBottom = offset.top + listHeight,
+                    hasOverflow = docHeight > viewHeight,
+                    down = d.elem.result_area.hasClass('shadowDown');
                 if(hasOverflow){
                     if(down){//open down
                         if(listBottom > (viewHeight + screenScrollTop)) d.calcResultsSize(d);
@@ -990,20 +984,17 @@
 	 * @param {boolean} enforce - 是否定位到输入框的位置
 	 */
 	SelectPage.prototype.scrollWindow = function(self, enforce) {
-		var current_result = self.getCurrentLine(self);
-
-		var target_top = (current_result && !enforce) ? current_result.offset().top: self.elem.container.offset().top;
-		var target_size;
+		var current_result = self.getCurrentLine(self),
+            target_top = (current_result && !enforce) ? current_result.offset().top: self.elem.container.offset().top,
+            target_size;
 
 		self.prop.size_li = self.elem.results.children('li:first').outerHeight();
 		target_size = self.prop.size_li;
 		
-		var client_height = $(window).height();
-		var scroll_top = $(window).scrollTop();
-		var scroll_bottom = scroll_top + client_height - target_size;
-
-		// 滚动处理
-		var gap;
+		var gap, client_height = $(window).height(),
+            scroll_top = $(window).scrollTop(),
+            scroll_bottom = scroll_top + client_height - target_size;
+        // 滚动处理
 		if (current_result.length) {
 			if (target_top < scroll_top || target_size > client_height) {
 				//滚动到顶部
@@ -1061,7 +1052,9 @@
 
 			if(self.option.selectOnly) self.setButtonAttrDefault();
             if(!self.option.multiple && !now_value){
-                self.clearAll(self);
+                self.elem.combo_input.val('');
+                self.elem.hidden.val('');
+                self.elem.clear_btn.remove();
             }
 
 			self.suggest(self);
@@ -1166,8 +1159,7 @@
 	 */
 	SelectPage.prototype.suggest = function(self) {
 		//搜索关键字
-		var q_word;
-        var val = $.trim(self.elem.combo_input.val());
+		var q_word, val = $.trim(self.elem.combo_input.val());
         if(self.option.multiple) q_word = val;
         else{
             if(val && val === self.prop.selected_text) q_word = '';
@@ -1175,7 +1167,7 @@
         }
 		q_word = q_word.split(/[\s　]+/);
 		self.abortAjax(self);
-		self.setLoading(self);
+		//self.setLoading(self);
 		var which_page_num = self.prop.current_page > 0 ? self.prop.current_page : 1;
 		
 		// 数据查询
@@ -1203,9 +1195,7 @@
 	SelectPage.prototype.searchForDb = function(self, q_word, which_page_num) {
 	    var p = self.option;
 		if(!p.eAjaxSuccess || !$.isFunction(p.eAjaxSuccess)) self.hideResults(self);
-		var _paramsFunc = p.params;
-		var _params = {};			
-		var searchKey = p.searchField;
+		var _paramsFunc = p.params, _params = {}, searchKey = p.searchField;
 		//when have query keyword, then reset page number to 1.
 		if(q_word.length && q_word[0] && q_word[0] !== self.prop.prev_value) which_page_num = 1;
 		var _orgParams = {
@@ -1234,9 +1224,7 @@
 					self.ajaxErrorNotify(self, errorThrown);
 					return;
 				}
-				var data = p.eAjaxSuccess(returnData);
-
-				var json = {};
+				var data = p.eAjaxSuccess(returnData), json = {};
 				json.originalResult = data.list;
 				json.cnt_whole = data.totalRow;
 
@@ -1292,10 +1280,9 @@
 
 		// SELECT * FROM data WHERE field LIKE q_word;
 		for (i = 0; i < p.data.length; i++) {
-			var flag = false;
-			var row = p.data[i];
+			var flag = false, row = p.data[i], itemText;
 			for (var j = 0; j < arr_reg.length; j++) {					
-				var itemText = row[p.showField];//默认获取showField字段的文本
+				itemText = row[p.showField];//默认获取showField字段的文本
 				if(p.formatItem && $.isFunction(p.formatItem))
 					itemText = p.formatItem(row);
 				if (itemText.match(arr_reg[j])) {
@@ -1371,8 +1358,7 @@
 		}
 		
 		// LIMIT xx OFFSET xx
-		var start = (which_page_num - 1) * p.pageSize;
-		var end = start + p.pageSize;
+		var start = (which_page_num - 1) * p.pageSize, end = start + p.pageSize;
 		//save original data
 		json.originalResult = [];
 		// after data filter handle
@@ -1499,9 +1485,9 @@
 		self.prop.current_page = page_num;//update current page number
         self.prop.max_page = last_page;//update page count
 		buildPageNav(self, pagebar, page_num, last_page);
-		var pageInfoBox = pagebar.find('li.pageInfoBox');
-		
-		var pageInfo = '第 ' + page_num + ' 页(共' + last_page + '页)';
+		var pageInfoBox = pagebar.find('li.pageInfoBox'),
+            pageInfo = '第 ' + page_num + ' 页(共' + last_page + '页)';
+
 		pageInfoBox.html('<a href="javascript:void(0);"> ' + pageInfo + ' </a>');
 		//update paging status
 		var dClass = 'disabled',
@@ -1749,7 +1735,6 @@
 	 * @param {Object} self
 	 */
 	SelectPage.prototype.lastPage = function(self) {
-	    console.log(self);
 		if (self.prop.current_page < self.prop.max_page) {
 			self.prop.current_page = self.prop.max_page;
 			self.prop.page_move = true;
@@ -1885,7 +1870,7 @@
         self.elem.combo_input.val('');
 		self.elem.hidden.val('');
 		self.afterAction(self);
-        self.elem.clear_btn.remove();
+        if(!p.multiple) self.elem.clear_btn.remove();
         if(p.multiple) {
             if (p.eTagRemove && $.isFunction(p.eTagRemove))
                 p.eTagRemove(size);
