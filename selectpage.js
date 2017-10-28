@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        Simple and powerful selection plugin
  * @file        selectpage.js
- * @version     2.10
+ * @version     2.12
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -208,7 +208,7 @@
 	/**
 	 * Plugin version number
 	 */
-	SelectPage.version = '2.10';
+	SelectPage.version = '2.12';
 	/**
 	 * Plugin object cache key
 	 */
@@ -639,21 +639,20 @@
      * <input data-init="key">
 	 */
 	SelectPage.prototype.setInitRecord = function(refresh) {
-		var self = this, p = self.option;
-        if($.type(self.elem.combo_input.data('init')) != 'undefined')
-            p.initRecord = String(self.elem.combo_input.data('init'));
+		var self = this, p = self.option, el = self.elem, key = '';
+        if($.type(el.combo_input.data('init')) != 'undefined')
+            p.initRecord = String(el.combo_input.data('init'));
         //若在输入框中放入了初始化值，则将它放到隐藏域中进行选中项目初始化
         //若输入框设置了初始值，同时又设置了data-init属性，那么以data-init属性为优先选择
-        if(!p.initRecord)
-            if(self.elem.combo_input.val()) p.initRecord = self.elem.combo_input.val();
-        self.elem.combo_input.val('');
-		if((refresh && self.elem.hidden.val()) || $.type(p.initRecord) === 'string'){
-			// 初始的KEY值放入隐藏域
-			if(!refresh) self.elem.hidden.val(p.initRecord);
-			//将初始值放入控件
-			if (typeof p.data === 'object') {//json数据源模式
+        if(!refresh && !p.initRecord && el.combo_input.val())
+            p.initRecord = el.combo_input.val();
+        el.combo_input.val('');
+        if(!refresh) el.hidden.val(p.initRecord);
+        key = refresh && el.hidden.val() ? el.hidden.val() : p.initRecord;
+		if(key){
+			if (typeof p.data === 'object') {
 				var data = new Array();
-				var keyarr = refresh ? self.elem.hidden.val().split(',') : p.initRecord.split(',');
+				var keyarr = key.split(',');
 				$.each(keyarr,function(index,row){
 					for (var i = 0; i < p.data.length; i++) {
 						if (p.data[i][p.keyField] == row) {
@@ -673,7 +672,7 @@
 					data: {
 						searchTable: p.dbTable,
 						searchKey: p.keyField,
-						searchValue: refresh ? self.elem.hidden.val() : p.initRecord
+						searchValue: key
 					},
 					success: function(json) {
 					    var d = null;

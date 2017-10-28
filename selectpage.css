@@ -78,6 +78,7 @@ div.sp_clear_btn {
     cursor: pointer;
     font-size: 20px;
     color: #666666;
+    font-weight: 600;
     margin: 0px;
     padding: 4px 0px 0px 0px;
     box-sizing: border-box;
