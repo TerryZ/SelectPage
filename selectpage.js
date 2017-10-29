@@ -604,7 +604,6 @@
 			elem.element_box.append(li);
 			if(elem.combo_input.attr('placeholder')) elem.combo_input.attr('placeholder_bak',elem.combo_input.attr('placeholder'));
 		}
-        p.container = elem.container;
 		this.elem = elem;
 	};
 
