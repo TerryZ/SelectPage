@@ -180,7 +180,12 @@
          * 单选模式下，选中项目后的清除按钮功能回调
          * @type function
          */
-        eClear : undefined
+        eClear : undefined,
+        /**
+         * @desc 包装input的控件元素dom容器（获取后可通过this.container获得selectpage的根div dom）
+         * @type object
+         */
+        container: {}
 	};
 
 
@@ -604,7 +609,7 @@
 			elem.element_box.append(li);
 			if(elem.combo_input.attr('placeholder')) elem.combo_input.attr('placeholder_bak',elem.combo_input.attr('placeholder'));
 		}
-
+        p.container = elem.container;
 		this.elem = elem;
 	};
 
