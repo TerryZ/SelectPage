@@ -604,7 +604,6 @@
 			elem.element_box.append(li);
 			if(elem.combo_input.attr('placeholder')) elem.combo_input.attr('placeholder_bak',elem.combo_input.attr('placeholder'));
 		}
-
 		this.elem = elem;
 	};
 
@@ -677,7 +676,7 @@
 					success: function(json) {
 					    var d = null;
 					    if(p.eAjaxSuccess && $.isFunction(p.eAjaxSuccess))
-					        d = p.eAjaxSuccess(json);
+					        d = p.eAjaxSuccess(json, self);
 						self.afterInit(self, d.list);
 					},
 					error: function(jqXHR, textStatus, errorThrown) {
@@ -768,7 +767,7 @@
             e.stopPropagation();
             if(!self.disabled(self)){
                 self.clearAll(self);
-                if(p.eClear && $.isFunction(p.eClear)) p.eClear();
+                if(p.eClear && $.isFunction(p.eClear)) p.eClear(self);
             }
         });
 		el.result_area.on('mousedown.SelectPage',function(e){
@@ -1207,7 +1206,7 @@
             searchKey: q_word[0]
 		};
 		if (_paramsFunc && $.isFunction(_paramsFunc)) {
-			var result = _paramsFunc();
+			var result = _paramsFunc(self);
 			if (result && $.isPlainObject(result)) {
 				_params = $.extend({},_orgParams, result);
 			} else _params = _orgParams;
@@ -1223,7 +1222,7 @@
 					self.ajaxErrorNotify(self, errorThrown);
 					return;
 				}
-				var data = p.eAjaxSuccess(returnData), json = {};
+				var data = p.eAjaxSuccess(returnData, self), json = {};
 				json.originalResult = data.list;
 				json.cnt_whole = data.totalRow;
 
@@ -1801,7 +1800,7 @@
 			
 			//Select item callback
 			if(p.eSelect && $.isFunction(p.eSelect))
-				p.eSelect(current.data('dataObj'));
+				p.eSelect(current.data('dataObj'), self);
 			
 			self.prop.prev_value = self.elem.combo_input.val();
 			self.prop.selected_text = self.elem.combo_input.val();
@@ -1838,7 +1837,7 @@
             }
 		});
 		if(p.eSelect && $.isFunction(p.eSelect))
-			p.eSelect(jsonarr);
+			p.eSelect(jsonarr, self);
 		self.afterAction(self);
 	};
 	/**
@@ -1854,7 +1853,7 @@
 		});
 		self.afterAction(self);
 		if(p.eTagRemove && $.isFunction(p.eTagRemove))
-			p.eTagRemove(size);
+			p.eTagRemove(size, self);
 	};
 	/**
 	 * Clear all selected items
@@ -1872,7 +1871,7 @@
         if(!p.multiple) self.elem.clear_btn.remove();
         if(p.multiple) {
             if (p.eTagRemove && $.isFunction(p.eTagRemove))
-                p.eTagRemove(size);
+                p.eTagRemove(size, self);
         }
 	};
 
