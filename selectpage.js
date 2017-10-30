@@ -23,8 +23,8 @@
 		 */
 		data: undefined,
 		/**
-		 * @desc 插件显示语言 ('ja', 'en', 'es', 'pt-br'等)
-		 * @type string 默认'cn'
+		 * Language ('ja', 'en', 'es', 'pt-br')
+		 * @type string - default:'cn'
 		 */
 		lang: 'cn',
 		/**
@@ -139,7 +139,7 @@
 		 */
 		noResultClean: true,
 		/**
-		 * @desc 只选择模式
+		 * Select only mode
 		 * @type boolean
 		 */
 		selectOnly: false,
@@ -152,16 +152,23 @@
 		 * -----------------------------------------事件回调--------------------------------------------
 		 */
 		/**
-		 * @type function
-		 * @param object
-		 * @param dom
+		 * Result list item selected callback
+         * @type function
+		 * @param object - selected item json data
+		 * @param self   - plugin object
 		 */
 		eSelect : undefined,
+        /**
+         * Before result list show up callback, you can do anything prepared
+         * @param self - plugin object
+         */
+        eOpen : undefined,
 		/**
 		 * ajax请求模式，请求成功后的数据处理回调
 		 * 回调的功能用于自定义处理服务端返回的数据
 		 * @type function
 		 * @param data {object} ajax服务端返回的json数据
+         * @param self {object} plugin object
 		 * @return {object} 函数返回的数据结构如下：
 		 * @example 
 		 * {
@@ -171,14 +178,16 @@
 		 */
 		eAjaxSuccess : undefined,
 		/**
-		 * 多选模式下，关闭标签是的回调函数
+         * Close selected item tag callback (multiple mode)
 		 * @type function
-		 * @param removeCount 被移除的个数
+		 * @param removeCount {number} remove item count
+         * @param self {object} plugin object
 		 */
 		eTagRemove : undefined,
         /**
-         * 单选模式下，选中项目后的清除按钮功能回调
+         * Clear selected item callback(single select mode)
          * @type function
+         * @param self {object} plugin object
          */
         eClear : undefined
 	};
@@ -203,7 +212,6 @@
 		this.eDropdownButton();
 		this.eInput();
 		this.eWhole();
-		return this;
 	};
 	/**
 	 * Plugin version number
@@ -768,7 +776,7 @@
             e.stopPropagation();
             if(!self.disabled(self)){
                 self.clearAll(self);
-                if(p.eClear && $.isFunction(p.eClear)) p.eClear();
+                if(p.eClear && $.isFunction(p.eClear)) p.eClear(self);
             }
         });
 		el.result_area.on('mousedown.SelectPage',function(e){
@@ -799,7 +807,7 @@
 				self.removeTag(self,li);
 				showList();
 				if(p.eTagRemove && $.isFunction(p.eTagRemove))
-					p.eTagRemove(1);
+					p.eTagRemove(1, self);
 			});
 			self.inputResize(self);
 		}
@@ -829,30 +837,22 @@
 
                 //若控件已有选中的的项目，而文本输入框中清空了关键字，则清空控件已选中的项目
                 if(!d.elem.combo_input.val() && d.elem.hidden.val() && !d.option.multiple){
-                    d.prop.current_page = 1;//重置当前页为1
+                    d.prop.current_page = 1;//reset page to 1
                     cleanContent(d);
                     d.hideResults(d);
                     return true;
                 }
-                if (d.elem.results.find('li').size()) {
-                    if(d.option.autoFillResult) {//打开自动内容填充功能
-                        //若已有选中项目，则直接隐藏列表
-                        if (d.elem.results.find('li.sp_selected').size()) {
-                            d.hideResults(d);
-                        }else if(d.elem.results.find('li.sp_over').size()){
-                            //若控件已有选中的值，则忽略高亮的项目
-                            if(d.elem.hidden.val()) d.hideResults(d);
-                            //若没有已选中的项目，且列表中有高亮项目时，选中当前高亮的行
-                            else d.selectCurrentLine(d, true);
+                if (d.elem.results.find('li').not('.'+css.message_box).size()) {
+                    if(d.option.autoFillResult) {
+                        //have selected item, then hide result list
+                        if (d.elem.hidden.val()) d.hideResults(d);
+                        else if(d.elem.results.find('li.sp_over').size()){
+                            //no one selected and have highlight item, select the highlight item
+                            d.selectCurrentLine(d, true);
                         }else if(d.option.autoSelectFirst){
-                            //若控件已有选中的值，则忽略自动选择第一项的功能
-                            if(d.elem.hidden.val()) d.hideResults(d);
-                            else{
-                                //对于没有选中，没有高亮的情况，若插件设置了自动选中第一项时，则选中第一项
-                                d.nextLine(d);
-                                //self.nextLine(self);
-                                d.selectCurrentLine(d, true);
-                            }
+                            //no one selected, no one highlight, select the first item
+                            d.nextLine(d);
+                            d.selectCurrentLine(d, true);
                         }else d.hideResults(d);
                     }else d.hideResults(d);
                 } else {
@@ -872,16 +872,16 @@
 	 */
 	SelectPage.prototype.eResultList = function() {
 		var self = this, css = this.css_class;
-		self.elem.results.children('li').mouseenter(function() {
+		self.elem.results.children('li').hover(function() {
 			if (self.prop.key_select) {
 				self.prop.key_select = false;
 				return;
 			}
-			if(!$(this).hasClass(css.selected) && !$(this).hasClass('sp_message_box')){
+			if(!$(this).hasClass(css.selected) && !$(this).hasClass(css.message_box)){
                 $(this).addClass(css.select);
                 self.setCssFocusedResults(self);
             }
-		}).mouseleave(function(){
+		},function(){
 		    $(this).removeClass(css.select);
         }).click(function(e) {
 			if (self.prop.key_select) {
@@ -969,7 +969,7 @@
 	 */
 	SelectPage.prototype.showMessage = function(self,msg){
 		if(!msg) return;
-		var msgLi = '<li class="sp_message_box"><i class="iconfont if-warning"></i> '+msg+'</li>';
+		var msgLi = '<li class="'+self.css_class.message_box+'"><i class="iconfont if-warning"></i> '+msg+'</li>';
 		self.elem.results.empty().append(msgLi).show();
 		self.calcResultsSize(self);
 		self.setOpenStatus(self, true);
@@ -1165,6 +1165,11 @@
             else q_word = val;
         }
 		q_word = q_word.split(/[\s　]+/);
+
+        //Before show up result list callback
+        if(self.option.eOpen && $.isFunction(self.option.eOpen))
+            self.option.eOpen.call(self);
+
 		self.abortAjax(self);
 		//self.setLoading(self);
 		var which_page_num = self.prop.current_page > 0 ? self.prop.current_page : 1;
@@ -1195,7 +1200,7 @@
 	    var p = self.option;
 		if(!p.eAjaxSuccess || !$.isFunction(p.eAjaxSuccess)) self.hideResults(self);
 		var _paramsFunc = p.params, _params = {}, searchKey = p.searchField;
-		//when have query keyword, then reset page number to 1.
+		//when have new query keyword, then reset page number to 1.
 		if(q_word.length && q_word[0] && q_word[0] !== self.prop.prev_value) which_page_num = 1;
 		var _orgParams = {
 			q_word: q_word,
@@ -1203,13 +1208,13 @@
 			pageSize: p.pageSize,
 			andOr: p.andOr,
 			orderBy: p.orderBy,
-			searchTable: p.dbTable,
-            searchKey: q_word[0]
+			searchTable: p.dbTable
 		};
+        _orgParams[searchKey] = q_word[0];
 		if (_paramsFunc && $.isFunction(_paramsFunc)) {
-			var result = _paramsFunc();
+			var result = _paramsFunc.call(self);
 			if (result && $.isPlainObject(result)) {
-				_params = $.extend({},_orgParams, result);
+				_params = $.extend({}, _orgParams, result);
 			} else _params = _orgParams;
 		} else _params = _orgParams;
 		self.prop.xhr = $.ajax({
@@ -1560,7 +1565,8 @@
                 el.results.append(list);
             }
         }else{
-		    var li = '<li class="sp_message_box"><i class="iconfont if-warning"></i> ' + self.message.not_found + '</li>';
+		    var li = '<li class="'+self.css_class.message_box+'"><i class="iconfont if-warning"></i> '+
+                self.message.not_found + '</li>';
             el.results.append(li);
         }
         el.results.show();
@@ -1801,7 +1807,7 @@
 			
 			//Select item callback
 			if(p.eSelect && $.isFunction(p.eSelect))
-				p.eSelect(current.data('dataObj'));
+				p.eSelect(current.data('dataObj'), self);
 			
 			self.prop.prev_value = self.elem.combo_input.val();
 			self.prop.selected_text = self.elem.combo_input.val();
@@ -1838,7 +1844,7 @@
             }
 		});
 		if(p.eSelect && $.isFunction(p.eSelect))
-			p.eSelect(jsonarr);
+			p.eSelect(jsonarr, self);
 		self.afterAction(self);
 	};
 	/**
@@ -1854,7 +1860,7 @@
 		});
 		self.afterAction(self);
 		if(p.eTagRemove && $.isFunction(p.eTagRemove))
-			p.eTagRemove(size);
+			p.eTagRemove(size, self);
 	};
 	/**
 	 * Clear all selected items
@@ -1872,7 +1878,7 @@
         if(!p.multiple) self.elem.clear_btn.remove();
         if(p.multiple) {
             if (p.eTagRemove && $.isFunction(p.eTagRemove))
-                p.eTagRemove(size);
+                p.eTagRemove(size, self);
         }
 	};
 
