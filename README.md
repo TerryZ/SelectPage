@@ -246,8 +246,15 @@ That's why SelectPage exists.
 
 - **eSelect** `function`  
   default : undefined  
+  item selected callback  
   **param**  
   *data* `object | array` selected row or rows data(json)
+  
+- **eOpen** `function`  
+  default : undefined  
+  before show up result list callback  
+  **param**  
+  *self* `object` plugin object
 
 - **eAjaxSuccess** `function`  
   default : undefined  
