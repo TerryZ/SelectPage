@@ -59,13 +59,6 @@ MIT
 
 <br><br>
 
-## Why
-
-Sometimes we need to have a plugin, it can enter the keyword for quick search(autocomplete), can pull down to choose(dropdown list), can display large amounts of data use pagination display, can support multiple language, can use the keyboard shotcut for quick operation, can fix to any UI framework, can be customized , and all this really appears in the real requirement of the web project
-
-That's why SelectPage exists.
-
-<br><br>
 
 ## How
 
