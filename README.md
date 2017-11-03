@@ -71,7 +71,7 @@ MIT
 ### Usage
   As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html), you will need to include:
   - [jQuery library](http://jquery.com) (1.10.2+), untest on jquery2.x & 3.x
-  - The JavaScript file `selectpage.js` (or its minified version selectpage.min.js)
+  - The JavaScript file `selectpage.js` (or its minified version `selectpage.min.js`)
   - The css file `selectpage.bootstrap3.css` for bootstrap3.x , `selectpage.css` for bootstrap2.x , `selectpage.base.css` for no css framework
   
   **Including files**  
