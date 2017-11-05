@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        Simple and powerful selection plugin
  * @file        selectpage.js
- * @version     2.12
+ * @version     2.14
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -37,6 +37,11 @@
          * @type boolean 默认值 true
          */
         pagination: true,
+        /**
+         * 是否显示下拉按钮
+         * @type boolean 默认 true
+         */
+        dropButton: true,
         /**
          * @desc 关闭分页的状态下，列表显示的项目个数，其它的项目以滚动条滚动方式展现
          * @type number 默认值 10
@@ -116,11 +121,6 @@
 		 * @return string
 		 */
 		formatItem : undefined,
-		/**
-		 * 是否在输入框获得焦点时，展开下拉窗口
-		 * @type boolean 默认值true
-		 */
-		focusDropList : true,
 		/**
 		 * 是否自动选择列表中的第一项内容(输入关键字查询模式，直接使用鼠标下拉并不触发)
 		 * @type boolean 默认值false
@@ -216,7 +216,7 @@
 	/**
 	 * Plugin version number
 	 */
-	SelectPage.version = '2.12';
+	SelectPage.version = '2.14';
 	/**
 	 * Plugin object cache key
 	 */
@@ -227,7 +227,7 @@
 	 */
 	SelectPage.prototype.setOption = function(option) {
 		//若没有设置搜索字段，则使用显示字段作为搜索字段
-		option.searchField = (option.searchField === undefined) ? option.showField: option.searchField;
+		option.searchField = option.searchField || option.showField;
 		
 		//统一大写
 		option.andOr = option.andOr.toUpperCase();
@@ -240,7 +240,7 @@
 		}
 
 		//设置排序字段
-		option.orderBy = (option.orderBy === undefined) ? option.searchField: option.orderBy;
+		option.orderBy = option.orderBy|| option.searchField;
 
 		//设置多字段排序
 		//例:  [ ['id', 'ASC'], ['name', 'DESC'] ]
@@ -494,7 +494,8 @@
 			btn_on: 'sp_btn_on',
 			btn_out: 'sp_btn_out',
 			input: 'sp_input',
-            clear_btn : 'sp_clear_btn'
+            clear_btn : 'sp_clear_btn',
+            align_right : 'sp_align_right'
 		};
 		this.css_class = css_class;
 	};
@@ -526,7 +527,7 @@
 		};
 		this.template = {
 			tag : {
-				content : '<li class="selected_tag" itemvalue="#item_value#">#item_text#<span class="tag_close">×</span></li>',
+				content : '<li class="selected_tag" itemvalue="#item_value#">#item_text#<span class="tag_close"><i class="iconfont if-close"></i></span></li>',
 				textKey : '#item_text#',
 				valueKey : '#item_value#'
 			}
@@ -558,7 +559,8 @@
 		//bootstrap风格的向下三角箭头
 		elem.dropdown = $('<span class="bs-caret"><span class="caret"></span></span>');
 		//单选模式下清除的按钮X
-		elem.clear_btn = $('<div>').append('×').addClass(css.clear_btn).attr('title','清除内容');
+		elem.clear_btn = $('<div>').html($('<i>').addClass('iconfont if-close')).addClass(css.clear_btn).attr('title','清除内容');
+		if(!p.dropButton) elem.clear_btn.addClass(css.align_right);
 		
 		//多选模式下带标签显示及文本输入的组合框
 		elem.element_box = $('<ul>').addClass(css.element_box);
@@ -575,8 +577,8 @@
 		 */
 		var namePrefix = '_text',
 		    //将keyField的值放入"input:hidden"
-		    input_id = (elem.combo_input.attr('id') !== undefined) ? elem.combo_input.attr('id') : elem.combo_input.attr('name'),
-		    input_name = (elem.combo_input.attr('name') !== undefined) ? elem.combo_input.attr('name') : 'selectPage',
+		    input_id = elem.combo_input.attr('id') || elem.combo_input.attr('name'),
+		    input_name = elem.combo_input.attr('name') || 'selectPage',
 		    hidden_name = input_name,
 		    hidden_id = input_id;
 
@@ -591,9 +593,12 @@
 		});
 
 		// 2. DOM element put
-		elem.container.append(elem.button).append(elem.hidden);
+		elem.container.append(elem.hidden);
+		if(p.dropButton){
+            elem.container.append(elem.button)
+            elem.button.append(elem.dropdown);
+        }
 		$(document.body).append(elem.result_area);
-		elem.button.append(elem.dropdown);
 		elem.result_area.append(elem.results);
         if(p.pagination) elem.result_area.append(elem.navi);
 		
@@ -637,7 +642,8 @@
 		}
 		*/
 		//this.elem.button.attr('title', this.message.get_all_btn);
-		this.elem.button.attr('title', this.message.close_btn);
+        if(this.option.dropButton)
+		    this.elem.button.attr('title', this.message.close_btn);
 	};
 
 	/**
@@ -742,12 +748,14 @@
 	 */
 	SelectPage.prototype.eDropdownButton = function() {
 		var self = this;
-		self.elem.button.mouseup(function(ev) {
-            ev.stopPropagation();
-			if (self.elem.result_area.is(':hidden') && !self.elem.combo_input.prop('disabled')) {
-				self.elem.combo_input.focus();
-			} else self.hideResults(self);
-		}).mouseout();
+		if(self.option.dropButton){
+            self.elem.button.mouseup(function(ev) {
+                ev.stopPropagation();
+                if (self.elem.result_area.is(':hidden') && !self.elem.combo_input.prop('disabled')) {
+                    self.elem.combo_input.focus();
+                } else self.hideResults(self);
+            });
+        }
 	};
 
 	/**
@@ -825,10 +833,9 @@
         };
 
 		//Out of plugin area
-		$(document).off('mousedown.selectPage').on('mousedown.selectPage',function(e) {
+		$(document.body).off('mousedown.selectPage').on('mousedown.selectPage',function(e) {
             var ele = e.target || e.srcElement;
             var sp = $(ele).closest('div.' + css.container);
-
             //Open status result list
             $('div.' + css.container + '.' + css.container_open).each(function(){
                 if(this == sp[0]) return;
@@ -1172,7 +1179,7 @@
 
 		self.abortAjax(self);
 		//self.setLoading(self);
-		var which_page_num = self.prop.current_page > 0 ? self.prop.current_page : 1;
+		var which_page_num = self.prop.current_page || 1;
 		
 		// 数据查询
 		if (typeof self.option.data == 'object') self.searchForJson(self, q_word, which_page_num);
@@ -1228,9 +1235,15 @@
 					self.ajaxErrorNotify(self, errorThrown);
 					return;
 				}
-				var data = p.eAjaxSuccess(returnData), json = {};
-				json.originalResult = data.list;
-				json.cnt_whole = data.totalRow;
+				var data = {}, json = {};
+				try{
+                    data = p.eAjaxSuccess(returnData);
+                    json.originalResult = data.list;
+                    json.cnt_whole = data.totalRow;
+                }catch(e){
+                    self.showMessage(self, self.message.ajax_error);
+                    return;
+                }
 
 				json.candidate = [];
 				json.keyField = [];
