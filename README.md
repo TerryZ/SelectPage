@@ -307,3 +307,4 @@ MIT
   alert($('#selectpage').selectPageText());
   ```
 
+**If you think this project is helpful, please star it.**
