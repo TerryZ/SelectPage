@@ -170,27 +170,34 @@ ul.sp_results > li.sp_selected {
 .sp_control_box{
     padding: 0px;
     height: 27px;
-    background-color: white;
-    border-bottom: 1px solid #e6e7e7;
+    background-color: #F6F6F6;
+}
+.sp_control_box p{
+    margin: 0;
+    line-height: 27px;
+    padding-left: 8px;
+    font-size: 14px;
+    font-weight: 600;
 }
 .sp_control_box button{
-    height: 26px;
+    height: 27px;
     line-height: 20px;
-    width: 33.3%;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
     border-radius: 0px;
     font-size: 13px !important;
-    padding: 1px 10px;
-    border: 0px;
-    background-color: white;
+    padding: 0 12px;
+    border: 0;
+    background-color: #F6F6F6;
     color: #666666;
-}
-.sp_control_box button:last-child{
-    width: 33.4%;
+    text-align: left;
+    -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1);
+    transition: all .5s cubic-bezier(.175,.885,.32,1);
+    outline: none !important;
+    float: right;
 }
 .sp_control_box button:hover{
-    background-color: #F0F0F0;
+    background-color: #E8E8E8;
     color: black;
 }
 
@@ -451,7 +458,6 @@ div.sp_result_area div.pagination>ul>li>a {
 	margin: 0px;
 	border-radius: 0px;
 	padding: 0px;
-	line-height: 24px;
 	box-shadow:         none;
 	-moz-box-shadow:    none;
 	-webkit-box-shadow: none;
@@ -463,6 +469,8 @@ div.sp_result_area div.pagination>ul>li>a {
     font-size: 20px;
     height: 26px;
     line-height: 26px;
+    -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1);
+    transition: all .5s cubic-bezier(.175,.885,.32,1);
 }
 
 div.sp_result_area div.pagination li.csFirstPage a,

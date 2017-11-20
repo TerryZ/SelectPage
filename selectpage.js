@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        Simple and powerful selection plugin
  * @file        selectpage.js
- * @version     2.14
+ * @version     2.15
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -15,127 +15,137 @@
 	 */
 	var defaults = {
 		/**
-		 * @desc 数据源(String：Ajax查询的URL|Object：JSON格式的数据源)
+		 * Data source
 		 * @type {string|Object}
-		 * @example
-		 * string：服务端请求的URL地址
-		 * Object：JSON格式数组，推荐格式：[{a:1,b:2,c:3},{...}]
+         *
+		 * string：server side request url address
+		 * Object：JSON array，format：[{a:1,b:2,c:3},{...}]
 		 */
 		data: undefined,
 		/**
-		 * Language ('ja', 'en', 'es', 'pt-br')
-		 * @type string - default:'cn'
+		 * Language ('cn', 'en', 'ja', 'es', 'pt-br')
+		 * @type string
+         * @default 'cn'
 		 */
 		lang: 'cn',
 		/**
-		 * @desc 是否为多选模式（标签模式）
-		 * @type boolean 默认值false
+         * Multiple select mode(tags)
+		 * @type boolean
+         * @default false
 		 */
 		multiple: false,
         /**
-         * @desc 是否分页
-         * @type boolean 默认值 true
+         * pagination or not
+         * @type boolean
+         * @default true
          */
         pagination: true,
         /**
-         * 是否显示下拉按钮
-         * @type boolean 默认 true
+         * Show up menu button
+         * @type boolean
+         * @default true
          */
         dropButton: true,
         /**
-         * @desc 关闭分页的状态下，列表显示的项目个数，其它的项目以滚动条滚动方式展现
-         * @type number 默认值 10
+         * Result list visible size in pagination bar close
+         * @type number
+         * @default 10
          */
         listSize : 10,
 		/**
-		 * @desc 是否启用多选模式的控制按钮区域
-		 * 仅multiple: true模式下可用
-		 * @type boolean 默认值true
+		 * Show control bar in multiple select mode
+		 * @type boolean
+         * @default true
 		 */
 		multipleControlbar: true,
 		/**
-		 * @desc 多选模式下最大选择个数，0为不限制
-		 * @type number 默认0
+         * Max selected item limited in multiple select mode
+		 * @type number
+         * @default 0(unlimited)
 		 */
 		maxSelectLimit: 0,
 		/**
-		 * @desc 选中项目后关闭列表
-		 * 该设置仅在多选模式下multiple:true有效
-		 * @type boolean 默认值true
+		 * Select result item to close list, work on multiple select mode
+		 * @type boolean
+         * @default false
 		 */
-		selectToCloseList: true,
+		selectToCloseList: false,
 		/**
-		 * @desc 插件初始值指定，该值会与option.keyField字段进行匹配，若匹配到，则自动设置选中并高亮
+         * Init selected item key, the result will match to option.keyField option
 		 * @type string 
 		 */
 		initRecord: undefined,
 		/**
-		 * @desc 使用ajax方式获取数据时，使用该参数设置对应的数据表名
+		 * The table parameter in server side mode
 		 * @type string
 		 */
 		dbTable: 'tbl',
 		/**
-		 * @desc 值字段，通常该字段的内容会自动保存在隐藏域中
-		 * @type string 默认值为'id'
+         * The value field, the value will fill to hidden element
+		 * @type string
+         * @default 'id'
 		 */
 		keyField: 'id',
 		/**
-		 * @desc 结果集中用于显示的属性名
-		 * @type string 默认字段为'name'
+         * The show text field, the text will show to input element or tags(multiple mode)
+		 * @type string
+         * @default 'name'
 		 */
 		showField: 'name',
 		/**
-		 * @desc 查询字段，仅为使用URL(ajax)方式查询服务端时，设置后端查询的字段，不设置则默认使用showField设置的字段
+         * Actually used to search field
 		 * @type string
 		 */
 		searchField : undefined,
 		/**
-		 * @desc 查询方式 ('AND' or 'OR')
-		 * @type string 默认为'AND'
+		 * Search type ('AND' or 'OR')
+		 * @type string
+         * @default 'AND'
 		 */
 		andOr: 'AND',
         /**
-         * @desc 数据排序方式
-         * @type array 若不设置则默认对showField指定的字段进行排序
+         * Result sort type
+         * @type array - if not set, will default used showField field
          * @example
-         * orderBy : ['id desc']//对ID字段进行降序排序
+         * orderBy : ['id desc']
          */
         orderBy: undefined,
 		/**
-		 * @desc 每页显示的记录数
+		 * Page size
 		 * @type number
+         * @default 10
 		 */
 		pageSize: 10,
 		/**
-		 * @desc 使用URL进行AJAX查询时，可传递查询参数
+         * Server side request parameters
 		 * @type function
 		 * @return object
 		 * @example params : function(){return {'name':'aa','sex':1};}
 		 */
 		params : undefined,
 		/**
-		 * 列表项目显示内容格式化
-		 * 参数类型：function
-		 * @type boolean
-		 * @param data {object} 行数据object格式
+         * Custom result list item show text
+		 * @type function
+		 * @param data {object} row data
 		 * @return string
 		 */
 		formatItem : undefined,
 		/**
-		 * 是否自动选择列表中的第一项内容(输入关键字查询模式，直接使用鼠标下拉并不触发)
-		 * @type boolean 默认值false
+         * Auto select first item in show up result list or search result
+		 * @type boolean
+         * @default false
 		 */
 		autoSelectFirst: false,
 		/**
-		 * 是否自动填充内容
-		 * 若有列表项目被高亮显示，在焦点离开控件后，自动设置该项为选中内容
-		 * @type boolean 默认值false
+         * Have some highlight item and lost focus, auto select the highlight item
+		 * @type boolean
+         * @default false
 		 */
 		autoFillResult: false,
 		/**
-		 * 是否清空输入关键字
-		 * 在输入框中输入内容进行查询，但没有匹配的内容返回，在焦点离开控件后，自动清空输入框输入的内容
-		 * @type boolean 默认值false
+         * Whether clear input element text when enter some keywords to search and no result return
+		 * @type boolean
+         * @default true
 		 */
 		noResultClean: true,
 		/**
@@ -144,12 +154,13 @@
 		 */
 		selectOnly: false,
         /**
-         * @desc 输入关键字查询延迟（仅ajax数据源模式下可用）
-         * @type number 默认值：0.5秒
+         * Input to search delay time, work on ajax data source
+         * @type number
+         * @default 0.5
          */
         inputDelay: 0.5,
 		/**
-		 * -----------------------------------------事件回调--------------------------------------------
+		 * -----------------------------------------Callback--------------------------------------------
 		 */
 		/**
 		 * Result list item selected callback
@@ -164,12 +175,11 @@
          */
         eOpen : undefined,
 		/**
-		 * ajax请求模式，请求成功后的数据处理回调
-		 * 回调的功能用于自定义处理服务端返回的数据
+         * Server side return data convert callback
 		 * @type function
-		 * @param data {object} ajax服务端返回的json数据
+		 * @param data {object} server side return data
          * @param self {object} plugin object
-		 * @return {object} 函数返回的数据结构如下：
+		 * @return {object} return data format：
 		 * @example 
 		 * {
 		 *   list : [{name:'aa',sex:1},{name:'bb',sex:1}...],
@@ -216,37 +226,35 @@
 	/**
 	 * Plugin version number
 	 */
-	SelectPage.version = '2.14';
+	SelectPage.version = '2.15';
 	/**
 	 * Plugin object cache key
 	 */
 	SelectPage.dataKey = 'selectPageObject';
 	/**
-	 * @desc 参数初始化
-	 * @param {Object} option - 参数集
+	 * Options set
+	 * @param {Object} option
 	 */
 	SelectPage.prototype.setOption = function(option) {
-		//若没有设置搜索字段，则使用显示字段作为搜索字段
+		//use showField to default
 		option.searchField = option.searchField || option.showField;
 		
-		//统一大写
 		option.andOr = option.andOr.toUpperCase();
 		if(option.andOr!=='AND' && option.andOr!=='OR') option.andOr = 'AND';
 
-		//将参数内容从使用","分隔的字符串转换为数组
+		//support multiple field set
 		var arr = ['searchField'];
 		for (var i = 0; i < arr.length; i++) {
 			option[arr[i]] = this.strToArray(option[arr[i]]);
 		}
 
-		//设置排序字段
-		option.orderBy = option.orderBy|| option.searchField;
+		//set default order field
+		option.orderBy = option.orderBy || option.showField;
 
-		//设置多字段排序
-		//例:  [ ['id', 'ASC'], ['name', 'DESC'] ]
+		//set multiple order field
+		//example:  [ ['id', 'ASC'], ['name', 'DESC'] ]
 		option.orderBy = this.setOrderbyOption(option.orderBy, option.showField);
-		//多选模式下，若设置了选择项目不关闭列表功能，则强制关闭自动选择第一项功能和自动选中高亮的项目功能
-		//原因是打开了会总是莫明选择了第一项，体验不佳
+        //close auto fill result and auto select first in multiple mode and select item not close list
 		if(option.multiple && !option.selectToCloseList){
 			option.autoFillResult = false;
 			option.autoSelectFirst = false;
@@ -255,7 +263,7 @@
 		if($.type(option.data) === 'string'){
 		    option.autoSelectFirst = false;
         }
-        //若不需要分页功能，则将所有数据都显示出来，上限200项
+        //show all item when pagination bar close, limited 200
         if(!option.pagination) option.pageSize = 200;
 		if($.type(option.listSize) !== 'number' || option.listSize < 0) option.listSize = 10;
 
@@ -263,9 +271,9 @@
 	};
 
 	/**
-	 * @desc 字符串转换为数组
-	 * @param str {string} - 字符串
-	 * @return {Array} - 数组
+	 * String convert to array
+	 * @param str {string}
+	 * @return {Array}
 	 */
 	SelectPage.prototype.strToArray = function(str) {
 		if(!str) return '';
@@ -273,10 +281,10 @@
 	};
 
 	/**
-	 * @desc 设置多字段排序
-	 * @param {Array} arg_order - 排序顺序
-	 * @param {string} arg_field - 字段
-	 * @return {Array} - 处理后的排序字段内容
+	 * Set order field
+	 * @param {Array} arg_order
+	 * @param {string} arg_field
+	 * @return {Array}
 	 */
 	SelectPage.prototype.setOrderbyOption = function(arg_order, arg_field) {
 		var arr = [],orders = [];
@@ -317,11 +325,16 @@
 				close_alt: '(Button)',
 				loading: 'lade...',
 				loading_alt: '(lade)',
-				page_info: 'num_page_top - num_page_end von cnt_whole',
+				page_info: 'page_num von page_count',
 				select_ng: 'Achtung: Bitte wählen Sie aus der Liste aus.',
 				select_ok: 'OK : Richtig ausgewählt.',
 				not_found: 'nicht gefunden',
-				ajax_error: 'Bei der Verbindung zum Server ist ein Fehler aufgetreten.'
+				ajax_error: 'Bei der Verbindung zum Server ist ein Fehler aufgetreten.',
+                clear: 'Löschen Sie den Inhalt',
+                select_all: 'Wähle diese Seite',
+                unselect_all: 'Diese Seite entfernen',
+                clear_all: 'Alles löschen',
+                max_selected: 'Sie können nur bis zu max_selected_limit Elemente auswählen'
 			};
 			break;
 
@@ -344,38 +357,16 @@
 				close_alt: '(button)',
 				loading: 'loading...',
 				loading_alt: '(loading)',
-				page_info: 'num_page_top - num_page_end of cnt_whole',
+				page_info: 'page_num of page_count',
 				select_ng: 'Attention : Please choose from among the list.',
 				select_ok: 'OK : Correctly selected.',
 				not_found: 'not found',
-				ajax_error: 'An error occurred while connecting to server.'
-			};
-			break;
-
-		// 中文
-		case 'cn':
-			message = {
-				add_btn: '添加按钮',
-				add_title: '添加区域',
-				del_btn: '删除按钮',
-				del_title: '删除区域',
-				next: '下一页',
-				next_title: '下' + p.pageSize + ' (→)',
-				prev: '上一页',
-				prev_title: '上' + p.pageSize + ' (←)',
-				first_title: '首页 (Shift + ←)',
-				last_title: '尾页 (Shift + →)',
-				get_all_btn: '获得全部 (↓)',
-				get_all_alt: '(按钮)',
-				close_btn: '关闭 (Tab键)',
-				close_alt: '(按钮)',
-				loading: '读取中...',
-				loading_alt: '(读取中)',
-				page_info: 'num_page_top - num_page_end (共 cnt_whole)',
-				select_ng: '请注意：请从列表中选择.',
-				select_ok: 'OK : 已经选择.',
-				not_found: '无查询结果',
-				ajax_error: '连接到服务器时发生错误！'
+				ajax_error: 'An error occurred while connecting to server.',
+                clear: 'Clear content',
+                select_all: 'Select current page',
+                unselect_all: 'Clear current page',
+                clear_all: 'Clear all selected',
+                max_selected: 'You can only select up to max_selected_limit items'
 			};
 			break;
 
@@ -398,11 +389,16 @@
 				close_alt: '(boton)',
 				loading: 'Cargando...',
 				loading_alt: '(Cargando)',
-				page_info: 'num_page_top - num_page_end de cnt_whole',
+				page_info: 'page_num de page_count',
 				select_ng: 'Atencion: Elija una opcion de la lista.',
 				select_ok: 'OK: Correctamente seleccionado.',
 				not_found: 'no encuentre',
-				ajax_error: 'Un error ocurrió mientras conectando al servidor.'
+				ajax_error: 'Un error ocurrió mientras conectando al servidor.',
+                clear: 'Borrar el contenido',
+                select_all: 'Elija esta página',
+                unselect_all: 'Borrar esta página',
+                clear_all: 'Borrar todo marcado',
+                max_selected: 'Solo puedes seleccionar hasta max_selected_limit elementos'
 			};
 			break;
 
@@ -425,11 +421,16 @@
 				close_alt: '(botão)',
 				loading: 'Carregando...',
 				loading_alt: '(Carregando)',
-				page_info: 'num_page_top - num_page_end de cnt_whole',
+				page_info: 'page_num de page_count',
 				select_ng: 'Atenção: Escolha uma opção da lista.',
 				select_ok: 'OK: Selecionado Corretamente.',
 				not_found: 'não encontrado',
-				ajax_error: 'Um erro aconteceu enquanto conectando a servidor.'
+				ajax_error: 'Um erro aconteceu enquanto conectando a servidor.',
+                clear: 'Limpe o conteúdo',
+                select_all: 'Selecione a página atual',
+                unselect_all: 'Remova a página atual',
+                clear_all: 'Limpar tudo',
+                max_selected: 'Você só pode selecionar até max_selected_limit itens'
 			};
 			break;
 
@@ -452,13 +453,50 @@
 				close_alt: '画像:ボタン',
 				loading: '読み込み中...',
 				loading_alt: '画像:読み込み中...',
-				page_info: 'num_page_top - num_page_end 件 (全 cnt_whole 件)',
+				page_info: 'page_num 件 (全 page_count 件)',
 				select_ng: '注意 : リストの中から選択してください',
 				select_ok: 'OK : 正しく選択されました。',
 				not_found: '(0 件)',
-				ajax_error: 'サーバとの通信でエラーが発生しました。'
+				ajax_error: 'サーバとの通信でエラーが発生しました。',
+                clear: 'コンテンツをクリアする',
+                select_all: '当ページを選びます',
+                unselect_all: '移して当ページを割ります',
+                clear_all: '選択した項目をクリアする',
+                max_selected: '最多で max_selected_limit のプロジェクトを選ぶことしかできません'
 			};
 			break;
+        // 中文
+        case 'cn':
+        default:
+            message = {
+                add_btn: '添加按钮',
+                add_title: '添加区域',
+                del_btn: '删除按钮',
+                del_title: '删除区域',
+                next: '下一页',
+                next_title: '下' + p.pageSize + ' (→)',
+                prev: '上一页',
+                prev_title: '上' + p.pageSize + ' (←)',
+                first_title: '首页 (Shift + ←)',
+                last_title: '尾页 (Shift + →)',
+                get_all_btn: '获得全部 (↓)',
+                get_all_alt: '(按钮)',
+                close_btn: '关闭 (Tab键)',
+                close_alt: '(按钮)',
+                loading: '读取中...',
+                loading_alt: '(读取中)',
+                page_info: '第 page_num 页(共page_count页)',
+                select_ng: '请注意：请从列表中选择.',
+                select_ok: 'OK : 已经选择.',
+                not_found: '无查询结果',
+                ajax_error: '连接到服务器时发生错误！',
+                clear: '清除内容',
+                select_all: '选择当前页项目',
+                unselect_all: '取消选择当前页项目',
+                clear_all: '清除全部已选择项目',
+                max_selected: '最多只能选择 max_selected_limit 个项目'
+            };
+            break;
 		}
 		this.message = message;
 	};
@@ -469,16 +507,14 @@
 	SelectPage.prototype.setCssClass = function() {
 		var css_class = {
 			container: 'sp_container',
-			// SelectPage最外层DIV的打开状态
 			container_open: 'sp_container_open',
 			re_area: 'sp_result_area',
             result_open: 'sp_result_area_open',
 			control_box: 'sp_control_box',
-			//标签及输入框的
+			//multiple select mode
 			element_box: 'sp_element_box',
-			// 分页导航
 			navi: 'sp_navi',
-			// 下拉结果列表
+			//result list
 			results: 'sp_results',
 			re_off: 'sp_results_off',
 			select: 'sp_over',
@@ -487,7 +523,6 @@
             selected: 'sp_selected',
 			input_off: 'sp_input_off',
 			message_box: 'sp_message_box',
-            // 多选模式的禁用状态样式
             disabled: 'sp_disabled',
 			
 			button: 'sp_button',
@@ -505,47 +540,109 @@
 	 */
 	SelectPage.prototype.setProp = function() {
 		this.prop = {
-		    // input disabled status
+		    //input disabled status
 		    disabled : false,
-			//当前页
 			current_page: 1,
-			//总页数
+			//total page
 			max_page: 1,
-			//是否正在Ajax请求
+			//ajax data loading status
 			is_loading: false,
 			xhr: false,
-			//使用键盘进行分页
 			key_paging: false,
-			//使用键盘进行选择
 			key_select: false,
-			//上一个选择的项目值
+			//last selected item value
 			prev_value: '',
-            //选中项目的文本内容
+            //last selected item text
             selected_text : '',
-			//上一次键盘输入的时间
-			last_input_time: undefined
+			last_input_time: undefined,
+            init_set: false
 		};
 		this.template = {
-			tag : {
+			tag: {
 				content : '<li class="selected_tag" itemvalue="#item_value#">#item_text#<span class="tag_close"><i class="iconfont if-close"></i></span></li>',
 				textKey : '#item_text#',
 				valueKey : '#item_value#'
-			}
+			},
+            page: {
+			    current: 'page_num',
+                total: 'page_count'
+            },
+            msg :{
+			    maxSelectLimit: 'max_selected_limit'
+            }
 		};
 	};
 
+    /**
+     * Get the actual width/height of invisible DOM elements with jQuery.
+     * Source code come from dreamerslab/jquery.actual
+     * @param element
+     * @param method
+     * @returns {*}
+     */
+    SelectPage.prototype.elementRealSize = function(element, method){
+        var defaults = {
+            absolute       : false,
+            clone          : false,
+            includeMargin : false,
+            display        : 'block'
+        };
+        var configs = defaults, $target = element.eq( 0 ),fix, restore,tmp = [], style = '', $hidden;
+
+        fix = function (){
+            // get all hidden parents
+            $hidden = $target.parents().addBack().filter( ':hidden' );
+            style   += 'visibility: hidden !important; display: ' + configs.display + ' !important; ';
+
+            if( configs.absolute === true ) style += 'position: absolute !important;';
+
+            // save the origin style props
+            // set the hidden el css to be got the actual value later
+            $hidden.each( function (){
+                // Save original style. If no style was set, attr() returns undefined
+                var $this = $( this ), thisStyle = $this.attr( 'style' );
+                tmp.push( thisStyle );
+                // Retain as much of the original style as possible, if there is one
+                $this.attr( 'style', thisStyle ? thisStyle + ';' + style : style );
+            });
+        };
+
+        restore = function (){
+            // restore origin style values
+            $hidden.each( function ( i ){
+                var $this = $( this ), _tmp  = tmp[ i ];
+
+                if( _tmp === undefined ) $this.removeAttr( 'style' );
+                else $this.attr( 'style', _tmp );
+            });
+        };
+
+        fix();
+        // get the actual value with user specific methed
+        // it can be 'width', 'height', 'outerWidth', 'innerWidth'... etc
+        // configs.includeMargin only works for 'outerWidth' and 'outerHeight'
+        var actual = /(outer)/.test( method ) ?
+            $target[ method ]( configs.includeMargin ) :
+            $target[ method ]();
+
+        restore();
+        // IMPORTANT, this plugin only return the value of the first element
+        return actual;
+    };
+
 	/**
 	 * Dom building
-	 * @param {Object} combo_input - input element
+	 * @param {Object} combo_input - original input element
 	 */
 	SelectPage.prototype.setElem = function(combo_input) {
 		// 1. build Dom object
-		var elem = {}, p = this.option, css = this.css_class;
-		var orgWidth = $(combo_input).outerWidth();
+		var elem = {}, p = this.option, css = this.css_class, msg = this.message, input = $(combo_input);
+		var orgWidth = input.outerWidth();
+		// fix input width in hidden situation
+		if(orgWidth <= 0) orgWidth = this.elementRealSize(input, 'outerWidth');
 		if(orgWidth < 150) orgWidth = 150;
 
-		elem.combo_input = $(combo_input).attr({'autocomplete':'off'}).addClass(css.input).wrap('<div>');
-		//只选择模式设置输入框为只读状态
+		elem.combo_input = input.attr({'autocomplete':'off'}).addClass(css.input).wrap('<div>');
 		if(p.selectOnly) elem.combo_input.prop('readonly',true);
         elem.container = elem.combo_input.parent().addClass(css.container);
 		if(elem.combo_input.prop('disabled')) {
@@ -553,36 +650,33 @@
             else elem.combo_input.addClass(css.input_off);
         }
 
+        // set outer box width
 		elem.container.width(orgWidth);
 
 		elem.button = $('<div>').addClass(css.button);
-		//bootstrap风格的向下三角箭头
+		//drop down button
 		elem.dropdown = $('<span class="bs-caret"><span class="caret"></span></span>');
-		//单选模式下清除的按钮X
-		elem.clear_btn = $('<div>').html($('<i>').addClass('iconfont if-close')).addClass(css.clear_btn).attr('title','清除内容');
+		//clear button 'X' in single mode
+		elem.clear_btn = $('<div>').html($('<i>').addClass('iconfont if-close')).addClass(css.clear_btn).attr('title', msg.clear);
 		if(!p.dropButton) elem.clear_btn.addClass(css.align_right);
 		
-		//多选模式下带标签显示及文本输入的组合框
+		//main box in multiple mode
 		elem.element_box = $('<ul>').addClass(css.element_box);
 		if(p.multiple && p.multipleControlbar)
 			elem.control = $('<div>').addClass(css.control_box);
-		//结果集列表
+		//result list box
 		elem.result_area = $('<div>').addClass(css.re_area);
-		//列表中的分页栏pagination
+		//pagination bar
         if(p.pagination) elem.navi = $('<div>').addClass('pagination').append('<ul>');
 		elem.results = $('<ul>').addClass(css.results);
 		
-		/**
-		 * 将原输入框的Name交换到Hidden中，因为具体需要保存传递到后端的是ID，而非Title
-		 */
 		var namePrefix = '_text',
-		    //将keyField的值放入"input:hidden"
 		    input_id = elem.combo_input.attr('id') || elem.combo_input.attr('name'),
 		    input_name = elem.combo_input.attr('name') || 'selectPage',
 		    hidden_name = input_name,
 		    hidden_id = input_id;
 
-		//将输入框的Name与Hidden的Name进行交换，使得可以将项目的具体ID被保存到后端进行处理
+        //switch the id and name attributes of input/hidden element
 		elem.hidden = $('<input type="hidden" class="sp_hidden" />').attr({
 			name: hidden_name,
 			id: hidden_id
@@ -605,9 +699,11 @@
 		//Multiple select mode
 		if(p.multiple){
 			if(p.multipleControlbar){
-				elem.control.append('<button type="button" class="btn btn-default sp_select_all" ><i class="iconfont if-select-all"></i> 全选本页</button>');
-				elem.control.append('<button type="button" class="btn btn-default sp_unselect_all" ><i class="iconfont if-unselect-all"></i> 取消本页</button>');
-				elem.control.append('<button type="button" class="btn btn-default sp_clear_all" ><i class="iconfont if-clear"></i> 清除全部</button>');
+				elem.control.append('<button type="button" class="btn btn-default sp_clear_all" ><i class="iconfont if-clear"></i></button>');
+				elem.control.append('<button type="button" class="btn btn-default sp_unselect_all" ><i class="iconfont if-unselect-all"></i></button>');
+				elem.control.append('<button type="button" class="btn btn-default sp_select_all" ><i class="iconfont if-select-all"></i></button>');
+				elem.control_text = $('<p>');
+                elem.control.append(elem.control_text);
 				elem.result_area.prepend(elem.control);
 			}				
 			elem.container.addClass('sp_container_combo');
@@ -622,7 +718,7 @@
 	};
 
 	/**
-	 * @desc 将控件的部分内容设置为默认状态
+	 * Drop down button set to default
 	 */
 	SelectPage.prototype.setButtonAttrDefault = function() {
 	    /*
@@ -656,8 +752,8 @@
 		var self = this, p = self.option, el = self.elem, key = '';
         if($.type(el.combo_input.data('init')) != 'undefined')
             p.initRecord = String(el.combo_input.data('init'));
-        //若在输入框中放入了初始化值，则将它放到隐藏域中进行选中项目初始化
-        //若输入框设置了初始值，同时又设置了data-init属性，那么以data-init属性为优先选择
+        //data-init and value attribute can be init plugin selected item
+        //but, if set data-init and value attribute in the same time, plugin will choose data-init attribute first
         if(!refresh && !p.initRecord && el.combo_input.val())
             p.initRecord = el.combo_input.val();
         el.combo_input.val('');
@@ -675,7 +771,6 @@
 						}
 					}
 				});
-				//在单选模式下，若使用了多选模式的初始化值（“key1,key2,...”多选方式），则选用第一项
 				if(!p.multiple && data.length > 1) data = [data[0]];
 				self.afterInit(self, data);
 			} else {//ajax data source mode to init selected item
@@ -723,6 +818,7 @@
         };
 		
 		if(p.multiple){
+		    self.prop.init_set = true;
 			self.clearAll(self);
 			$.each(data,function(i,row){
 				var item = {text:getText(row),value:row[p.keyField]};
@@ -730,6 +826,7 @@
 			});
 			self.tagValuesSet(self);
 			self.inputResize(self);
+            self.prop.init_set = false;
 		}else{
 			var row = data[0];
 			self.elem.combo_input.val(getText(row));
@@ -762,7 +859,7 @@
 	 * Events bind
 	 */
 	SelectPage.prototype.eInput = function() {
-		var self = this,p = self.option, el = self.elem;
+		var self = this,p = self.option, el = self.elem, msg = self.message;
 		var showList = function(){
 			self.prop.page_move = false;
 			self.suggest(self);
@@ -795,15 +892,27 @@
 				//Select all item of current page
                 el.control.find('.sp_select_all').on('click.SelectPage',function(e){
 					self.selectAllLine(self);
-				});
+				}).hover(function(){
+				    el.control_text.html(msg.select_all);
+                },function(){
+                    el.control_text.html('');
+                });
 				//Cancel select all item of current page
                 el.control.find('.sp_unselect_all').on('click.SelectPage',function(e){
 					self.unSelectAllLine(self);
-				});
+				}).hover(function(){
+                    el.control_text.html(msg.unselect_all);
+                },function(){
+                    el.control_text.html('');
+                });
 				//Clear all selected item
                 el.control.find('.sp_clear_all').on('click.SelectPage',function(e){
 					self.clearAll(self);
-				});
+				}).hover(function(){
+                    el.control_text.html(msg.clear_all);
+                },function(){
+                    el.control_text.html('');
+                });
 			}
 			el.element_box.on('click.SelectPage',function(e){
 				var srcEl = e.target || e.srcElement;
@@ -841,8 +950,6 @@
                 if(this == sp[0]) return;
                 var $this = $(this), d = $this.find('input.' + css.input).data(SelectPage.dataKey);
 
-
-                //若控件已有选中的的项目，而文本输入框中清空了关键字，则清空控件已选中的项目
                 if(!d.elem.combo_input.val() && d.elem.hidden.val() && !d.option.multiple){
                     d.prop.current_page = 1;//reset page to 1
                     cleanContent(d);
@@ -985,9 +1092,9 @@
 	};
 
 	/**
-	 * @desc 窗口滚动处理
-	 * @param {Object} self - 插件内部对象
-	 * @param {boolean} enforce - 是否定位到输入框的位置
+	 * @desc Scroll
+	 * @param {Object} self
+	 * @param {boolean} enforce
 	 */
 	SelectPage.prototype.scrollWindow = function(self, enforce) {
 		var current_result = self.getCurrentLine(self),
@@ -1000,20 +1107,19 @@
 		var gap, client_height = $(window).height(),
             scroll_top = $(window).scrollTop(),
             scroll_bottom = scroll_top + client_height - target_size;
-        // 滚动处理
 		if (current_result.length) {
 			if (target_top < scroll_top || target_size > client_height) {
-				//滚动到顶部
+				//scroll to top
 				gap = target_top - scroll_top;
 			} else if (target_top > scroll_bottom) {
-				//向下滚动
+				//scroll down
 				gap = target_top - scroll_bottom;
-			} else return; //不进行滚动
+			} else return; //do not scroll
 		} else if (target_top < scroll_top) gap = target_top - scroll_top;
 		window.scrollBy(0, gap);
 	};
     /**
-     * 设置控件的打开/关闭状态
+     * change css class by status
      * @param self
      * @param status {boolean} true: open, false: close
      */
@@ -1029,8 +1135,8 @@
     };
 
 	/**
-	 * @desc 输入框获得焦点的样式设置
-	 * @param {Object} self - 插件内部对象
+	 * input element in focus css class set
+	 * @param {Object} self
 	 */
 	SelectPage.prototype.setCssFocusedInput = function(self) {
 		//$(self.elem.results).addClass(self.css_class.re_off);
@@ -1038,8 +1144,8 @@
 	};
 
 	/**
-	 * @desc 设置结果列表高亮，输入框失去焦点
-	 * @param {Object} self - 插件内部对象
+     * set result list get focus and input element lost focus
+	 * @param {Object} self
 	 */
 	SelectPage.prototype.setCssFocusedResults = function(self) {
 		//$(self.elem.results).removeClass(self.css_class.re_off);
@@ -1101,46 +1207,33 @@
 			e.cancelBubble = true;
 			e.returnValue = false;
 			switch (e.keyCode) {
-			case 37:
-				// left
+			case 37:// left
 				if (e.shiftKey) self.firstPage(self);
 				else self.prevPage(self);
 				break;
-
-			case 38:
-				// up
+			case 38:// up
 				self.prop.key_select = true;
 				self.prevLine(self);
 				break;
-
-			case 39:
-				// right
+			case 39:// right
 				if (e.shiftKey) self.lastPage(self);
 				else self.nextPage(self);
 				break;
-
-			case 40:
-				// down
+			case 40:// down
 				if (self.elem.results.children('li').length) {
 					self.prop.key_select = true;
 					self.nextLine(self);
 				} else self.suggest(self);
 				break;
-
-			case 9:
-				// tab
+			case 9:// tab
 				self.prop.key_paging = true;
 				self.selectCurrentLine(self, true);
 				//self.hideResults(self);
 				break;
-
-			case 13:
-				// return
+			case 13:// return
 				self.selectCurrentLine(self, true);
 				break;
-
-			case 27:
-				//  escape
+			case 27://  escape
 				self.prop.key_paging = true;
 				self.hideResults(self);
 				break;
@@ -1160,11 +1253,10 @@
 	};
 
 	/**
-	 * @desc 数据查询
-	 * @param {Object} self - 插件内部对象
+	 * Suggest result of search keywords
+	 * @param {Object} self
 	 */
 	SelectPage.prototype.suggest = function(self) {
-		//搜索关键字
 		var q_word, val = $.trim(self.elem.combo_input.val());
         if(self.option.multiple) q_word = val;
         else{
@@ -1181,7 +1273,6 @@
 		//self.setLoading(self);
 		var which_page_num = self.prop.current_page || 1;
 		
-		// 数据查询
 		if (typeof self.option.data == 'object') self.searchForJson(self, q_word, which_page_num);
 		else self.searchForDb(self, q_word, which_page_num);
 	};
@@ -1299,7 +1390,7 @@
 		for (i = 0; i < p.data.length; i++) {
 			var flag = false, row = p.data[i], itemText;
 			for (var j = 0; j < arr_reg.length; j++) {					
-				itemText = row[p.showField];//默认获取showField字段的文本
+				itemText = row[p.searchField];
 				if(p.formatItem && $.isFunction(p.formatItem))
 					itemText = p.formatItem(row);
 				if (itemText.match(arr_reg[j])) {
@@ -1347,11 +1438,11 @@
         }
         */
         json.cnt_whole = sorted.length;
-		//page_move参数用于区别数据加载是在初始化列表还是在进行分页的翻页操作
+        //page_move used to distinguish between init plugin or page moving
 		if(!self.prop.page_move){
-			//仅单选模式进行选中项目定位页功能
+			//only single mode can be used page number relocation
 			if(!p.multiple){
-				//若控件当前已有选中值，则获得该项目所在的页数，并跳转到该页进行显示
+                //get selected item belong page number
 				var currentValue = self.elem.hidden.val();
 				if($.type(currentValue) !== 'undefined' && $.trim(currentValue) !== ''){
 					var index = 0;
@@ -1367,18 +1458,18 @@
 				}
 			}
 		}else{
-			//过滤后的数据个数不足一页显示的个数时，强制设置页码
+            //set page number to 1 when result number less then page size
 			if(sorted.length <= ((which_page_num - 1) * p.pageSize)){
 				which_page_num = 1;
 				self.prop.current_page = 1;
 			}
 		}
 		
-		// LIMIT xx OFFSET xx
+		//LIMIT xx OFFSET xx
 		var start = (which_page_num - 1) * p.pageSize, end = start + p.pageSize;
 		//save original data
 		json.originalResult = [];
-		// after data filter handle
+		//after data filter handle
 		for (i = start; i < end; i++) {
 			if (sorted[i] === undefined) break;
 			json.originalResult.push(sorted[i]);
@@ -1400,9 +1491,9 @@
 	};
 
 	/**
-	 * @desc 升序排序
-	 * @param {Object} self - 插件内部对象
-	 * @param {Array} arr - 结果集数组
+     * Set order asc
+	 * @param {Object} self
+	 * @param {Array} arr - result array
 	 */
 	SelectPage.prototype.sortAsc = function(self, arr) {
 		arr.sort(function(a, b) {
@@ -1413,9 +1504,9 @@
 	};
 
 	/**
-	 * @desc 降序排序
-	 * @param {Object} self - 插件内部对象
-	 * @param {Array} arr - 结果集数组
+	 * Set order desc
+	 * @param {Object} self
+	 * @param {Array} arr - result array
 	 */
 	SelectPage.prototype.sortDesc = function(self, arr) {
 		arr.sort(function(a, b) {
@@ -1426,8 +1517,8 @@
 	};
 
 	/**
-	 * @desc 查询无结果的处理
-	 * @param {Object} self - 插件内部对象
+	 * Not result found handle
+	 * @param {Object} self
 	 */
 	SelectPage.prototype.notFoundSearch = function(self) {
 		self.elem.results.empty();
@@ -1465,31 +1556,33 @@
 	 * @param {number} page_num - current page number
 	 */
 	SelectPage.prototype.setNavi = function(self, cnt_whole, cnt_page, page_num) {
+	    var msg = self.message;
 		/**
-		 * build bar
+		 * build pagination bar
 		 */
 		var buildPageNav = function(self, pagebar, page_num, last_page) {
+		    var updatePageInfo = function(){
+                var pageInfo = msg.page_info;
+                return pageInfo.replace(self.template.page.current, page_num).replace(self.template.page.total, last_page);
+            };
 			if (pagebar.find('li').size() === 0) {
 				pagebar.hide().empty();
-				var btnclass = '',
-                    iconFist='iconfont if-first',
+				var iconFist='iconfont if-first',
                     iconPrev='iconfont if-previous',
                     iconNext='iconfont if-next',
                     iconLast='iconfont if-last';
 
-				if (page_num == 1) btnclass = ' disabled ';
-				pagebar.append('<li class="csFirstPage' + btnclass + '" title="' + self.message.first_title + '" ><a href="javascript:void(0);"> <i class="'+iconFist+'"></i> </a></li>');
-				pagebar.append('<li class="csPreviousPage' + btnclass + '" title="' + self.message.prev_title + '" ><a href="javascript:void(0);"><i class="'+iconPrev+'"></i></a></li>');
-				var pageInfo = '第 ' + page_num + ' 页 ( 共' + last_page + '页 ) ';
+				pagebar.append('<li class="csFirstPage" title="' + msg.first_title + '" ><a href="javascript:void(0);"> <i class="'+iconFist+'"></i> </a></li>');
+				pagebar.append('<li class="csPreviousPage" title="' + msg.prev_title + '" ><a href="javascript:void(0);"><i class="'+iconPrev+'"></i></a></li>');
 				//pagination information
-				pagebar.append('<li class="pageInfoBox"><a href="javascript:void(0);"> ' + pageInfo + ' </a></li>');
+				pagebar.append('<li class="pageInfoBox"><a href="javascript:void(0);"> ' + updatePageInfo() + ' </a></li>');
 
-				btnclass = page_num === last_page ? ' disabled ' : '';
-
-				pagebar.append('<li class="csNextPage' + btnclass + '" title="' + self.message.next_title + '" ><a href="javascript:void(0);"><i class="'+iconNext+'"></i></a></li>');
-				pagebar.append('<li class="csLastPage' + btnclass + '" title="' + self.message.last_title + '" ><a href="javascript:void(0);"> <i class="'+iconLast+'"></i> </a></li>');
+				pagebar.append('<li class="csNextPage" title="' + msg.next_title + '" ><a href="javascript:void(0);"><i class="'+iconNext+'"></i></a></li>');
+				pagebar.append('<li class="csLastPage" title="' + msg.last_title + '" ><a href="javascript:void(0);"> <i class="'+iconLast+'"></i> </a></li>');
                 pagebar.show();
-			}
+			}else{
+                pagebar.find('li.pageInfoBox a').html(updatePageInfo());
+            }
 		};
 
 		var pagebar = self.elem.navi.find('ul'),
@@ -1502,10 +1595,7 @@
 		self.prop.current_page = page_num;//update current page number
         self.prop.max_page = last_page;//update page count
 		buildPageNav(self, pagebar, page_num, last_page);
-		var pageInfoBox = pagebar.find('li.pageInfoBox'),
-            pageInfo = '第 ' + page_num + ' 页(共' + last_page + '页)';
 
-		pageInfoBox.html('<a href="javascript:void(0);"> ' + pageInfo + ' </a>');
 		//update paging status
 		var dClass = 'disabled',
             first = pagebar.find('li.csFirstPage'),
@@ -1536,7 +1626,7 @@
 	 * Render result list
 	 * @param {Object} self
 	 * @param {Object} json - result data
-	 * @param {boolean} is_query - 是否是通过关键字搜索（用于区分是鼠标点击下拉还是输入框输入关键字进行查找）
+	 * @param {boolean} is_query - used to different from search to open and just click to open
 	 */
 	SelectPage.prototype.displayResults = function(self, json, is_query) {
 	    var p = self.option, el = self.elem;
@@ -1544,7 +1634,8 @@
 		if(p.multiple && $.type(p.maxSelectLimit) === 'number' && p.maxSelectLimit > 0){
 			var selectedSize = el.element_box.find('li.selected_tag').size();
 			if(selectedSize > 0 && selectedSize >= p.maxSelectLimit){
-				self.showMessage(self,'最多只能选择 '+p.maxSelectLimit+' 个项目');
+			    var msg = self.message.max_selected;
+				self.showMessage(self, msg.replace(self.template.msg.maxSelectLimit, p.maxSelectLimit));
 				return;
 			}
 		}
@@ -1593,7 +1684,7 @@
 		self.eResultList();
 		//scrolling listen
 		self.eScroll();
-		//若是键盘输入关键字进行查询且有内容时，列表自动选中第一行(autoSelectFirst为true时)
+        //auto highlight first item in search, have result and set autoSelectFirst to true situation
 		if (is_query && json.candidate.length && p.autoSelectFirst) self.nextLine(self);
 	};
 
@@ -1621,26 +1712,26 @@
                     });
                 }
 
-                //在展示下拉列表时，判断默认与输入框左对齐的列表是否会超出屏幕边界，是则右对齐，否则默认左对齐
+                //handle result list show up side(left, right, up or down)
                 var docWidth = $(document).width(),
-                    docHeight = $(document).height(),//文档全部高度
-                    viewHeight = $(window).height(),//可视区域高度
+                    docHeight = $(document).height(),//the document full height
+                    viewHeight = $(window).height(),//browser visible area height
                     offset = el.container.offset(),
                     screenScrollTop = $(window).scrollTop(),
                     listWidth = el.result_area.outerWidth(),
-                    //当前状态，列表并未被显示，数据未被填充，列表并未展现最终高度，所以只能使用默认一页显示10条数据的固定高度进行计算
+                    //result list height
                     listHeight = el.result_area.outerHeight(),
-                    //默认方向的坐标，在多选模式下，因为外框架是DIV，所以需要向左靠一个像素
+                    //default left used input element left
                     defaultLeft = offset.left,//p.multiple ? -1 : 0;
-                    //输入框高度
+                    //input element height
                     inputHeight = el.container.outerHeight(),
                     left = (offset.left + listWidth) > docWidth ?
                         defaultLeft - (listWidth - el.container.outerWidth()) :
                         defaultLeft,
-                    //控件在全文档范围中的实际TOP（非当前可视区域中的相对TOP）
+                    //the actual top coordinate of input element(outer div)
                     screenTop = offset.top,//$(el.container).scrollTop();//offset.top - screenScrollTop;
-                    top = 0,dist = 5,//设置偏移量，让列表与输入框有5px的间距
-                    //列表展开后的坐标高度
+                    top = 0,dist = 5,//set distance between input element and result list
+                    //the actual top coordinate of result list
                     listBottom = screenTop + inputHeight + listHeight + dist,
                     hasOverflow = docHeight > viewHeight;
 
@@ -1760,25 +1851,14 @@
 		}
 	};
 	/**
-	 * @desc 跳转到指定页
-	 * @param {Object} self
-	 * @param {number} page 目标页数
-	 */
-	SelectPage.prototype.goPage = function(self,page){
-		if(typeof(page) === 'undefined') page = 1;
-		if (self.prop.current_page < self.prop.max_page) {
-			self.prop.current_page = page;
-			self.prop.page_move = true;
-			self.suggest(self);
-		}
-	};
-	/**
-	 * @desc 操作结束后的一些收尾工作
+	 * do something after select/unSelect action
+     * @param {Object} self
 	 */
 	SelectPage.prototype.afterAction = function(self){
 		self.inputResize(self);
 		self.elem.combo_input.change();
 		self.setCssFocusedInput(self);
+		if(self.prop.init_set) return;
 		if(self.option.multiple){
 			if(self.option.selectToCloseList){
 				self.hideResults(self);
@@ -1849,7 +1929,7 @@
 				self.tagValuesSet(self);
 			}
 			jsonarr.push($row.data('dataObj'));
-			//若有最大选择数量限制，则添加最大个数后，不再添加
+            //limited max selected items
 			if($.type(p.maxSelectLimit) === 'number' &&
                 p.maxSelectLimit > 0 &&
                 p.maxSelectLimit === self.elem.element_box.find('li.selected_tag').size()){
@@ -1907,9 +1987,9 @@
 	};
 	
 	/**
-	 * @desc 多选模式下判断当前选中项目是否已经存在已选中列表中
-	 * @param {Object} self - 插件内部对象
-	 * @param {Object} item - 选中行对象
+	 * Check the result item is already selected or not
+	 * @param {Object} self
+	 * @param {Object} item - item info
 	 */
 	SelectPage.prototype.isAlreadySelected = function(self,item){
 		var isExist = false;
@@ -1945,7 +2025,6 @@
 	SelectPage.prototype.removeTag = function(self,item){
 		var key = $(item).attr('itemvalue');
 		var keys = self.elem.hidden.val();
-		//从已保存的key列表中删除该标签对应的项目
 		if($.type(key)!='undefined' && keys){
 			var keyarr = keys.split(','),
                 index = $.inArray(key.toString(),keyarr);
@@ -1959,8 +2038,8 @@
 	};
 	
 	/**
-	 * @desc 多选模式下标签结果值放入隐藏域
-	 * @param {Object} self - 插件内部对象
+	 * Selected item value(keyField) put in to hidden element
+	 * @param {Object} self
 	 */
 	SelectPage.prototype.tagValuesSet = function(self){
 		if(!self.option.multiple) return;
@@ -1978,14 +2057,13 @@
 	};
 	
 	/**
-	 * @desc 多选模式下输入框根据输入内容调整输入框宽度
-	 * @param {Object} self - 插件内部对象
+     * auto resize input element width in multiple select mode
+	 * @param {Object} self
 	 */
 	SelectPage.prototype.inputResize = function(self){
 		if(!self.option.multiple) return;
 		var width = '',
             inputLi = self.elem.combo_input.closest('li');
-		//设置默认宽度
 		var setDefaultSize = function(self,inputLi){
 			inputLi.removeClass('full_width');
 			var minimumWidth = self.elem.combo_input.val().length + 1,
@@ -2021,8 +2099,8 @@
 	};
 
 	/**
-	 * @desc 选择上一行
-	 * @param {Object} self - 插件内部对象
+     * Move to previous line
+	 * @param {Object} self
 	 */
 	SelectPage.prototype.prevLine = function(self) {
 		var obj = self.getCurrentLine(self), idx;
@@ -2077,7 +2155,9 @@
 
 	/**
 	 * Refresh result list
-	 * 使用场景：使用$().val('xxx')修改插件的选中项目ID，此时需要刷新插件在输入框中的显示文本
+     * use case:
+     * 1.use $(obj).val('xxx') to modify selectpage selected item key
+     * 2.refresh selected item show content/tag text
 	 */
 	function SelectedRefresh(){
 		return this.each(function(){
@@ -2134,7 +2214,17 @@
 		var str = '';
 		this.each(function(){
 			var $this = getPlugin(this),data = $this.data(SelectPage.dataKey);
-			if(data) str += data.elem.combo_input.val();
+			if(data){
+			    if(data.option.multiple){
+			        var tags = [];
+                    data.elem.element_box.find('li.selected_tag').each(function(i, tag){
+                        tags.push($(tag).text());
+                    });
+                    str += tags.toString();
+                }else{
+                    str += data.elem.combo_input.val();
+                }
+            }
 		});
 		return str;
 	}	
