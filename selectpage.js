@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        Simple and powerful selection plugin
  * @file        selectpage.js
- * @version     2.15
+ * @version     2.16
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -226,7 +226,7 @@
 	/**
 	 * Plugin version number
 	 */
-	SelectPage.version = '2.15';
+	SelectPage.version = '2.16';
 	/**
 	 * Plugin object cache key
 	 */
@@ -1289,7 +1289,7 @@
 	};
 
 	/**
-	 * Search for json data source
+	 * Search for ajax
 	 * @param {Object} self
 	 * @param {Array} q_word - query keyword
 	 * @param {number} which_page_num - target page number
@@ -1369,7 +1369,7 @@
 	};
 
 	/**
-	 * Search for ajax
+	 * Search for json data source
 	 * @param {Object} self
 	 * @param {Array} q_word
 	 * @param {number} which_page_num
@@ -2149,7 +2149,11 @@
 		return this.each(function(){
 			var $this = getPlugin(this),
 				data = $this.data(SelectPage.dataKey);
-			if(data) data.clearAll(data);
+			if(data){
+			    data.prop.init_set = true;
+			    data.clearAll(data);
+                data.prop.init_set = false;
+            }
 		});
 	}
 
