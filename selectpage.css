@@ -170,7 +170,6 @@ ul.sp_results > li.sp_selected {
 .sp_control_box{
     padding: 0px;
     height: 27px;
-    background-color: #F6F6F6;
 }
 .sp_control_box p{
     margin: 0;
@@ -188,16 +187,24 @@ ul.sp_results > li.sp_selected {
     font-size: 13px !important;
     padding: 0 12px;
     border: 0;
-    background-color: #F6F6F6;
+    background-color: white;
     color: #666666;
     text-align: left;
     -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1);
     transition: all .5s cubic-bezier(.175,.885,.32,1);
     outline: none !important;
     float: right;
+    opacity: .3;
 }
-.sp_control_box button:hover{
-    background-color: #E8E8E8;
+.sp_control_box:hover{
+    background-color: #F8F8F8;
+}
+.sp_control_box:hover button{
+    background-color: #F8F8F8;
+    opacity: 1;
+}
+.sp_control_box:hover button:hover{
+    background-color: #EEEEEE;
     color: black;
 }
 

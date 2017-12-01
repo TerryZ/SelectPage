@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        Simple and powerful selection plugin
  * @file        selectpage.js
- * @version     2.16
+ * @version     2.17
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -130,18 +130,19 @@
 		 * @return string
 		 */
 		formatItem : undefined,
+        /**
+         * Have some highlight item and lost focus, auto select the highlight item
+         * @type boolean
+         * @default false
+         */
+        autoFillResult: false,
 		/**
          * Auto select first item in show up result list or search result
+         * depend on `autoFillResult` option set to true
 		 * @type boolean
          * @default false
 		 */
 		autoSelectFirst: false,
-		/**
-         * Have some highlight item and lost focus, auto select the highlight item
-		 * @type boolean
-         * @default false
-		 */
-		autoFillResult: false,
 		/**
          * Whether clear input element text when enter some keywords to search and no result return
 		 * @type boolean
@@ -226,7 +227,7 @@
 	/**
 	 * Plugin version number
 	 */
-	SelectPage.version = '2.16';
+	SelectPage.version = '2.17';
 	/**
 	 * Plugin object cache key
 	 */
@@ -259,10 +260,6 @@
 			option.autoFillResult = false;
 			option.autoSelectFirst = false;
 		}
-
-		if($.type(option.data) === 'string'){
-		    option.autoSelectFirst = false;
-        }
         //show all item when pagination bar close, limited 200
         if(!option.pagination) option.pageSize = 200;
 		if($.type(option.listSize) !== 'number' || option.listSize < 0) option.listSize = 10;

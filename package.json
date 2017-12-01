@@ -1,6 +1,6 @@
 {
   "name": "selectpage",
-  "version": "2.16.0",
+  "version": "2.17.0",
   "description": "A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n, keyboard navigation functions",
   "main": "selectpage.js",
   "dependencies": {
