@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        Simple and powerful selection plugin
  * @file        selectpage.js
- * @version     2.17
+ * @version     2.18
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -227,7 +227,7 @@
 	/**
 	 * Plugin version number
 	 */
-	SelectPage.version = '2.17';
+	SelectPage.version = '2.18';
 	/**
 	 * Plugin object cache key
 	 */
@@ -652,7 +652,7 @@
 
 		elem.button = $('<div>').addClass(css.button);
 		//drop down button
-		elem.dropdown = $('<span class="bs-caret"><span class="caret"></span></span>');
+		elem.dropdown = $('<span class="sp_caret"></span>');
 		//clear button 'X' in single mode
 		elem.clear_btn = $('<div>').html($('<i>').addClass('iconfont if-close')).addClass(css.clear_btn).attr('title', msg.clear);
 		if(!p.dropButton) elem.clear_btn.addClass(css.align_right);
@@ -664,7 +664,7 @@
 		//result list box
 		elem.result_area = $('<div>').addClass(css.re_area);
 		//pagination bar
-        if(p.pagination) elem.navi = $('<div>').addClass('pagination').append('<ul>');
+        if(p.pagination) elem.navi = $('<div>').addClass('sp_pagination').append('<ul>');
 		elem.results = $('<ul>').addClass(css.results);
 		
 		var namePrefix = '_text',
@@ -800,7 +800,7 @@
 	 * @param {Object} data - selected item data
 	 */
 	SelectPage.prototype.afterInit = function(self, data) {
-		if(!data) return;
+		if(!data || ($.isArray(data) && data.length === 0)) return;
 		if(!$.isArray(data)) data = [data];
 		var p = self.option, css = self.css_class;
 
@@ -1653,9 +1653,9 @@
                     }
                 }else itemText = arr_candidate[i];
                 var list = $('<li>').html(itemText).attr({
-                    pkey: arr_primary_key[i],
-                    title: itemText
+                    pkey: arr_primary_key[i]
                 });
+                if(!p.formatItem) list.attr('title', itemText);
 
                 //Set selected item highlight
                 if ($.inArray(arr_primary_key[i].toString(),keyArr) !== -1) {
@@ -1752,8 +1752,10 @@
         if(el.result_area.is(':visible')){
             el.result_area.css(rePosition());
         }else{
-            el.result_area.show(1,function(){
-                $(this).css(rePosition());
+            var pss = rePosition();
+            el.result_area.css(pss).show(1,function(){
+                var repss = rePosition();
+                if(pss.top !== repss.top || pss.left !== repss.left) el.result_area.css(repss);
             });
         }
 	};
@@ -1962,15 +1964,26 @@
             size = self.elem.element_box.find('li.selected_tag').size();
             self.elem.element_box.find('li.selected_tag').remove();
         }
-        self.elem.combo_input.val('');
-		self.elem.hidden.val('');
+        self.reset(self);
 		self.afterAction(self);
+
         if(!p.multiple) self.elem.clear_btn.remove();
         if(p.multiple) {
             if (p.eTagRemove && $.isFunction(p.eTagRemove))
                 p.eTagRemove(size, self);
         }
 	};
+
+    /**
+     * reset
+     */
+	SelectPage.prototype.reset = function(self){
+        self.elem.combo_input.val('');
+        self.elem.hidden.val('');
+        self.prop.prev_value = '';
+        self.prop.selected_text = '';
+        self.prop.current_page = 1;
+    };
 
 	/**
 	 * Get current highlight item
@@ -2177,7 +2190,7 @@
 	 */
 	function ModifyDataSource(data){
 		return this.each(function(){
-			if(data && $.isArray(data) && data.length){
+			if(data && $.isArray(data)){
 				var $this = getPlugin(this),
 					plugin = $this.data(SelectPage.dataKey);
 				if(plugin){

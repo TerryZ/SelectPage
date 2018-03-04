@@ -4,34 +4,38 @@
  * Container
  */
 .sp_container {
-	border: none;
-	margin: 0;
-	padding: 0;
-	display: inline-block;
-	position: relative;
-	vertical-align: middle;
+    border: none;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
 }
 .sp_input {
-	background-color: white;
-	/* border-radius: 4px 0 0 4px; */
-	border-right: none;
-	/* border: 1px solid #79b; */
-	box-shadow:         1px 1px 1px rgba(0,0,0,0.2) inset;
-	-moz-box-shadow:    1px 1px 1px rgba(0,0,0,0.2) inset;
-	-webkit-box-shadow: 1px 1px 1px rgba(0,0,0,0.2) inset;
-	margin: 0px !important;
-	/* width: 320px; */
-	
-	
-	font-size: 14px;
-	height: 20px;
-	line-height: 20px;
-	min-height: 20px;
-	padding: 4px 6px;
-	vertical-align: middle;
-	display: block;
-	box-sizing: content-box;
-	/* width: 100%; */
+    background-color: white;
+
+    border: 1px solid #ccc;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+
+    box-shadow:         0 1px 1px rgba(0,0,0,0.075) inset;
+    -moz-box-shadow:    0 1px 1px rgba(0,0,0,0.075) inset;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.075) inset;
+    margin: 0 !important;
+    /* width: 320px; */
+
+
+    font-size: 14px;
+    height: 34px;
+    line-height: 34px;
+    min-height: 34px;
+    padding: 4px 6px;
+    vertical-align: middle;
+    display: block;
+    width: 100%;
+    outline: none;
+    box-sizing: border-box;
 }
 .sp_input:focus {
     border: 1px solid #ccc;
@@ -44,33 +48,50 @@
 
 
 .sp_container_open .sp_input {
-	border-radius: 0px 0px 0 0 !important;
+    border-radius: 2px !important;
 }
 
 /**
  * "Get all" button
  */
 div.sp_button {
-	display: inline-block;
-	border-bottom-right-radius: 0px;
-	border-top-right-radius: 0px;
-	cursor: pointer;
-	text-align: center;
-	box-sizing: border-box;
-  
-    border: 0px;
+    display: inline-block;
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box;
+
+    border: 0;
     width: 24px;
     height: 100%;
-    padding: 0px;
+    padding: 0;
     vertical-align: middle;
     line-height: 100%;
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 0;
+    right: 0;
 }
 
 .sp_container_open > .sp_button {
-	border-bottom-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+}
+
+div.sp_button span.sp_caret {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    margin-top: -1px;
+    vertical-align: middle;
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    /*vertical-align: middle;*/
+    border-top: 4px dashed;
+    /*border-top: 4px solid\9;*/
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
 }
 
 div.sp_clear_btn {
@@ -84,8 +105,8 @@ div.sp_clear_btn {
     font-size: 20px;
     color: #666666;
     font-weight: 600;
-    margin: 0px;
-    padding: 4px 0px 0px 0px;
+    margin: 0;
+    padding: 6px 0 0 0;
     box-sizing: border-box;
     line-height: 1;
     font-family: "Helvetica Neue Light", "HelveticaNeue-Light", "Helvetica Neue", Calibri, Helvetica, Arial;
@@ -105,61 +126,62 @@ div.sp_clear_btn.sp_align_right {
  * Results
  */
 .sp_result_area {
-	/* background-color: transparent; */
-	background-color: white;
+    /* background-color: transparent; */
+    background-color: white;
     border: 1px solid #D6D7D7;
-	display: none;
-	list-style: none;
-	margin: 0;
-	padding: 0;
-	position: absolute;
-	z-index: 100;
-	width: 300px;
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    z-index: 100;
+    width: 300px;
+    border-radius: 2px;
 }
 div.sp_result_area.shadowDown{
-    box-shadow: 0px 3px 12px rgba(0,0,0,0.2);
-    -moz-box-shadow: 0px 3px 12px rgba(0,0,0,0.2);
-    -webkit-box-shadow: 0px 3px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 3px 12px rgba(0,0,0,0.2);
 }
 div.sp_result_area.shadowUp{
-    box-shadow: 0px -1px 12px rgba(0,0,0,0.2);
-    -moz-box-shadow: 0px -1px 12px rgba(0,0,0,0.2);
-    -webkit-box-shadow: 0px -1px 12px rgba(0,0,0,0.2);
+    box-shadow: 0 -1px 12px rgba(0,0,0,0.2);
+    -moz-box-shadow: 0 -1px 12px rgba(0,0,0,0.2);
+    -webkit-box-shadow: 0 -1px 12px rgba(0,0,0,0.2);
 }
 .sp_results {
-  background-color: white;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+    background-color: white;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .sp_results > li {
-	height: auto !important;
-	line-height: 1;
-	margin: 0;
-	overflow: hidden;
+    height: auto !important;
+    line-height: 1;
+    margin: 0;
+    overflow: hidden;
     padding: 4px 8px;
-	position: relative;
-	text-align: left;
-	white-space: nowrap;
-	font-size: 14px;
-	color: black;
-	cursor : pointer;
+    position: relative;
+    text-align: left;
+    white-space: nowrap;
+    font-size: 14px;
+    color: black;
+    cursor : pointer;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 .sp_results > li.sp_message_box {
-	height: 30px;
-	line-height: 30px;
-	text-align: center;
-	box-sizing: content-box;
-	font-size: 14px;
-	cursor: default;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    box-sizing: content-box;
+    font-size: 14px;
+    cursor: default;
 }
 
 ul.sp_results > li.sp_over {
-	background-color: #53A4EA !important;
-	color: #fff !important;
-	cursor: pointer;
+    background-color: #53A4EA !important;
+    color: #fff !important;
+    cursor: pointer;
 }
 
 ul.sp_results > li.sp_selected {
@@ -168,7 +190,7 @@ ul.sp_results > li.sp_selected {
 }
 
 .sp_control_box{
-    padding: 0px;
+    padding: 0;
     height: 27px;
 }
 .sp_control_box p{
@@ -181,13 +203,13 @@ ul.sp_results > li.sp_selected {
 .sp_control_box button{
     height: 27px;
     line-height: 20px;
-    -webkit-border-radius: 0px;
-    -moz-border-radius: 0px;
-    border-radius: 0px;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
     font-size: 13px !important;
     padding: 0 12px;
     border: 0;
-    background-color: white;
+    background: white none;
     color: #666666;
     text-align: left;
     -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1);
@@ -207,14 +229,13 @@ ul.sp_results > li.sp_selected {
     background-color: #EEEEEE;
     color: black;
 }
-
 /**
  * 多选模式相关样式
  */
 div.sp_container_combo{
-	border: 1px solid #CCCCCC;
-	border-radius: 4px;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
     box-sizing: border-box;
@@ -234,67 +255,66 @@ div.sp_container.sp_disabled .sp_clear_btn,
 div.sp_container_combo.sp_disabled ul.sp_element_box span.tag_close{
     display: none;
 }
+
 div.sp_container_combo.sp_container_open{
-	border-radius: 0px;
+    border-radius: 2px;
 }
 input.sp_combo_input{
-	border: 0px;
-	box-shadow: none;
-	background-color: transparent;
-	max-width: 100%;
-	padding: 0px;
-	height: 30px !important;
-	line-height: 30px !important;
-	min-height: 30px !important;
+    border: 0 !important;
+    box-shadow: none;
+    background-color: transparent;
+    max-width: 100%;
+    padding: 0;
+    height: 34px !important;
+    line-height: 34px !important;
+    min-height: 34px !important;
 }
 input.sp_combo_input:focus {
-	box-shadow: none;
+    box-shadow: none;
+    border: 0;
 }
 input.sp_combo_input[readonly],
 input.sp_combo_input[disabled]{
     background-color: white;
 }
 ul.sp_element_box{
-	margin: 0px;
-	position: relative;
-	overflow: hidden;
-	clear: both;
-	cursor: text;
-	margin-right: 24px;
-	list-style: none;
-	height: auto;
-	padding: 4px 0px 0px 5px;
-	font-size: 14px;
-	min-height: 24px;
+    margin: 0;
+    padding: 3px 0 0 3px;
+    position: relative;
+    overflow: hidden;
+    clear: both;
+    cursor: text;
+    margin-right: 24px;
+    list-style: none;
+    height: auto;
+    min-height: 25px;
+    font-size: 14px;
 }
 ul.sp_element_box > li{
-	list-style: none;
-	padding: 0px 5px;
-/* 	margin-left: 5px;
-	margin-top: 3px; */
-	/* margin-bottom: 2px; */
-	float: left;
-	height: 19px;
-	line-height: 19px;
-	position: relative;
-	margin: 0px;
-	box-sizing: content-box;
+    list-style: none;
+    padding: 0 5px;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    /* margin-bottom: 2px; */
+    float: left;
+    position: relative;
+    box-sizing: content-box;
 }
 ul.sp_element_box li.full_width {
-	width: 100%;
+    width: 100%;
 }
 ul.sp_element_box li.full_width input{
-	width: 100% !important;
+    width: 100% !important;
 }
 ul.sp_element_box li.selected_tag {
-	border: 1px solid #AAAAAA;
-	border-radius: 3px;
-	background-color: #EFEFEF;
-	cursor: pointer;
-	max-width: 100%;
-	box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
-	margin-bottom: 2px;
-	margin-right: 5px;
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background-color: #EFEFEF;
+    cursor: pointer;
+    max-width: 100%;
+    box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    height: 24px;
+    line-height: 24px;
     -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1);
     transition: all .5s cubic-bezier(.175,.885,.32,1);
 }
@@ -311,16 +331,16 @@ ul.sp_element_box li.selected_tag i:hover {
     color: black;
 }
 ul.sp_element_box li.input_box {
-	padding: 0px;
-	/* margin: 0px; */
-	margin-top: 0px;
- 	height: 21px;
-	min-height: 21px;
+    padding: 0;
+    /* margin: 0; */
+    margin-top: 0;
+    height: 26px;
+    min-height: 26px;
 }
 ul.sp_element_box li.input_box input {
-	height: 21px !important;
-	line-height: 21px !important;
-	min-height: 21px !important;
+    height: 26px !important;
+    line-height: 26px !important;
+    min-height: 26px !important;
 }
 ul.sp_element_box li.selected_tag span.tag_close {
     cursor: pointer;
@@ -334,7 +354,7 @@ ul.sp_element_box li.selected_tag span.tag_close {
  * 加深颜色表示非选中
  */
 .sp_results_off {
-  /*background: rgba(255, 255, 255, 0.8);*/
+    /*background: rgba(255, 255, 255, 0.8);*/
 }
 
 .sp_input_off {
@@ -343,51 +363,51 @@ ul.sp_element_box li.selected_tag span.tag_close {
 }
 
 .sp_hide {
-  display: none;
+    display: none;
 }
 
 /**
  * Navi
  */
 .sp_navi {
-  background: #eee;
-  border-bottom: 1px solid #79b;
-  font-size: 13px;
-  font-weight: normal;
-  line-height: 1;
-  margin: 0;
-  padding: 4px;
-  text-align: right;
+    background: #eee;
+    border-bottom: 1px solid #79b;
+    font-size: 13px;
+    font-weight: normal;
+    line-height: 1;
+    margin: 0;
+    padding: 4px;
+    text-align: right;
 }
 
 .sp_navi > p > a:link,
 .sp_navi > p > a:visited,
 .sp_navi > p > a:hover,
 .sp_navi > p > a:active {
-  color: blue;
-  font-weight: normal;
-  margin: 0 4px;
-  text-decoration: underline;
+    color: blue;
+    font-weight: normal;
+    margin: 0 4px;
+    text-decoration: underline;
 }
 
 .sp_navi > p {
-  color: black;
-  font-size: 15px;
-  margin: 0;
-  padding-top: 4px;
-  text-align: center;
+    color: black;
+    font-size: 15px;
+    margin: 0;
+    padding-top: 4px;
+    text-align: center;
 }
 
 .sp_navi > p > a >.current {
-  color: #00c;
-  font-size: 16px;
-  font-weight: bold;
+    color: #00c;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 .sp_navi > p >.page_end {
-  color: gray;
-  font-weight: normal;
-  margin: 0 4px;
+    color: gray;
+    font-weight: normal;
+    margin: 0 4px;
 }
 
 .navi_page,
@@ -395,19 +415,19 @@ ul.sp_element_box li.selected_tag span.tag_close {
 .navi_prev,
 .navi_next,
 .navi_last {
-  margin: auto 4px !important;
+    margin: auto 4px !important;
 }
 
 .sp_navi > .info {
-  margin: 0 !important;
-  padding: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 /**
  * Select only
  */
 .sp_container > .sp_select_ng {
-  background: #fcc;
+    background: #fcc;
 }
 
 
@@ -418,11 +438,11 @@ ul.sp_element_box li.selected_tag span.tag_close {
 
 /*输入框设置了input-block-level样式时的特殊情况修复*/
 div.sp_container input.sp_input.input-block-level{
-	box-sizing:border-box;
-	height: 30px;
-	line-height: 30px;
-	min-height: 30px;
-	width: 100%;
+    box-sizing:border-box;
+    height: 30px;
+    line-height: 30px;
+    min-height: 30px;
+    width: 100%;
 }
 
 div.sp_container_open .sp_input::-ms-clear{display:none;}
@@ -430,15 +450,8 @@ div.sp_container_open .sp_input::-ms-clear{display:none;}
 input::-ms-clear{display:none;}/*隐藏文本框叉子*/
 input::-ms-reveal{display:none;}/*隐藏密码框小眼睛*/
 
-div.sp_button span.caret {
-	position: absolute;
-	top: 50%;
-	right: 12px;
-	margin-top: -1px;
-    vertical-align: middle;
-}
 div.sp_navi > p {
-	font-size: 12px;
+    font-size: 12px;
 }
 
 
@@ -447,30 +460,53 @@ div.sp_navi > p {
 /**
  * 分页条样式（基于Bootstrap2的样式进行调整）
  */
-div.sp_result_area div.pagination {
-	margin: 0px;
-	padding: 0px;
-	height: 26px;
-	line-height: 26px;
-	width: 100%;
-	/* border-top: 1px solid #DDDDDD; */
+div.sp_result_area div.sp_pagination {
+    margin: 0;
+    padding: 0;
+    height: 26px;
+    line-height: 26px;
+    width: 100%;
+    /* border-top: 1px solid #DDDDDD; */
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    display: block;
 }
-div.sp_result_area div.pagination ul {
-	width: 100%;
+div.sp_result_area div.sp_pagination ul {
+    width: 100%;
+    display: inline-block;
+    margin: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    /*     -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        box-shadow: 0 1px 2px rgba(0,0,0,0.05); */
+    padding: 0;
 }
-div.sp_result_area div.pagination li{
-	text-align: center;
+div.sp_result_area div.sp_pagination li{
+    text-align: center;
+    display: inline;
+    box-sizing: border-box;
 }
-div.sp_result_area div.pagination>ul>li>a {
-	margin: 0px;
-	border-radius: 0px;
-	padding: 0px;
-	box-shadow:         none;
-	-moz-box-shadow:    none;
-	-webkit-box-shadow: none;
-	background-color: white;
-	
-	border: 0px;
+div.sp_result_area div.sp_pagination>ul>li>a {
+    margin: 0;
+    /* border: 1px solid #ddd; */
+    border-radius: 0;
+    padding: 0;
+    box-shadow:         none;
+    -moz-box-shadow:    none;
+    -webkit-box-shadow: none;
+    background-color: white;
+
+    float: left;
+    text-decoration: none;
+
+    border: 0;
     box-sizing: content-box;
     color: #666666;
     font-size: 20px;
@@ -480,43 +516,44 @@ div.sp_result_area div.pagination>ul>li>a {
     transition: all .5s cubic-bezier(.175,.885,.32,1);
 }
 
-div.sp_result_area div.pagination li.csFirstPage a,
-div.sp_result_area div.pagination li.csPreviousPage a,
-div.sp_result_area div.pagination li.csNextPage a,
-div.sp_result_area div.pagination li.csLastPage a {
-	width: 30px;
+div.sp_result_area div.sp_pagination li.csFirstPage a,
+div.sp_result_area div.sp_pagination li.csPreviousPage a,
+div.sp_result_area div.sp_pagination li.csNextPage a,
+div.sp_result_area div.sp_pagination li.csLastPage a {
+    width: 30px;
 }
-div.sp_result_area div.pagination li.csFirstPage a{
-	border-left: 0px;
+div.sp_result_area div.sp_pagination li.csFirstPage a{
+    border-left: 0;
+    border-bottom-left-radius: 2px;
 }
-div.sp_result_area div.pagination li.csLastPage a{
-	border-right: 0px;
-}
-
-div.sp_result_area div.pagination>ul>li>a:hover {
-	color: #000000; background-color: #E8E8E8;
+div.sp_result_area div.sp_pagination li.csLastPage a{
+    border-right: 0;
+    border-bottom-right-radius: 2px;
 }
 
-div.sp_result_area div.pagination>ul>li.disabled>a{
-	color: #DDDDDD;
-	cursor: default;
+div.sp_result_area div.sp_pagination>ul>li>a:hover {
+    color: #000000; background-color: #E8E8E8;
 }
-div.sp_result_area div.pagination>ul>li.disabled>a:hover {
-	color: #DDDDDD;background-color: white;
+div.sp_result_area div.sp_pagination>ul>li.disabled>a{
+    color: #DDDDDD;
+    cursor: default;
+}
+div.sp_result_area div.sp_pagination>ul>li.disabled>a:hover {
+    color: #DDDDDD;background-color: white;
 }
 
-div.sp_result_area div.pagination>ul>li.pageInfoBox>a {
-	width: 178px;
-	text-align: center;
-	/* padding-left: 4px;
-	padding-right: 4px; */
-	color: #666666;
-	font-size: 14px;
+div.sp_result_area div.sp_pagination>ul>li.pageInfoBox>a {
+    width: 178px;
+    text-align: center;
+    /* padding-left: 4px;
+    padding-right: 4px; */
+    color: #666666;
+    font-size: 14px;
 }
-div.sp_result_area div.pagination>ul>li.pageInfoBox>a:hover {
-	background-color: inherit;
-	color: #666666;
-	cursor: default;
+div.sp_result_area div.sp_pagination>ul>li.pageInfoBox>a:hover {
+    background-color: inherit;
+    color: #666666;
+    cursor: default;
 }
 
 
