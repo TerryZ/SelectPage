@@ -73,25 +73,12 @@ SelectPage是一个基于jQuery开发的多功能下拉分页选择器，作为�
 ### 引用文件
 
 ```html
-<!-- 基础环境引用说明 -->
-<!-- Bootstrap的UI框架基础样式 -->
-<link rel="stylesheet" href="bootstrap.min.css" type="text/css">
-<!-- 插件使用了部分font-awesome的图标，所以需要引入该样式 -->
-<link rel="stylesheet" href="font-awesome.min.css" type="text/css">
-<!-- jQuery，Bootstrap的基础脚本引用 -->
-<script type="text/javascript" src="bootstrap.min.js" >< /script>
+<!-- jQuery的基础脚本引用 -->
 <script type="text/javascript" src="jquery.min.js" >< /script>
- 
- 
-<!-- 插件使用的样式表文件，根据使用环境的Bootstrap版本进行引用 -->
-<!-- Bootstrap2使用 -->
+
+<!-- 核心样式文件 -->
 <link rel="stylesheet" href="selectpage.css" type="text/css">
-<!-- Bootstrap3使用 -->
-<link rel="stylesheet" href="selectpage.bootstrap3.css" type="text/css">
-<!-- 非Bootstrap生态下引用该样式 -->
-<link rel="stylesheet" href="selectpage.base.css" type="text/css">
-<!-- 以上的样式文件根据实际使用的环境进行引用，引用其中一项即可 -->
- 
+
 <!-- 插件核心脚本 -->
 <script type="text/javascript" src="selectpage.js" >< /script>
 ```
