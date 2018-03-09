@@ -64,7 +64,6 @@ SelectPage是一个基于jQuery开发的多功能下拉分页选择器，作为�
 
 有时候我们需要有一个插件，它可以输入关键字进行快速查找，可以下拉进行选择，可以在展示大量数据时进行分页显示，可以使用键盘进行快速操作，可以适应各种UI环境，可以被灵活定制，而上述的情况就真的出现在现实项目的需求里了
 
-这就是为什么会有SelectPage插件的原因
 
 ## 怎么使用SelectPage
 
@@ -80,7 +79,7 @@ SelectPage是一个基于jQuery开发的多功能下拉分页选择器，作为�
 <link rel="stylesheet" href="selectpage.css" type="text/css">
 
 <!-- 插件核心脚本 -->
-<script type="text/javascript" src="selectpage.js" >< /script>
+<script type="text/javascript" src="selectpage.min.js" >< /script>
 ```
 
 ### HTML页面元素设置
