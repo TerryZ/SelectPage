@@ -10,7 +10,7 @@ Explorer on
 
 - [English official site](https://TerryZ.github.io/selectpage/index.html)（translation unfinished）
 
-- [中文官网](https://terryz.oschina.io/selectpage/index.html)
+- [中文官网](https://terryz.gitee.io/selectpage/index.html)
 
 
 ## Status
@@ -25,15 +25,15 @@ Explorer on
 
 *Multiple Select by Tags mode*
 
-![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
+![SelectPage1](https://terryz.gitee.io/image/SelectPage1.png)
 
 *Normal select mode ( single select )*
 
-![SelectPage](https://terryz.github.io/image/SelectPage.png)
+![SelectPage](https://terryz.gitee.io/image/SelectPage.png)
 
 *List only mode ( pagination bar close, disable typing to quick search, select only )*
 
-![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
+![SelectPageList](https://terryz.gitee.io/image/SelectPageList.png)
 
 <br><br>
 
