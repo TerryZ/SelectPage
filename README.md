@@ -61,7 +61,7 @@ MIT
 
 ## Stargazers over time
 
-[![Stargazers over time](https://starcharts.herokuapp.com/caarlos0/starcharts.svg)](https://starcharts.herokuapp.com/caarlos0/starcharts)
+[![Stargazers over time](https://starcharts.herokuapp.com/TerryZ/SelectPage.svg)](https://starcharts.herokuapp.com/TerryZ/SelectPage)
 
 <br><br>
 
