@@ -15,7 +15,7 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
 </p>
 
 <p align="center">
-**If you think this project is helpful, please star it.**
+<strong>If you think this project is helpful, please star it.</strong>
 </p>
 
 <br><br><br><br><br>
