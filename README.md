@@ -43,9 +43,11 @@ Explorer on
 
 ![SelectPageList](https://terryz.gitee.io/image/SelectPageList.png)
 
+**If you think this project is helpful, please star it.**
+
 <br><br>
 
-**If you think this project is helpful, please star it.**
+
 
 ## What
 
