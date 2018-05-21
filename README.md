@@ -14,6 +14,10 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
   <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
 </p>
 
+<p align="center">
+**If you think this project is helpful, please star it.**
+</p>
+
 <br><br><br><br><br>
 
 
@@ -45,7 +49,7 @@ Explorer on
 
 <br><br>
 
-**If you think this project is helpful, please star it.**
+
 
 ## What
 
