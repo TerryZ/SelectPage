@@ -2,8 +2,6 @@
 
 <br><br><br><br><br>
 
-<p align="center"><img src="https://terryz.gitee.io/image/SelectPage1.png" alt="SelectPage" ></p>
-
 <p align="center">
 A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n and keyboard navigation features
 </p>
