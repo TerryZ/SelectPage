@@ -14,11 +14,7 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
   <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
 </p>
 
-# ![SelectPageLogo](https://terryz.github.io/image/logo/SelectPage.png)
 
-A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n and keyboard navigation features
-
-[简体中文文档](README-CN.md)
 
 ## Docs、Demo、Guide
 
@@ -28,6 +24,7 @@ Explorer on
 
 - [中文官网](https://terryz.gitee.io/selectpage/index.html)
 
+[简体中文文档](README-CN.md)
 
 ## Status
 
