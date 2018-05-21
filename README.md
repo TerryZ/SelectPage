@@ -45,6 +45,7 @@ Explorer on
 
 <br><br>
 
+**If you think this project is helpful, please star it.**
 
 ## What
 
@@ -320,4 +321,4 @@ MIT
   alert($('#selectpage').selectPageText());
   ```
 
-**If you think this project is helpful, please star it.**
+
