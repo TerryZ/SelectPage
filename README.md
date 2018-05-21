@@ -14,6 +14,7 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
   <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
 </p>
 
+<br><br>
 
 
 ## Docs、Demo、Guide
@@ -26,13 +27,7 @@ Explorer on
 
 [简体中文文档](README-CN.md)
 
-## Status
 
-[![travis ci](https://travis-ci.org/TerryZ/SelectPage.svg?branch=master)](https://travis-ci.org/TerryZ/SelectPage)
-[![npm version](https://img.shields.io/npm/v/selectpage.svg)](https://www.npmjs.com/package/selectpage)
-[![license](https://img.shields.io/badge/license-MIT-brightgreen.svg)](https://mit-license.org/)
-[![npm](https://img.shields.io/npm/dy/selectpage.svg)](https://www.npmjs.com/package/selectpage)
-[![language](https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg)]()
 
 ## Plugin Preview
 
