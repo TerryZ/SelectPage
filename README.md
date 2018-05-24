@@ -27,9 +27,9 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
 
 Explorer on 
 
-- [English site](https://TerryZ.github.io/selectpage/index.html)（translation unfinished）
+- [English site](https://TerryZ.github.io/selectpage)（translation unfinished）
 
-- [国内站点](https://terryz.gitee.io/selectpage/index.html)
+- [国内站点](https://terryz.gitee.io/selectpage)
 
 [简体中文文档](README-CN.md)
 
