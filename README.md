@@ -1,6 +1,10 @@
 <br><br><br>
 
-<p align="center"><img src="https://terryz.github.io/image/logo/SelectPage.png" alt="SelectPage" ></p>
+<p align="center">
+    <a href="https://terryz.github.io/selectpage/" target="_blank">
+	    <img src="https://terryz.github.io/image/logo/SelectPage.png" alt="SelectPage" >
+    </a>
+</p>
 
 <br><br><br>
 
