@@ -35,7 +35,7 @@ Explorer on
 
 this Vue.js version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
-
+<br><br>
 
 ## Plugin Preview
 
