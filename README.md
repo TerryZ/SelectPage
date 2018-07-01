@@ -33,6 +33,8 @@ Explorer on
 
 [简体中文文档](README-CN.md)
 
+this Vue.js version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
+
 
 
 ## Plugin Preview
