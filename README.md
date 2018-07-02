@@ -23,7 +23,7 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
 </p>
 
 <p align="center">
-  <a href="https://nodei.co/npm/selectpage/"><img src="https://nodei.co/npm/selectpage"></a>
+  <a href="https://nodei.co/npm/selectpage/"><img src="https://nodei.co/npm/selectpage.png"></a>
 </p>
 
 <br><br><br><br><br>
