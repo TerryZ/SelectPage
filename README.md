@@ -13,7 +13,6 @@
   <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/v/selectpage.svg"></a>
   <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/dy/selectpage.svg"></a>
   <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
-  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
 </p>
 
 <p align="center"><img src="https://terryz.gitee.io/image/SelectPage1.png" alt="SelectPage" ></p>
