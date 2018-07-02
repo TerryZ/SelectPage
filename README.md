@@ -6,7 +6,7 @@
     </a>
 </p>
 
-<br><br><br>
+<br><br>
 
 <p align="center">
   <a href="https://travis-ci.org/TerryZ/SelectPage"><img src="https://travis-ci.org/TerryZ/SelectPage.svg?branch=master"></a>
@@ -18,7 +18,7 @@
 <p align="center"><img src="https://terryz.gitee.io/image/SelectPage1.png" alt="SelectPage" ></p>
 
 <p align="center">
-A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n and keyboard navigation features
+A simple style and powerful selection jQuery plugin, including ajax remote data, <br>autocomplete, pagination, tags, i18n and keyboard navigation features
 </p>
 
 <p align="center">
