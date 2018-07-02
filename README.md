@@ -9,15 +9,21 @@
 <br><br><br>
 
 <p align="center">
-A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n and keyboard navigation features
-</p>
-
-<p align="center">
   <a href="https://travis-ci.org/TerryZ/SelectPage"><img src="https://travis-ci.org/TerryZ/SelectPage.svg?branch=master"></a>
   <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/v/selectpage.svg"></a>
   <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/dy/selectpage.svg"></a>
   <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
   <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
+</p>
+
+<p align="center"><img src="https://terryz.gitee.io/image/SelectPage1.png" alt="SelectPage" ></p>
+
+<p align="center">
+A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n and keyboard navigation features
+</p>
+
+<p align="center">
+  <a href="https://nodei.co/npm/SelectPage/"><img src="https://nodei.co/npm/SelectPage"></a>
 </p>
 
 <br><br><br><br><br>
