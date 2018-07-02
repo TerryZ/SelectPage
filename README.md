@@ -6,14 +6,7 @@
     </a>
 </p>
 
-<br><br>
-
-<p align="center">
-  <a href="https://travis-ci.org/TerryZ/SelectPage"><img src="https://travis-ci.org/TerryZ/SelectPage.svg?branch=master"></a>
-  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/v/selectpage.svg"></a>
-  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/dy/selectpage.svg"></a>
-  <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
-</p>
+<br>
 
 <p align="center"><img src="https://terryz.gitee.io/image/SelectPage1.png" alt="SelectPage" ></p>
 
@@ -23,6 +16,13 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
 
 <p align="center">
   <a href="https://nodei.co/npm/selectpage/"><img src="https://nodei.co/npm/selectpage.png"></a>
+</p>
+
+<p align="center">
+  <a href="https://travis-ci.org/TerryZ/SelectPage"><img src="https://travis-ci.org/TerryZ/SelectPage.svg?branch=master"></a>
+  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/v/selectpage.svg"></a>
+  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/dy/selectpage.svg"></a>
+  <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
 </p>
 
 <br><br><br><br><br>
