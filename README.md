@@ -108,18 +108,10 @@ npm install selectpage
   
   **Including files**  
   ```html
-  <!-- SelectPage depend on font-awesome icon -->
-  <link rel="stylesheet" href="font-awesome.min.css" type="text/css">
-  <!-- jQuery library 1.6+ -->
+  <!-- jQuery library -->
   <script type="text/javascript" src="jquery.min.js" >< /script>
 
-  <!-- include for Bootstrap2.x -->
   <link rel="stylesheet" href="selectpage.css" type="text/css">
-  <!-- include for Bootstrap3.x -->
-  <link rel="stylesheet" href="selectpage.bootstrap3.css" type="text/css">
-  <!-- include for no css framework -->
-  <link rel="stylesheet" href="selectpage.base.css" type="text/css">
-  <!-- Above the css file under your css framework choose one of them to include -->
   
   <script type="text/javascript" src="selectpage.js" >< /script>
   ```
