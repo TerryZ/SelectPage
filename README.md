@@ -38,7 +38,30 @@ Explorer on
 
 [简体中文文档](README-CN.md)
 
-this Vue.js version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
+this Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
+
+<br><br>
+
+### Key Features
+
+- a jQuery plugin
+- highly customized
+- compatible with no UI framework of the program, but it is recommended to use at least normalize.css
+- quick search item by input autocomplete
+- use keybord to quick navigate
+- multiple select by tag form
+- screen edges handle
+- custom content render
+- i18n supports, provide 6 languages
+- The result list automatically determines the edge of the screen to avoid content beyond the visible range
+- server side data supports
+
+
+<br><br>
+
+### License
+
+MIT
 
 <br><br>
 
@@ -60,26 +83,6 @@ this Vue.js version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 <br><br>
 
-
-
-### Key Features
-
-- a jQuery plugin
-- a item selection plugin for bootstrap2、3
-- compatible with no UI framework of the program, but it is recommended to use at least normalize.css
-- quick search item by input autocomplete
-- use keybord to quick navigate
-- multiple select by tag form
-- The result list automatically determines the edge of the screen to avoid content beyond the visible range
-- brower support IE8+, chrome, firefox
-
-<br><br>
-
-### License
-
-MIT
-
-<br><br>
 
 ## Stargazers over time
 
