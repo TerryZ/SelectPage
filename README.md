@@ -62,10 +62,6 @@ this Vue.js version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 
 
-## What
-
-SelectPage is a jquery library multifunction drop list paging selector, as a powerful one form element, it will have a lot of shortcoming, welcome to submit your suggestions to the project, let's make SelectPage better
-
 ### Key Features
 
 - a jQuery plugin
@@ -76,6 +72,8 @@ SelectPage is a jquery library multifunction drop list paging selector, as a pow
 - multiple select by tag form
 - The result list automatically determines the edge of the screen to avoid content beyond the visible range
 - brower support IE8+, chrome, firefox
+
+<br><br>
 
 ### License
 
@@ -89,14 +87,16 @@ MIT
 
 <br><br>
 
-## How
 
 ### Install  
-  download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage  
-  or use **NPM**
-  ```
-  npm install selectpage
-  ```
+download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage  
+
+or use **NPM**
+
+```
+npm install selectpage
+```
+<br><br>
 ### Usage
   As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html), you will need to include:
   - [jQuery library](http://jquery.com) (1.10.2+), untest on jquery2.x & 3.x
@@ -143,6 +143,9 @@ MIT
       data : data
   });
   ```
+
+<br><br>
+
 ## Options
 
 - **data** `string | object`  
@@ -299,6 +302,8 @@ MIT
   this callback function is used to close tag, when `multiple : true`  
   **param**  
   *removeCount* `number` removed tag count
+
+<br><br>
 
 ## API
 - **selectPageClear**  
