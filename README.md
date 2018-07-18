@@ -42,7 +42,7 @@ this Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 <br><br>
 
-### Key Features
+## Features
 
 - a jQuery plugin
 - highly customized
