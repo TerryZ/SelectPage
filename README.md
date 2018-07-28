@@ -53,7 +53,6 @@ this Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 - screen edges handle
 - custom content render
 - i18n supports, provide 6 languages
-- The result list automatically determines the edge of the screen to avoid content beyond the visible range
 - server side data supports
 
 
