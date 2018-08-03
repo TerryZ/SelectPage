@@ -38,7 +38,7 @@ Explorer on
 
 [简体中文文档](README-CN.md)
 
-this Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
+The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 <br><br>
 
