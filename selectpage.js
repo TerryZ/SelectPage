@@ -953,11 +953,11 @@
                     d.hideResults(d);
                     return true;
                 }
-                if (d.elem.results.find('li').not('.'+css.message_box).size()) {
+                if (d.elem.results.find('li').not('.'+css.message_box).length) {
                     if(d.option.autoFillResult) {
                         //have selected item, then hide result list
                         if (d.elem.hidden.val()) d.hideResults(d);
-                        else if(d.elem.results.find('li.sp_over').size()){
+                        else if(d.elem.results.find('li.sp_over').length){
                             //no one selected and have highlight item, select the highlight item
                             d.selectCurrentLine(d, true);
                         }else if(d.option.autoSelectFirst){
@@ -1562,7 +1562,7 @@
                 var pageInfo = msg.page_info;
                 return pageInfo.replace(self.template.page.current, page_num).replace(self.template.page.total, last_page);
             };
-			if (pagebar.find('li').size() === 0) {
+			if (pagebar.find('li').length === 0) {
 				pagebar.hide().empty();
 				var iconFist='iconfont if-first',
                     iconPrev='iconfont if-previous',
@@ -1629,7 +1629,7 @@
 	    var p = self.option, el = self.elem;
 		el.results.hide().empty();
 		if(p.multiple && $.type(p.maxSelectLimit) === 'number' && p.maxSelectLimit > 0){
-			var selectedSize = el.element_box.find('li.selected_tag').size();
+			var selectedSize = el.element_box.find('li.selected_tag').length;
 			if(selectedSize > 0 && selectedSize >= p.maxSelectLimit){
 			    var msg = self.message.max_selected;
 				self.showMessage(self, msg.replace(self.template.msg.maxSelectLimit, p.maxSelectLimit));
@@ -1931,7 +1931,7 @@
             //limited max selected items
 			if($.type(p.maxSelectLimit) === 'number' &&
                 p.maxSelectLimit > 0 &&
-                p.maxSelectLimit === self.elem.element_box.find('li.selected_tag').size()){
+                p.maxSelectLimit === self.elem.element_box.find('li.selected_tag').length){
 			    return false;
             }
 		});
@@ -1944,7 +1944,7 @@
 	 * @param {Object} self
 	 */
 	SelectPage.prototype.unSelectAllLine = function(self){
-		var p = self.option,size = self.elem.results.find('li').size();
+		var p = self.option,size = self.elem.results.find('li').length;
         self.elem.results.find('li').each(function(i,row){
 			var key = $(row).attr('pkey');
 			var tag = self.elem.element_box.find('li.selected_tag[itemvalue="'+key+'"]');
@@ -1961,7 +1961,7 @@
 	SelectPage.prototype.clearAll = function(self){
 		var p = self.option, size = 0;
         if(p.multiple){
-            size = self.elem.element_box.find('li.selected_tag').size();
+            size = self.elem.element_box.find('li.selected_tag').length;
             self.elem.element_box.find('li.selected_tag').remove();
         }
         self.reset(self);
@@ -1992,7 +1992,7 @@
 	SelectPage.prototype.getCurrentLine = function(self) {
 		if (self.elem.result_area.is(':hidden')) return false;
 		var obj = self.elem.results.find('li.' + self.css_class.select);
-		if (obj.size()) return obj;
+		if (obj.length) return obj;
 		else return false;
 	};
 	
@@ -2054,7 +2054,7 @@
 	SelectPage.prototype.tagValuesSet = function(self){
 		if(!self.option.multiple) return;
 		var tags = self.elem.element_box.find('li.selected_tag');
-		if(tags && tags.size()){
+		if(tags && tags.length){
 			var result = new Array();
 			$.each(tags,function(i,li){
 				var v = $(li).attr('itemvalue');
@@ -2080,7 +2080,7 @@
                 width = (minimumWidth * 0.75) + 'em';
 			self.elem.combo_input.css('width', width).removeAttr('placeholder');
 		};
-		if(self.elem.element_box.find('li.selected_tag').size() === 0){
+		if(self.elem.element_box.find('li.selected_tag').length === 0){
 			if(self.elem.combo_input.attr('placeholder_bak')){
 				if(!inputLi.hasClass('full_width')) inputLi.addClass('full_width');
 				self.elem.combo_input.attr('placeholder',self.elem.combo_input.attr('placeholder_bak')).removeAttr('style');
