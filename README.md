@@ -44,7 +44,7 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 ## Features
 
-- a jQuery plugin
+- a jQuery(1.x) plugin
 - highly customized
 - compatible with no UI framework of the program, but it is recommended to use at least normalize.css
 - quick search item by input autocomplete
