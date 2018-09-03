@@ -8,7 +8,7 @@
 
 <br>
 
-<p align="center"><img src="https://terryz.gitee.io/image/SelectPage1.png" alt="SelectPage" ></p>
+<p align="center"><img src="https://terryz.github.io/image/SelectPage1.png" alt="SelectPage" ></p>
 
 <p align="center">
 A simple style and powerful selection jQuery plugin, <br>including ajax remote data, autocomplete, pagination, tags, i18n and keyboard navigation features
@@ -68,15 +68,15 @@ MIT
 
 *Multiple Select by Tags mode*
 
-![SelectPage1](https://terryz.gitee.io/image/SelectPage1.png)
+![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
 
 *Normal select mode ( single select )*
 
-![SelectPage](https://terryz.gitee.io/image/SelectPage.png)
+![SelectPage](https://terryz.github.io/image/SelectPage.png)
 
 *List only mode ( pagination bar close, disable typing to quick search, select only )*
 
-![SelectPageList](https://terryz.gitee.io/image/SelectPageList.png)
+![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
 
 **If you think this project is helpful, please star it.**
 
