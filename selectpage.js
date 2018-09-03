@@ -2,7 +2,7 @@
  * @summary     SelectPage
  * @desc        Simple and powerful selection plugin
  * @file        selectpage.js
- * @version     2.18
+ * @version     2.19
  * @author      TerryZeng
  * @contact     https://terryz.github.io/
  * @license     MIT License
@@ -105,11 +105,11 @@
 		andOr: 'AND',
         /**
          * Result sort type
-         * @type array - if not set, will default used showField field
+         * @type array|boolean
          * @example
          * orderBy : ['id desc']
          */
-        orderBy: undefined,
+        orderBy: false,
 		/**
 		 * Page size
 		 * @type number
@@ -227,7 +227,7 @@
 	/**
 	 * Plugin version number
 	 */
-	SelectPage.version = '2.18';
+	SelectPage.version = '2.19';
 	/**
 	 * Plugin object cache key
 	 */
@@ -249,12 +249,9 @@
 			option[arr[i]] = this.strToArray(option[arr[i]]);
 		}
 
-		//set default order field
-		option.orderBy = option.orderBy || option.showField;
-
 		//set multiple order field
-		//example:  [ ['id', 'ASC'], ['name', 'DESC'] ]
-		option.orderBy = this.setOrderbyOption(option.orderBy, option.showField);
+		//example:  [ ['id ASC'], ['name DESC'] ]
+		if(option.orderBy !== false) option.orderBy = this.setOrderbyOption(option.orderBy, option.showField);
         //close auto fill result and auto select first in multiple mode and select item not close list
 		if(option.multiple && !option.selectToCloseList){
 			option.autoFillResult = false;
@@ -273,26 +270,26 @@
 	 * @return {Array}
 	 */
 	SelectPage.prototype.strToArray = function(str) {
-		if(!str) return '';
-		return str.replace(/[\s　]+/g, '').split(',');
+		return str ? str.replace(/[\s　]+/g, '').split(',') : '';
 	};
 
 	/**
 	 * Set order field
 	 * @param {Array} arg_order
-	 * @param {string} arg_field
+	 * @param {string} arg_field - default sort field
 	 * @return {Array}
 	 */
 	SelectPage.prototype.setOrderbyOption = function(arg_order, arg_field) {
 		var arr = [],orders = [];
-		if (typeof arg_order == 'object') {
+		if (typeof arg_order === 'object') {
 			for (var i = 0; i < arg_order.length; i++) {
 				orders = $.trim(arg_order[i]).split(' ');
-				arr[i] = (orders.length == 2) ? orders: [orders[0], 'ASC'];
+				if(orders.length)
+				    arr.push((orders.length === 2) ? orders.concat(): [orders[0], 'ASC']);
 			}
 		} else {
 			orders = $.trim(arg_order).split(' ');
-			arr[0] = (orders.length == 2) ? orders: (orders[0].match(/^(ASC|DESC)$/i)) ? [arg_field, orders[0]] : [orders[0], 'ASC'];
+			arr[0] = (orders.length === 2) ? orders.concat(): (orders[0].toUpperCase().match(/^(ASC|DESC)$/i)) ? [arg_field, orders[0].toUpperCase()] : [orders[0], 'ASC'];
 		}
 		return arr;
 	};
@@ -354,7 +351,7 @@
 				close_alt: '(button)',
 				loading: 'loading...',
 				loading_alt: '(loading)',
-				page_info: 'page_num of page_count',
+				page_info: 'Page page_num of page_count',
 				select_ng: 'Attention : Please choose from among the list.',
 				select_ok: 'OK : Correctly selected.',
 				not_found: 'not found',
@@ -523,6 +520,7 @@
             disabled: 'sp_disabled',
 			
 			button: 'sp_button',
+            caret_open: 'sp_caret_open',
 			btn_on: 'sp_btn_on',
 			btn_out: 'sp_btn_out',
 			input: 'sp_input',
@@ -556,7 +554,7 @@
 		};
 		this.template = {
 			tag: {
-				content : '<li class="selected_tag" itemvalue="#item_value#">#item_text#<span class="tag_close"><i class="iconfont if-close"></i></span></li>',
+				content : '<li class="selected_tag" itemvalue="#item_value#">#item_text#<span class="tag_close"><i class="sp-iconfont if-close"></i></span></li>',
 				textKey : '#item_text#',
 				valueKey : '#item_value#'
 			},
@@ -654,7 +652,7 @@
 		//drop down button
 		elem.dropdown = $('<span class="sp_caret"></span>');
 		//clear button 'X' in single mode
-		elem.clear_btn = $('<div>').html($('<i>').addClass('iconfont if-close')).addClass(css.clear_btn).attr('title', msg.clear);
+		elem.clear_btn = $('<div>').html($('<i>').addClass('sp-iconfont if-close')).addClass(css.clear_btn).attr('title', msg.clear);
 		if(!p.dropButton) elem.clear_btn.addClass(css.align_right);
 		
 		//main box in multiple mode
@@ -696,9 +694,9 @@
 		//Multiple select mode
 		if(p.multiple){
 			if(p.multipleControlbar){
-				elem.control.append('<button type="button" class="btn btn-default sp_clear_all" ><i class="iconfont if-clear"></i></button>');
-				elem.control.append('<button type="button" class="btn btn-default sp_unselect_all" ><i class="iconfont if-unselect-all"></i></button>');
-				elem.control.append('<button type="button" class="btn btn-default sp_select_all" ><i class="iconfont if-select-all"></i></button>');
+				elem.control.append('<button type="button" class="btn btn-default sp_clear_all" ><i class="sp-iconfont if-clear"></i></button>');
+				elem.control.append('<button type="button" class="btn btn-default sp_unselect_all" ><i class="sp-iconfont if-unselect-all"></i></button>');
+				elem.control.append('<button type="button" class="btn btn-default sp_select_all" ><i class="sp-iconfont if-select-all"></i></button>');
 				elem.control_text = $('<p>');
                 elem.control.append(elem.control_text);
 				elem.result_area.prepend(elem.control);
@@ -819,7 +817,7 @@
 			self.clearAll(self);
 			$.each(data,function(i,row){
 				var item = {text:getText(row),value:row[p.keyField]};
-				if(!self.isAlreadySelected(self,item)) self.addNewTag(self,item);
+				if(!self.isAlreadySelected(self,item)) self.addNewTag(self, row, item);
 			});
 			self.tagValuesSet(self);
 			self.inputResize(self);
@@ -877,7 +875,7 @@
 		el.container.on('click.SelectPage','div.'+self.css_class.clear_btn,function(e){
             e.stopPropagation();
             if(!self.disabled(self)){
-                self.clearAll(self);
+                self.clearAll(self, true);
                 if(p.eClear && $.isFunction(p.eClear)) p.eClear(self);
             }
         });
@@ -904,7 +902,7 @@
                 });
 				//Clear all selected item
                 el.control.find('.sp_clear_all').on('click.SelectPage',function(e){
-					self.clearAll(self);
+					self.clearAll(self, true);
 				}).hover(function(){
                     el.control_text.html(msg.clear_all);
                 },function(){
@@ -917,11 +915,10 @@
 			});
 			//Tag close
 			el.element_box.on('click.SelectPage','span.tag_close',function(){
-				var li = $(this).closest('li');
-				self.removeTag(self,li);
+				var li = $(this).closest('li'), data = li.data('dataObj');
+				self.removeTag(self, li);
 				showList();
-				if(p.eTagRemove && $.isFunction(p.eTagRemove))
-					p.eTagRemove(1, self);
+				if(p.eTagRemove && $.isFunction(p.eTagRemove)) p.eTagRemove([data]);
 			});
 			self.inputResize(self);
 		}
@@ -953,11 +950,11 @@
                     d.hideResults(d);
                     return true;
                 }
-                if (d.elem.results.find('li').not('.'+css.message_box).size()) {
+                if (d.elem.results.find('li').not('.'+css.message_box).length) {
                     if(d.option.autoFillResult) {
                         //have selected item, then hide result list
                         if (d.elem.hidden.val()) d.hideResults(d);
-                        else if(d.elem.results.find('li.sp_over').size()){
+                        else if(d.elem.results.find('li.sp_over').length){
                             //no one selected and have highlight item, select the highlight item
                             d.selectCurrentLine(d, true);
                         }else if(d.option.autoSelectFirst){
@@ -1080,7 +1077,7 @@
 	 */
 	SelectPage.prototype.showMessage = function(self,msg){
 		if(!msg) return;
-		var msgLi = '<li class="'+self.css_class.message_box+'"><i class="iconfont if-warning"></i> '+msg+'</li>';
+		var msgLi = '<li class="'+self.css_class.message_box+'"><i class="sp-iconfont if-warning"></i> '+msg+'</li>';
 		self.elem.results.empty().append(msgLi).show();
 		self.calcResultsSize(self);
 		self.setOpenStatus(self, true);
@@ -1302,9 +1299,9 @@
 			pageNumber: which_page_num,
 			pageSize: p.pageSize,
 			andOr: p.andOr,
-			orderBy: p.orderBy,
 			searchTable: p.dbTable
 		};
+		if(p.orderBy !== false) _orgParams.orderBy = p.orderBy;
         _orgParams[searchKey] = q_word[0];
 		if (_paramsFunc && $.isFunction(_paramsFunc)) {
 			var result = _paramsFunc.call(self);
@@ -1384,7 +1381,7 @@
 		} while ( i < q_word.length );
 
 		// SELECT * FROM data WHERE field LIKE q_word;
-		for (i = 0; i < p.data.length; i++) {
+		for (var i = 0; i < p.data.length; i++) {
 			var flag = false, row = p.data[i], itemText;
 			for (var j = 0; j < arr_reg.length; j++) {					
 				itemText = row[p.searchField];
@@ -1402,31 +1399,34 @@
 		}
 		
 		// (CASE WHEN ...) then く order some column
-		var reg1 = new RegExp('^' + esc_q[0] + '$', 'gi'),
-            reg2 = new RegExp('^' + esc_q[0], 'gi'),
-            matched1 = [], matched2 = [], matched3 = [];
-		for (i = 0; i < matched.length; i++) {
-		    var orderField = p.orderBy[0][0];
-            var orderValue = String(matched[i][orderField]);
-			if (orderValue.match(reg1)) {
-				matched1.push(matched[i]);
-			} else if (orderValue.match(reg2)) {
-				matched2.push(matched[i]);
-			} else {
-				matched3.push(matched[i]);
-			}
-		}
+        if(p.orderBy === false) sorted = matched.concat();
+        else{
+            var reg1 = new RegExp('^' + esc_q[0] + '$', 'gi'),
+                reg2 = new RegExp('^' + esc_q[0], 'gi'),
+                matched1 = [], matched2 = [], matched3 = [];
+            for (var i = 0; i < matched.length; i++) {
+                var orderField = p.orderBy[0][0];
+                var orderValue = String(matched[i][orderField]);
+                if (orderValue.match(reg1)) {
+                    matched1.push(matched[i]);
+                } else if (orderValue.match(reg2)) {
+                    matched2.push(matched[i]);
+                } else {
+                    matched3.push(matched[i]);
+                }
+            }
 
-		if (p.orderBy[0][1].match(/^asc$/i)) {
-			matched1 = self.sortAsc(self, matched1);
-			matched2 = self.sortAsc(self, matched2);
-			matched3 = self.sortAsc(self, matched3);
-		} else {
-			matched1 = self.sortDesc(self, matched1);
-			matched2 = self.sortDesc(self, matched2);
-			matched3 = self.sortDesc(self, matched3);
-		}
-		sorted = sorted.concat(matched1).concat(matched2).concat(matched3);
+            if (p.orderBy[0][1].match(/^asc$/i)) {
+                matched1 = self.sortAsc(self, matched1);
+                matched2 = self.sortAsc(self, matched2);
+                matched3 = self.sortAsc(self, matched3);
+            } else {
+                matched1 = self.sortDesc(self, matched1);
+                matched2 = self.sortDesc(self, matched2);
+                matched3 = self.sortDesc(self, matched3);
+            }
+            sorted = sorted.concat(matched1).concat(matched2).concat(matched3);
+        }
 
         /*
         if (sorted.length === undefined || sorted.length === 0 ) {
@@ -1467,7 +1467,7 @@
 		//save original data
 		json.originalResult = [];
 		//after data filter handle
-		for (i = start; i < end; i++) {
+		for (var i = start; i < end; i++) {
 			if (sorted[i] === undefined) break;
 			json.originalResult.push(sorted[i]);
 			for (var key in sorted[i]) {
@@ -1562,12 +1562,12 @@
                 var pageInfo = msg.page_info;
                 return pageInfo.replace(self.template.page.current, page_num).replace(self.template.page.total, last_page);
             };
-			if (pagebar.find('li').size() === 0) {
+			if (pagebar.find('li').length === 0) {
 				pagebar.hide().empty();
-				var iconFist='iconfont if-first',
-                    iconPrev='iconfont if-previous',
-                    iconNext='iconfont if-next',
-                    iconLast='iconfont if-last';
+				var iconFist='sp-iconfont if-first',
+                    iconPrev='sp-iconfont if-previous',
+                    iconNext='sp-iconfont if-next',
+                    iconLast='sp-iconfont if-last';
 
 				pagebar.append('<li class="csFirstPage" title="' + msg.first_title + '" ><a href="javascript:void(0);"> <i class="'+iconFist+'"></i> </a></li>');
 				pagebar.append('<li class="csPreviousPage" title="' + msg.prev_title + '" ><a href="javascript:void(0);"><i class="'+iconPrev+'"></i></a></li>');
@@ -1629,7 +1629,7 @@
 	    var p = self.option, el = self.elem;
 		el.results.hide().empty();
 		if(p.multiple && $.type(p.maxSelectLimit) === 'number' && p.maxSelectLimit > 0){
-			var selectedSize = el.element_box.find('li.selected_tag').size();
+			var selectedSize = el.element_box.find('li.selected_tag').length;
 			if(selectedSize > 0 && selectedSize >= p.maxSelectLimit){
 			    var msg = self.message.max_selected;
 				self.showMessage(self, msg.replace(self.template.msg.maxSelectLimit, p.maxSelectLimit));
@@ -1666,7 +1666,7 @@
                 el.results.append(list);
             }
         }else{
-		    var li = '<li class="'+self.css_class.message_box+'"><i class="iconfont if-warning"></i> '+
+		    var li = '<li class="'+self.css_class.message_box+'"><i class="sp-iconfont if-warning"></i> '+
                 self.message.not_found + '</li>';
             el.results.append(li);
         }
@@ -1795,10 +1795,8 @@
 	    if($.type(disabled) === 'undefined') return el.combo_input.prop('disabled');
 	    if($.type(disabled) === 'boolean'){
             el.combo_input.prop('disabled', disabled);
-            if(disabled)
-                el.container.addClass(self.css_class.disabled);
-            else
-                el.container.removeClass(self.css_class.disabled);
+            if(disabled) el.container.addClass(self.css_class.disabled);
+            else el.container.removeClass(self.css_class.disabled);
         }
     };
 
@@ -1852,8 +1850,9 @@
 	/**
 	 * do something after select/unSelect action
      * @param {Object} self
+     * @param {boolean} reOpen
 	 */
-	SelectPage.prototype.afterAction = function(self){
+	SelectPage.prototype.afterAction = function(self, reOpen){
 		self.inputResize(self);
 		self.elem.combo_input.change();
 		self.setCssFocusedInput(self);
@@ -1862,7 +1861,8 @@
 			if(self.option.selectToCloseList){
 				self.hideResults(self);
 				self.elem.combo_input.blur();
-			}else{
+			}
+            if(!self.option.selectToCloseList && reOpen){
 				self.suggest(self);
 				self.elem.combo_input.focus();
 			}
@@ -1882,15 +1882,16 @@
 
 		var p = self.option, current = self.getCurrentLine(self);
 		if (current) {
+		    var data = current.data('dataObj');
 			if(!p.multiple){
 				self.elem.combo_input.val(current.text());
 				self.elem.hidden.val(current.attr('pkey'));
 			}else{
 				//build tags in multiple selection mode
 				self.elem.combo_input.val('');
-				var item = {text:current.text(),value:current.attr('pkey')};
-				if(!self.isAlreadySelected(self,item)){
-					self.addNewTag(self,item);
+				var item = {text:current.text(), value:current.attr('pkey')};
+				if(!self.isAlreadySelected(self, item)){
+					self.addNewTag(self, data, item);
 					self.tagValuesSet(self);
 				}
 			}
@@ -1898,15 +1899,14 @@
 			if (p.selectOnly) self.setButtonAttrDefault();
 			
 			//Select item callback
-			if(p.eSelect && $.isFunction(p.eSelect))
-				p.eSelect(current.data('dataObj'), self);
+			if(p.eSelect && $.isFunction(p.eSelect)) p.eSelect(data, self);
 			
 			self.prop.prev_value = self.elem.combo_input.val();
 			self.prop.selected_text = self.elem.combo_input.val();
 
 			self.putClearButton();
 		}
-		self.afterAction(self);
+		self.afterAction(self, true);
 	};
     /**
      * Show clear button when item selected in single selection mode
@@ -1921,57 +1921,58 @@
 	SelectPage.prototype.selectAllLine = function(self){
 		var p = self.option, jsonarr = new Array();
         self.elem.results.find('li').each(function(i,row){
-            var $row = $(row);
+            var $row = $(row), data = $row.data('dataObj');
 			var item = {text:$row.text(),value:$row.attr('pkey')};
 			if(!self.isAlreadySelected(self,item)){
-				self.addNewTag(self,item);
+				self.addNewTag(self, data, item);
 				self.tagValuesSet(self);
 			}
-			jsonarr.push($row.data('dataObj'));
+			jsonarr.push(data);
             //limited max selected items
 			if($.type(p.maxSelectLimit) === 'number' &&
                 p.maxSelectLimit > 0 &&
-                p.maxSelectLimit === self.elem.element_box.find('li.selected_tag').size()){
+                p.maxSelectLimit === self.elem.element_box.find('li.selected_tag').length){
 			    return false;
             }
 		});
-		if(p.eSelect && $.isFunction(p.eSelect))
-			p.eSelect(jsonarr, self);
-		self.afterAction(self);
+		if(p.eSelect && $.isFunction(p.eSelect)) p.eSelect(jsonarr, self);
+		self.afterAction(self, true);
 	};
 	/**
 	 * Cancel select all item in current page
 	 * @param {Object} self
 	 */
 	SelectPage.prototype.unSelectAllLine = function(self){
-		var p = self.option,size = self.elem.results.find('li').size();
+		var p = self.option,size = self.elem.results.find('li').length, ds = [];
         self.elem.results.find('li').each(function(i,row){
 			var key = $(row).attr('pkey');
 			var tag = self.elem.element_box.find('li.selected_tag[itemvalue="'+key+'"]');
-			self.removeTag(self,tag);
+			if(tag.length) ds.push(tag.data('dataObj'));
+			self.removeTag(self, tag);
 		});
-		self.afterAction(self);
-		if(p.eTagRemove && $.isFunction(p.eTagRemove))
-			p.eTagRemove(size, self);
+		self.afterAction(self, true);
+		if(p.eTagRemove && $.isFunction(p.eTagRemove)) p.eTagRemove(ds);
 	};
 	/**
 	 * Clear all selected items
 	 * @param {Object} self
+     * @param {boolean} open - open list after clear selected item
 	 */
-	SelectPage.prototype.clearAll = function(self){
-		var p = self.option, size = 0;
+	SelectPage.prototype.clearAll = function(self, open){
+		var p = self.option, ds = [];
         if(p.multiple){
-            size = self.elem.element_box.find('li.selected_tag').size();
+            self.elem.element_box.find('li.selected_tag').each(function(i, row){
+                ds.push($(row).data('dataObj'));
+                row.remove();
+            });
             self.elem.element_box.find('li.selected_tag').remove();
         }
         self.reset(self);
-		self.afterAction(self);
+		self.afterAction(self, open);
 
-        if(!p.multiple) self.elem.clear_btn.remove();
         if(p.multiple) {
-            if (p.eTagRemove && $.isFunction(p.eTagRemove))
-                p.eTagRemove(size, self);
-        }
+            if (p.eTagRemove && $.isFunction(p.eTagRemove)) p.eTagRemove(ds);
+        }else self.elem.clear_btn.remove();
 	};
 
     /**
@@ -1992,7 +1993,7 @@
 	SelectPage.prototype.getCurrentLine = function(self) {
 		if (self.elem.result_area.is(':hidden')) return false;
 		var obj = self.elem.results.find('li.' + self.css_class.select);
-		if (obj.size()) return obj;
+		if (obj.length) return obj;
 		else return false;
 	};
 	
@@ -2016,14 +2017,16 @@
 	/**
 	 * Add a new tag in multiple selection mode
 	 * @param {Object} self
+     * @param {object} data - raw row data
 	 * @param {Object} item
 	 */
-	SelectPage.prototype.addNewTag = function(self,item){
-		if(!self.option.multiple || !item) return;
+	SelectPage.prototype.addNewTag = function(self, data, item){
+		if(!self.option.multiple || !data || !item) return;
 		var tmp = self.template.tag.content,tag;
 		tmp = tmp.replace(self.template.tag.textKey,item.text);
 		tmp = tmp.replace(self.template.tag.valueKey,item.value);
 		tag = $(tmp);
+		tag.data('dataObj', data);
 		if(self.elem.combo_input.prop('disabled')) tag.find('span.tag_close').hide();
 		self.elem.combo_input.closest('li').before(tag);
 	};
@@ -2054,7 +2057,7 @@
 	SelectPage.prototype.tagValuesSet = function(self){
 		if(!self.option.multiple) return;
 		var tags = self.elem.element_box.find('li.selected_tag');
-		if(tags && tags.size()){
+		if(tags && tags.length){
 			var result = new Array();
 			$.each(tags,function(i,li){
 				var v = $(li).attr('itemvalue');
@@ -2080,7 +2083,7 @@
                 width = (minimumWidth * 0.75) + 'em';
 			self.elem.combo_input.css('width', width).removeAttr('placeholder');
 		};
-		if(self.elem.element_box.find('li.selected_tag').size() === 0){
+		if(self.elem.element_box.find('li.selected_tag').length === 0){
 			if(self.elem.combo_input.attr('placeholder_bak')){
 				if(!inputLi.hasClass('full_width')) inputLi.addClass('full_width');
 				self.elem.combo_input.attr('placeholder',self.elem.combo_input.attr('placeholder_bak')).removeAttr('style');
