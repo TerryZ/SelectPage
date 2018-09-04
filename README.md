@@ -17,10 +17,11 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
 </p>
 
 <p align="center">
-  <a href="https://travis-ci.org/TerryZ/SelectPage"><img src="https://travis-ci.org/TerryZ/SelectPage.svg?branch=master"></a>
-  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/v/selectpage.svg"></a>
-  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/dy/selectpage.svg"></a>
-  <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
+    <a href="https://travis-ci.org/TerryZ/SelectPage"><img src="https://travis-ci.org/TerryZ/SelectPage.svg?branch=master"></a>
+    <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/v/selectpage.svg"></a>
+    <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/dy/selectpage.svg"></a>
+    <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
+    <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
 </p>
 
 <br><br><br><br><br>
@@ -37,6 +38,8 @@ Explorer on
 [简体中文文档](README-CN.md)
 
 The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
+
+<a href="https://nodei.co/npm/selectpage/"><img src="https://nodei.co/npm/selectpage.png"></a>
 
 <br><br>
 
