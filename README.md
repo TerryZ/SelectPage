@@ -8,8 +8,6 @@
 
 <br>
 
-<p align="center"><img src="https://terryz.github.io/image/SelectPage1.png" alt="SelectPage" ></p>
-
 <p align="center">
 A simple style and powerful selection jQuery plugin, <br>including ajax remote data, autocomplete, pagination, tags, i18n and keyboard navigation features
 </p>
