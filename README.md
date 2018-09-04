@@ -1,4 +1,4 @@
-<br><br><br>
+<br><br><br><br><br>
 
 <p align="center">
     <a href="https://terryz.github.io/selectpage/" target="_blank">
@@ -6,7 +6,7 @@
     </a>
 </p>
 
-<br>
+<br><br>
 
 <p align="center">
 A simple style and powerful selection jQuery plugin, <br>including ajax remote data, autocomplete, pagination, tags, i18n and keyboard navigation features
@@ -20,7 +20,7 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
     <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
 </p>
 
-<br><br><br><br><br>
+<br><br><br><br><br><br>
 
 
 ## Demos and Docs
