@@ -63,15 +63,15 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 ## Plugin Preview
 
-*Multiple Select by Tags form*
+*Multiple Selection with Tags form*
 
 ![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
 
-*Normal select mode ( single select )*
+*Regular select mode ( single selection )*
 
 ![SelectPage](https://terryz.github.io/image/SelectPage.png)
 
-*List only mode ( pagination bar close, disable typing to quick search, select only )*
+*List only ( pagination bar close, disable typing to quick search, select only )*
 
 ![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
 
