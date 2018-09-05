@@ -63,7 +63,7 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 ## Plugin Preview
 
-*Multiple Select by Tags mode*
+*Multiple Select by Tags form*
 
 ![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
 
