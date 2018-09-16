@@ -88,7 +88,7 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 
 ### Install  
-download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage  
+Download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage  
 
 or use **NPM**
 
