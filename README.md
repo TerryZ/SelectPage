@@ -28,7 +28,7 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
 
 
 
-## Demos and Docs
+## Demos and Documents
 
 Explorer on 
 
