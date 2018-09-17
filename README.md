@@ -23,6 +23,9 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
 <br><br><br><br><br><br>
 
 
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_large)
+
 ## Demos and Docs
 
 Explorer on 
@@ -83,6 +86,7 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 ## Stargazers over time
 
 [![Stargazers over time](https://starcharts.herokuapp.com/TerryZ/SelectPage.svg)](https://starcharts.herokuapp.com/TerryZ/SelectPage)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_shield)
 
 <br><br>
 
@@ -332,5 +336,3 @@ npm install selectpage
   ```js
   alert($('#selectpage').selectPageText());
   ```
-
-
