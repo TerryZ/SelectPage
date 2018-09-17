@@ -17,14 +17,16 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
     <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/v/selectpage.svg"></a>
     <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/dy/selectpage.svg"></a>
     <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
+	<a href="https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=shield"></a>
     <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
 </p>
+
 
 <br><br><br><br><br><br>
 
 
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_large)
+
 
 ## Demos and Docs
 
@@ -37,6 +39,8 @@ Explorer on
 [简体中文文档](README-CN.md)
 
 <a href="https://nodei.co/npm/selectpage/"><img src="https://nodei.co/npm/selectpage.png"></a>
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_large)
 
 The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
@@ -86,7 +90,6 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 ## Stargazers over time
 
 [![Stargazers over time](https://starcharts.herokuapp.com/TerryZ/SelectPage.svg)](https://starcharts.herokuapp.com/TerryZ/SelectPage)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_shield)
 
 <br><br>
 
