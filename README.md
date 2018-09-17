@@ -62,11 +62,6 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 <br><br>
 
-## License
-
-[MIT](https://github.com/TerryZ/SelectPage/blob/master/LICENSE)
-
-<br><br>
 
 ## Plugin Preview
 
