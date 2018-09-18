@@ -38,8 +38,6 @@ Explorer on
 
 [简体中文文档](README-CN.md)
 
-<a href="https://nodei.co/npm/selectpage/"><img src="https://nodei.co/npm/selectpage.png"></a>
-
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_large)
 
 The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
@@ -97,6 +95,9 @@ or use **NPM**
 ```
 npm install selectpage
 ```
+
+<a href="https://nodei.co/npm/selectpage/"><img src="https://nodei.co/npm/selectpage.png"></a>
+
 <br><br>
 ### Usage
   As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html), you will need to include:
