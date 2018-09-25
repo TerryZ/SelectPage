@@ -87,7 +87,7 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 <br><br>
 
 
-### Install  
+## Install  
 Download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage  
 
 or use **NPM**
@@ -99,7 +99,7 @@ npm install selectpage
 <a href="https://nodei.co/npm/selectpage/"><img src="https://nodei.co/npm/selectpage.png"></a>
 
 <br><br>
-### Usage
+## Usage
   As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html), you will need to include:
   - [jQuery library](http://jquery.com) (1.10.2+), untest on jquery2.x & 3.x
   - The JavaScript file `selectpage.js` (or its minified version `selectpage.min.js`)
