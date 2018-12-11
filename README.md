@@ -14,6 +14,7 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
 <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
 <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
 </p>
+
 <!--
 <br><br><br><br><br>
 <p align="center">
