@@ -135,11 +135,10 @@ npm install selectpage
   **Including files**  
   ```html
   <!-- jQuery library -->
-  <script type="text/javascript" src="jquery.min.js" >< /script>
+  <script type="text/javascript" src="jquery.min.js" ></script>
 
-  <link rel="stylesheet" href="selectpage.css" type="text/css">
-  
-  <script type="text/javascript" src="selectpage.js" >< /script>
+  <link rel="stylesheet" href="selectpage.css" type="text/css">  
+  <script type="text/javascript" src="selectpage.js" ></script>
   ```
 
   **HTML input element set**  
