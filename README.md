@@ -102,7 +102,6 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 ![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
 
-**If you think this project is helpful, please star it.**
 
 <br><br>
 
