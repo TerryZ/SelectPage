@@ -57,6 +57,35 @@ const language = {
         clear_all: 'Clear all selected',
         max_selected: 'You can only select up to max_selected_limit items'
     },
+    // Turkish
+    tr: {
+        add_btn: 'Buton ekle',
+        add_title: 'kutu ekle',
+        del_btn: 'Buton sil',
+        del_title: 'kutuyu sil',
+        next: 'sonraki',
+        next_title: 'Sonraki page_size (Sağ tuş)',
+        prev: 'Önceki',
+        prev_title: 'Önceki page_size (Sol tuş)',
+        first_title: 'İlk (Shift + Sol tuş)',
+        last_title: 'Son (Shift + Sağ tuş)',
+        get_all_btn: 'Tümünü Al (Alt tuş)',
+        get_all_alt: '(button)',
+        close_btn: 'kapat (Tab düğmesi)',
+        close_alt: '(buton)',
+        loading: 'yükleniyor...',
+        loading_alt: '(yükleniyor)',
+        page_info: 'Sayfa page_num / page_count',
+        select_ng: 'Uyarı: Lütfen listeden seçim yapın.',
+        select_ok: 'Tamam: Doğru seçildi.',
+        not_found: 'bulunamadı',
+        ajax_error: 'Sunucuya bağlanırken bir hata meydana geldi.',
+        clear: 'İçeriği temizle',
+        select_all: 'Mevcut sayfayı seç',
+        unselect_all: 'Mevcut sayfayı temizle',
+        clear_all: 'Seçili olanları temizle',
+        max_selected: 'Yalnızca en fazla max_selected_limit öğe seçebilirsiniz'
+    },
     // German
     de: {
         add_btn: 'Hinzufügen-Button',
