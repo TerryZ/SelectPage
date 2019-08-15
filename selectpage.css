@@ -136,7 +136,7 @@ div.sp_clear_btn.sp_align_right {
     margin: 0;
     padding: 0;
     position: absolute;
-    z-index: 100;
+    z-index: 1040;
     width: 300px;
     border-radius: 2px;
 }
