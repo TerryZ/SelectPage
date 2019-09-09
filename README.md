@@ -1,17 +1,19 @@
 <a href="https://terryz.github.io/selectpage/" target="_blank">
-    <img src="https://terryz.github.io/image/logo/SelectPage.png" alt="SelectPage" align="right" valign="top" >
+  <img src="https://terryz.github.io/image/SelectPage1.png" alt="SelectPage" align="right" valign="top" >
 </a>
+
+![SelectPage](https://terryz.github.io/image/logo/SelectPage.png)
 
 # SelectPage
 
 <p>
-<a href="https://travis-ci.org/TerryZ/SelectPage"><img src="https://travis-ci.org/TerryZ/SelectPage.svg?branch=master"></a>
-<a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/v/selectpage.svg"></a>
-<a href="https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=shield"></a>    
-<a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/dy/selectpage.svg"></a>
-<a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
-<a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
-<a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
+  <a href="https://travis-ci.org/TerryZ/SelectPage"><img src="https://travis-ci.org/TerryZ/SelectPage.svg?branch=master"></a>
+  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/v/selectpage.svg"></a>
+  <a href="https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_shield"><img src="https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=shield"></a>    
+  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/npm/dy/selectpage.svg"></a>
+  <a href="https://mit-license.org/"><img src="https://img.shields.io/badge/license-MIT-brightgreen.svg"></a>
+  <a href="https://www.npmjs.com/package/selectpage"><img src="https://img.shields.io/badge/language-javascript%20%2F%20jquery-blue.svg"></a>
+  <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 </p>
 
 A simple style and powerful selection jQuery plugin, including ajax remote data, autocomplete, pagination, tags, i18n and keyboard navigation features
@@ -19,9 +21,9 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
 <!--
 <br><br><br><br><br>
 <p align="center">
-    <a href="https://terryz.github.io/selectpage/" target="_blank">
-	    <img src="https://terryz.github.io/image/logo/SelectPage.png" alt="SelectPage" >
-    </a>
+  <a href="https://terryz.github.io/selectpage/" target="_blank">
+    <img src="https://terryz.github.io/image/logo/SelectPage.png" alt="SelectPage" >
+  </a>
 </p>
 
 
@@ -48,7 +50,7 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
 
 
 
-## Demos and Documents
+## Examples and Documentation
 
 Explorer on 
 
@@ -61,8 +63,6 @@ Explorer on
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_large)
 
 The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
-
-<br><br>
 
 ## Features
 
@@ -77,17 +77,11 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 - i18n supports, provide 6 languages
 - server side data supports
 
-
-<br><br>
-
 ## Browsers support
 
 | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt="IE / Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE / Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Opera |
 | --------- | --------- | --------- | --------- | --------- |
 | IE8, IE9, IE10, IE11, Edge| Firefox 18+| Chrome 49+| Safari 10+| Opera 36+
-
-<br><br>
-
 
 ## Plugin Preview
 
@@ -104,17 +98,8 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 ![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
 
 
-<br><br>
+## Installation
 
-
-## Stargazers over time
-
-[![Stargazers over time](https://starcharts.herokuapp.com/TerryZ/SelectPage.svg)](https://starcharts.herokuapp.com/TerryZ/SelectPage)
-
-<br><br>
-
-
-## Install  
 Download SelectPage plugin zip file by last release, or [click me](https://github.com/TerryZ/SelectPage/archive/master.zip) to download SelectPage  
 
 or use **NPM**
@@ -125,47 +110,54 @@ npm install selectpage
 
 <a href="https://nodei.co/npm/selectpage/"><img src="https://nodei.co/npm/selectpage.png"></a>
 
-<br><br>
 ## Usage
-  As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html), you will need to include:
-  - [jQuery library](http://jquery.com) (1.10.2+), untest on jquery2.x & 3.x
-  - The JavaScript file `selectpage.js` (or its minified version `selectpage.min.js`)
-  - The css file `selectpage.css`
-  
-  **Including files**  
-  ```html
-  <!-- jQuery library -->
-  <script type="text/javascript" src="jquery.min.js" ></script>
 
-  <link rel="stylesheet" href="selectpage.css" type="text/css">  
-  <script type="text/javascript" src="selectpage.js" ></script>
-  ```
+As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html), you will need to include:
 
-  **HTML input element set**  
-  the SelectPage plugin just need put a input tag in the page  
-  ```html
-  <input type="text" id="selectpage" >
-  ```
+- [jQuery library](http://jquery.com) (1.10.2+), untest on jquery2.x & 3.x
+- The JavaScript file `selectpage.js` (or its minified version `selectpage.min.js`)
+- The css file `selectpage.css`
 
-  **Javascript init plugin**
-  ```js
-  //defined a array (the server side returned data format was same like that)
-  //Array[{Object},{...}]
-  var data = [
-      {id:1 ,name:'Chicago Bulls',desc:'芝加哥公牛'},
-      {id:2 ,name:'Cleveland Cavaliers',desc:'克里夫兰骑士'},
-      {id:3 ,name:'Detroit Pistons',desc:'底特律活塞'},
-      {id:4 ,name:'Indiana Pacers',desc:'印第安纳步行者'}
-  ];
-  //init SelectPage
-  $('#selectpage').selectPage({
-      showField : 'desc',
-      keyField : 'id',
-      data : data
-  });
-  ```
+**Including files**  
 
-<br><br>
+```html
+<!-- jQuery library -->
+<script type="text/javascript" src="jquery.min.js" ></script>
+
+<link rel="stylesheet" href="selectpage.css" type="text/css">  
+<script type="text/javascript" src="selectpage.js" ></script>
+```
+
+**HTML input element set**  
+
+the SelectPage plugin just need put a input tag in the page  
+
+```html
+<input type="text" id="selectpage" >
+```
+
+**Javascript init plugin**
+
+```js
+//defined a array (the server side returned data format was same like that)
+//Array[{Object},{...}]
+var data = [
+  {id: 1, name: 'Chicago Bulls', desc: '芝加哥公牛' },
+  {id: 2, name: 'Cleveland Cavaliers', desc: '克里夫兰骑士' },
+  {id: 3, name: 'Detroit Pistons', desc: '底特律活塞' },
+  {id: 4, name: 'Indiana Pacers', desc: '印第安纳步行者' }
+]
+//init SelectPage
+$('#selectpage').selectPage({
+  showField : 'desc',
+  keyField : 'id',
+  data : data
+})
+```
+
+## Stargazers over time
+
+[![Stargazers over time](https://starcharts.herokuapp.com/TerryZ/SelectPage.svg)](https://starcharts.herokuapp.com/TerryZ/SelectPage)
 
 ## Options
 
