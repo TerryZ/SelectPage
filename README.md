@@ -56,8 +56,6 @@ Explorer on
 
 [简体中文文档](README-CN.md)
 
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_large)
-
 The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 ![SelectPage](https://terryz.github.io/image/logo/SelectPage.png)
@@ -351,3 +349,7 @@ $('#selectpage').selectPage({
   ```js
   alert($('#selectpage').selectPageText());
   ```
+
+## License
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FTerryZ%2FSelectPage?ref=badge_large)
