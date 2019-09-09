@@ -2,8 +2,6 @@
   <img src="https://terryz.github.io/image/SelectPage1.png" alt="SelectPage" align="right" valign="top" >
 </a>
 
-![SelectPage](https://terryz.github.io/image/logo/SelectPage.png)
-
 # SelectPage
 
 <p>
@@ -48,7 +46,7 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
 
 
 
-
+![SelectPage](https://terryz.github.io/image/logo/SelectPage.png)
 
 ## Examples and Documentation
 
