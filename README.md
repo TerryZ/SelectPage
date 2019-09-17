@@ -49,7 +49,6 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
 Explorer on 
 
 - [English site](https://TerryZ.github.io/selectpage)（translation unfinished）
-
 - [国内站点](https://terryz.gitee.io/selectpage)
 
 [简体中文文档](README-CN.md)
