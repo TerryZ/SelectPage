@@ -16,7 +16,7 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
   <a href="https://996.icu"><img src="https://img.shields.io/badge/link-996.icu-red.svg" alt="996.icu" /></a>
 </p>
 
-<br><br><br><br><br>
+<br><br><br>
 
 <!--
 <br><br><br><br><br>
@@ -114,7 +114,7 @@ As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html)
 - The JavaScript file `selectpage.js` (or its minified version `selectpage.min.js`)
 - The css file `selectpage.css`
 
-**Including files**  
+**Including files**
 
 ```html
 <!-- jQuery library -->
@@ -124,7 +124,7 @@ As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html)
 <script type="text/javascript" src="selectpage.js" ></script>
 ```
 
-**HTML input element set**  
+**HTML input element set**
 
 the SelectPage plugin just need put a input tag in the page  
 
@@ -251,7 +251,7 @@ $('#selectpage').selectPage({
   **example**  
   ```js
   formatItem : function(data){
-	  return data.a + '(' + data.b + ')';
+    return data.a + '(' + data.b + ')';
   }
   ```
 
@@ -301,8 +301,8 @@ $('#selectpage').selectPage({
   **return data format**  
   ```js
   {
-	  list : [{name:'aa',sex:1},{name:'bb',sex:1}...],
-	  totalRow : 100
+    list : [{name:'aa',sex:1},{name:'bb',sex:1}...],
+    totalRow : 100
   }
   ```
 
@@ -341,7 +341,7 @@ $('#selectpage').selectPage({
   *disabled* `boolean` set disabled stauts. `true` to disabled, `false` to enabled  
   ```js
   if($('#selectpage').selectPageDisabled()){//get plugin disabled stuats
-      $('#selectpage').selectPageDisabled(false);//set plugin to enabled 
+      $('#selectpage').selectPageDisabled(false);//set plugin to enabled
   }
   ```
 - **selectPageText**  
