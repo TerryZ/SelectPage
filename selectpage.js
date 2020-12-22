@@ -821,6 +821,11 @@
             self.prop.init_set = false;
 		}else{
 			var row = data[0];
+			$.each(data,function (i,rows) {
+				if(rows[p.keyField]==p.value){
+					row=data[i];
+				}
+			})
 			self.elem.combo_input.val(getText(row));
 			self.elem.hidden.val(row[p.keyField]);
 			self.prop.prev_value = getText(row);
