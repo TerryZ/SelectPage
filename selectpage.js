@@ -2119,48 +2119,14 @@
     self.scrollWindow(self, true)
 
     var p = self.option,
-      current = self.getCurrentLine(self, self.option.maxTagCount)
-    if (current) {
+			current = self.getCurrentLine(self, self.option.maxTagCount)
+		if (current) {
 			var data = current.data('dataObj')
 			var idsArr = self.elem.hidden.val().split(',')
 			if (idsArr.length) {
 				var index = $.inArray(data.id.toString(), idsArr)
 				if (index !== -1) { // 删除逻辑
-					idsArr.splice(index, 1)
-					self.elem.hidden.val(idsArr.toString())
-					// 先删除备份的tag
-					if (self.elem.element_box.find('li.selected_tag').length) {
-						self.elem.element_box.find('li.selected_tag').each(function (index, item) {
-							var liData = $(item).data('dataObj')
-							if (liData.id === data.id) {
-								$(item).remove()
-							}
-						})
-					}
-					// 再删除显示的tag
-					self.elem.tags_bak.find('li.selected_tag').each(function (index, item) {
-						var liData = $(item).data('dataObj')
-						if (liData.id === data.id) {
-							$(item).remove()
-						}
-					})
-					// 更新个数显示
-					if (self.elem.element_box.find('li.custom_tag').length) {
-						var tmpl = `<li class="custom_tag">${self.option.maxTagPlaceholder}</>`
-						var count = self.elem.tags_bak.find('li.selected_tag').length
-						self.elem.element_box
-							.find('li.custom_tag')
-							.replaceWith(tmpl.replace('#count#', count))
-					}
-					if (
-						self.elem.tags_bak.find('li.selected_tag').length <= self.option.maxTagCount
-					) {
-						if (self.elem.element_box.find('li.custom_tag').length) {
-							self.elem.element_box.find('li.custom_tag').remove()
-							self.elem.combo_input.closest('li').before(self.elem.tags_bak.find('li.selected_tag'))
-						}
-					}
-					self.suggest(self)
+					self.removeTag(self, current)
 					return
 				}
 			}
@@ -2233,11 +2199,17 @@
     var p = self.option,
       ds = []
     self.elem.results.find('li').each(function (i, row) {
-      var key = $(row).attr('pkey')
-      var tag = self.elem.element_box.find(
-        'li.selected_tag[itemvalue="' + key + '"]'
-      )
-      if (tag.length) ds.push(tag.data('dataObj'))
+			var key = $(row).attr('pkey')
+      if (self.elem.tags_bak.find('li.selected_tag').length > self.option.maxTagCount) {
+				var tag = self.elem.tags_bak.find(
+					'li.selected_tag[itemvalue="' + key + '"]'
+				)
+			} else {
+				var tag = self.elem.element_box.find(
+					'li.selected_tag[itemvalue="' + key + '"]'
+				)
+			}
+			if (tag.length) ds.push(tag.data('dataObj'))
       self.removeTag(self, tag)
     })
     self.afterAction(self, true)
@@ -2256,7 +2228,9 @@
         ds.push($(row).data('dataObj'))
         row.remove()
       })
-      self.elem.element_box.find('li.selected_tag').remove()
+			self.elem.element_box.find('li.selected_tag').remove()
+			self.elem.element_box.find('li.custom_tag').remove()
+      self.elem.tags_bak.find('li.selected_tag').remove()
     }
     self.reset(self)
     self.afterAction(self, open)
@@ -2349,17 +2323,58 @@
    * @param {Object} item
    */
   SelectPage.prototype.removeTag = function (self, item) {
-    var key = $(item).attr('itemvalue')
-    var keys = self.elem.hidden.val()
-    if ($.type(key) != 'undefined' && keys) {
-      var keyarr = keys.split(','),
-        index = $.inArray(key.toString(), keyarr)
-      if (index != -1) {
-        keyarr.splice(index, 1)
-        self.elem.hidden.val(keyarr.toString())
-      }
-    }
-    $(item).remove()
+		if (self.option.maxTagCount) {
+			var idsArr = self.elem.hidden.val().split(',')
+			var id = item.attr('pkey') || item.attr('itemvalue')
+			var index = $.inArray(id.toString(), idsArr)
+			idsArr.splice(index, 1)
+			self.elem.hidden.val(idsArr.toString())
+			// 先删除显示的tag
+			if (self.elem.element_box.find('li.selected_tag').length) {
+				self.elem.element_box.find('li.selected_tag').each(function (i, item) {
+					var liData = $(item).data('dataObj')
+					if (liData.id == id) {
+						$(item).remove()
+					}
+				})
+			}
+			// 再删除备份的tag
+			self.elem.tags_bak.find('li.selected_tag').each(function (i, item) {
+				var liData = $(item).data('dataObj')
+				if (liData.id == id) {
+					$(item).remove()
+				}
+			})
+			// 更新个数显示
+			if (self.elem.element_box.find('li.custom_tag').length) {
+				var tmpl = `<li class="custom_tag">${self.option.maxTagPlaceholder}</>`
+				var count = self.elem.tags_bak.find('li.selected_tag').length
+				self.elem.element_box
+					.find('li.custom_tag')
+					.replaceWith(tmpl.replace('#count#', count))
+			}
+			if (
+				self.elem.tags_bak.find('li.selected_tag').length <= self.option.maxTagCount
+			) {
+				if (self.elem.element_box.find('li.custom_tag').length) {
+					self.elem.element_box.find('li.custom_tag').remove()
+					self.elem.combo_input.closest('li').before(self.elem.tags_bak.find('li.selected_tag'))
+				}
+			}
+			self.suggest(self) // 刷新result列表
+		} else {
+			var key = $(item).attr('itemvalue')
+			var keys = self.elem.hidden.val()
+			if ($.type(key) != 'undefined' && keys) {
+				var keyarr = keys.split(','),
+					index = $.inArray(key.toString(), keyarr)
+				if (index != -1) {
+					keyarr.splice(index, 1)
+					self.elem.hidden.val(keyarr.toString())
+				}
+			}
+			$(item).remove()
+		}
     self.inputResize(self)
   }
 
