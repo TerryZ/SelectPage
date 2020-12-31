@@ -519,6 +519,7 @@
       control_box: 'sp_control_box',
       //multiple select mode
       element_box: 'sp_element_box',
+			tags_bak: 'sp_element_box_bak',
       navi: 'sp_navi',
       //result list
       results: 'sp_results',
@@ -538,7 +539,11 @@
       input: 'sp_input',
       clear_btn: 'sp_clear_btn',
       align_right: 'sp_align_right',
-    }
+		}
+		
+		if (this.option.maxTagCount) {
+			css_class.selected = 'sp_selected enabled'
+		}
     this.css_class = css_class
   }
 
@@ -690,7 +695,8 @@
     if (!p.dropButton) elem.clear_btn.addClass(css.align_right)
 
     //main box in multiple mode
-    elem.element_box = $('<ul>').addClass(css.element_box)
+		elem.element_box = $('<ul>').addClass(css.element_box)
+		elem.tags_bak = $('<ul>').addClass(css.tags_bak)
     if (p.multiple && p.multipleControlbar)
       elem.control = $('<div>').addClass(css.control_box)
     //result list box
@@ -742,8 +748,9 @@
         elem.control.append(elem.control_text)
         elem.result_area.prepend(elem.control)
       }
-      elem.container.addClass('sp_container_combo')
+			elem.container.addClass('sp_container_combo')
       elem.combo_input.addClass('sp_combo_input').before(elem.element_box)
+      elem.combo_input.addClass('sp_combo_input').before(elem.tags_bak)
       var li = $('<li>').addClass('input_box')
       li.append(elem.combo_input)
       elem.element_box.append(li)
@@ -1073,7 +1080,11 @@
    */
   SelectPage.prototype.eResultList = function () {
     var self = this,
-      css = this.css_class
+			css = this.css_class
+		var selectedEnable = !$(this).hasClass(css.selected)
+		if (self.option.maxTagCount) { // 设置了最大显示tag则允许选择
+			selectedEnable = true
+		}
     self.elem.results
       .children('li')
       .hover(
@@ -1083,7 +1094,7 @@
             return
           }
           if (
-            !$(this).hasClass(css.selected) &&
+						selectedEnable &&
             !$(this).hasClass(css.message_box)
           ) {
             $(this).addClass(css.select)
@@ -1102,7 +1113,7 @@
         e.preventDefault()
         e.stopPropagation()
 
-        if (!$(this).hasClass(css.selected)) self.selectCurrentLine(self)
+        if (selectedEnable) self.selectCurrentLine(self)
       })
   }
 
@@ -2108,9 +2119,51 @@
     self.scrollWindow(self, true)
 
     var p = self.option,
-      current = self.getCurrentLine(self)
+      current = self.getCurrentLine(self, self.option.maxTagCount)
     if (current) {
-      var data = current.data('dataObj')
+			var data = current.data('dataObj')
+			var idsArr = self.elem.hidden.val().split(',')
+			if (idsArr.length) {
+				var index = $.inArray(data.id.toString(), idsArr)
+				if (index !== -1) { // 删除逻辑
+					idsArr.splice(index, 1)
+					self.elem.hidden.val(idsArr.toString())
+					// 先删除备份的tag
+					if (self.elem.element_box.find('li.selected_tag').length) {
+						self.elem.element_box.find('li.selected_tag').each(function (index, item) {
+							var liData = $(item).data('dataObj')
+							if (liData.id === data.id) {
+								$(item).remove()
+							}
+						})
+					}
+					// 再删除显示的tag
+					self.elem.tags_bak.find('li.selected_tag').each(function (index, item) {
+						var liData = $(item).data('dataObj')
+						if (liData.id === data.id) {
+							$(item).remove()
+						}
+					})
+					// 更新个数显示
+					if (self.elem.element_box.find('li.custom_tag').length) {
+						var tmpl = `<li class="custom_tag">${self.option.maxTagPlaceholder}</>`
+						var count = self.elem.tags_bak.find('li.selected_tag').length
+						self.elem.element_box
+							.find('li.custom_tag')
+							.replaceWith(tmpl.replace('#count#', count))
+					}
+					if (
+						self.elem.tags_bak.find('li.selected_tag').length <= self.option.maxTagCount
+					) {
+						if (self.elem.element_box.find('li.custom_tag').length) {
+							self.elem.element_box.find('li.custom_tag').remove()
+							self.elem.combo_input.closest('li').before(self.elem.tags_bak.find('li.selected_tag'))
+						}
+					}
+					self.suggest(self)
+					return
+				}
+			}
       if (!p.multiple) {
         self.elem.combo_input.val(current.text())
         self.elem.hidden.val(current.attr('pkey'))
@@ -2231,8 +2284,8 @@
   SelectPage.prototype.getCurrentLine = function (self) {
     if (self.elem.result_area.is(':hidden')) return false
     var obj = self.elem.results.find('li.' + self.css_class.select)
-    if (obj.length) return obj
-    else return false
+		if (obj.length) return obj
+		else return false
   }
 
   /**
@@ -2266,9 +2319,28 @@
     tmp = tmp.replace(self.template.tag.textKey, item.text)
     tmp = tmp.replace(self.template.tag.valueKey, item.value)
     tag = $(tmp)
-    tag.data('dataObj', data)
-    if (self.elem.combo_input.prop('disabled'))
-      tag.find('span.tag_close').hide()
+		tag.data('dataObj', data)
+    if (self.elem.combo_input.prop('disabled')) {
+			tag.find('span.tag_close').hide()
+		}
+		if (self.option.maxTagCount) {
+			var tmpl = `<li class="custom_tag">${self.option.maxTagPlaceholder}</>`
+			self.elem.tags_bak.append(tag.clone().data('dataObj', data))
+			var count = self.elem.tags_bak.find('li.selected_tag').length
+			if (count > self.option.maxTagCount) {
+				self.elem.element_box.find('li.selected_tag').remove()
+				if (self.elem.element_box.find('li.custom_tag').length) {
+					self.elem.element_box
+						.find('li.custom_tag')
+						.replaceWith(tmpl.replace('#count#', count))
+				} else {
+					self.elem.combo_input
+						.closest('li')
+						.before(tmpl.replace('#count#', count))
+				}
+				return
+			}	 
+		}
     self.elem.combo_input.closest('li').before(tag)
   }
   /**
@@ -2297,7 +2369,10 @@
    */
   SelectPage.prototype.tagValuesSet = function (self) {
     if (!self.option.multiple) return
-    var tags = self.elem.element_box.find('li.selected_tag')
+		var tags = self.elem.element_box.find('li.selected_tag')
+		if (self.option.maxTagCount) {
+			tags = self.elem.tags_bak.find('li.selected_tag')
+		}
     if (tags && tags.length) {
       var result = new Array()
       $.each(tags, function (i, li) {
