@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.staticfile.org/jquery/1.10.0/jquery.js"></script>
+  <script type="text/javascript" src="../selectpage.js" ></script>
+  <link rel="stylesheet" href="../selectpage.css">
+</head>
+<body>
+  <div class="" style="padding: 100px 200px;">
+    <input type="text" id="selectPage" style="width: 300px;" >
+    <script>
+      //定义数组，在服务端返回的数据也以该格式返回：Array[{Object},{...}]
+      var tag_data = [
+          {id:1 ,name:'Chicago Bulls',desc:'芝加哥公牛1'},
+          {id:2 ,name:'Cleveland Cavaliers',desc:'克里夫兰骑士2'},
+          {id:3 ,name:'Detroit Pistons',desc:'底特律活塞3'},
+          {id:4 ,name:'Indiana Pacers',desc:'印第安纳步行者4'},
+          {id:5 ,name:'Cleveland Cavaliers',desc:'克里夫兰骑士5'},
+          {id:6 ,name:'Detroit Pistons',desc:'底特律活塞6'},
+          {id:7 ,name:'Indiana Pacers',desc:'印第安纳步行者7'},
+      ];
+      //初始化插件
+      $('#selectPage').selectPage({
+          showField : 'desc',
+          keyField : 'id',
+          data : tag_data,
+          // pageSize: 3,
+          //启用多选模式
+          multiple : true,
+          maxTagCount: 3,
+          // maxTagPlaceholder: '已选择#count#个用户',
+      });
+    </script>
+  </div>
+</body>
+</html>

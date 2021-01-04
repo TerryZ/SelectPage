@@ -10,6 +10,10 @@
 
 ![SelectPage1](https://terryz.github.io/image/SelectPage1.png "SelectPage")
 
+*Tags限定数量模式*
+
+![SelectPage2](https://terryz.github.io/image/SelectPage2.jpg "SelectPage")
+
 *单选模式*
 
 ![SelectPage](https://terryz.github.io/image/SelectPage.png "SelectPage")

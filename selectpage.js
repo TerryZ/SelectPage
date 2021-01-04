@@ -65,6 +65,18 @@
      */
     maxSelectLimit: 0,
     /**
+     * Max Tag selected limited
+     * @type number
+     * @default 0(unlimited)
+     */
+    maxTagCount: 0,
+    /**
+     * Max Tag selected placeholder
+     * @type string
+     * @default 0(unlimited)
+     */
+    maxTagPlaceholder: '已选择#count#个',
+    /**
      * Select result item to close list, work on multiple select mode
      * @type boolean
      * @default false
