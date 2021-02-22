@@ -197,6 +197,10 @@ ul.sp_results > li.sp_selected {
     cursor: default;
 }
 
+ul.sp_results > li.sp_selected.enabled {
+    color: blue;
+}
+
 .sp_control_box{
     padding: 0;
     height: 27px;
@@ -285,6 +289,9 @@ input.sp_combo_input[readonly],
 input.sp_combo_input[disabled]{
     background-color: white;
 }
+ul.sp_element_box_bak{
+    display: none;
+}
 ul.sp_element_box{
     margin: 0;
     padding: 3px 0 0 3px;
@@ -336,6 +343,30 @@ ul.sp_element_box li.selected_tag i {
     color: #AAAAAA;
 }
 ul.sp_element_box li.selected_tag i:hover {
+    color: black;
+}
+ul.sp_element_box li.custom_tag {
+    border: 1px solid #AAAAAA;
+    border-radius: 3px;
+    background-color: #EFEFEF;
+    cursor: pointer;
+    max-width: 100%;
+    box-shadow: 0 0 2px white inset, 0 1px 0 rgba(0, 0, 0, 0.05);
+    height: 24px;
+    line-height: 24px;
+    -webkit-transition: all .5s cubic-bezier(.175,.885,.32,1);
+    transition: all .5s cubic-bezier(.175,.885,.32,1);
+}
+ul.sp_element_box li.custom_tag:hover {
+    background-color: white;
+    border: 1px solid #D0D0D0;
+    box-shadow: 0 2px 7px rgba(0,0,0,.1);
+}
+ul.sp_element_box li.custom_tag i {
+    font-size: 14px;
+    color: #AAAAAA;
+}
+ul.sp_element_box li.custom_tag i:hover {
     color: black;
 }
 ul.sp_element_box li.input_box {
