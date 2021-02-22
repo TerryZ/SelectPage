@@ -81,6 +81,7 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 *Multiple Selection with Tags form*
 
 ![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
+![SelectPage max tag limit](https://github.com/WLyKan/SelectPage/blob/master/demo/SelectPage2.jpg)
 
 *Regular select mode ( single selection )*
 
