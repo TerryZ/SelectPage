@@ -177,7 +177,7 @@ $('#selectpage').selectPage({
 ### lang
 
 - type: `string`
-- default: `cn`
+- default: `'cn'`
 
 plugin language
 
@@ -548,7 +548,7 @@ alert($('#selectpage').selectPageText())
 ### selectPageSelectedData
 
 - `selectPageSelectedData(): object[]`
-- return `object[]` selected items raw datas
+  - return `object[]` selected items raw datas
 
 get selected items raw data
 
