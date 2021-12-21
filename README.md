@@ -522,7 +522,7 @@ $('#selectpage').selectPageData(newdata)
 ### selectPageDisabled
 
 - `selectPageDisabled(status?: boolean): void`
-  - disabled `boolean(optional)` set disabled stauts. `true` to disabled, `false` to enabled
+  - status `boolean(optional)` set disabled stauts. `true` to disabled, `false` to enabled
 
 get plugin disabled status or set plugin status to `disabled` / `enabled`
 
