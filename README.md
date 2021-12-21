@@ -26,7 +26,6 @@ A simple style and powerful selection jQuery plugin, including ajax remote data,
   </a>
 </p>
 
-
 <br><br>
 
 <p align="center">
@@ -116,13 +115,13 @@ As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html)
 <!-- jQuery library -->
 <script type="text/javascript" src="jquery.min.js" ></script>
 
-<link rel="stylesheet" href="selectpage.css" type="text/css">  
+<link rel="stylesheet" href="selectpage.css" type="text/css">
 <script type="text/javascript" src="selectpage.js" ></script>
 ```
 
 ### HTML input element set
 
-the SelectPage plugin just need put a input tag in the page  
+the SelectPage plugin just need put a input tag in the page
 
 ```html
 <input type="text" id="selectpage" >
@@ -131,15 +130,15 @@ the SelectPage plugin just need put a input tag in the page
 ### Javascript init plugin
 
 ```js
-//defined a array (the server side returned data format was same like that)
-//Array[{Object},{...}]
+// defined a array (the server side returned data format was same like that)
+// Array[{Object},{...}]
 var data = [
   {id: 1, name: 'Chicago Bulls', desc: '芝加哥公牛' },
   {id: 2, name: 'Cleveland Cavaliers', desc: '克里夫兰骑士' },
   {id: 3, name: 'Detroit Pistons', desc: '底特律活塞' },
   {id: 4, name: 'Indiana Pacers', desc: '印第安纳步行者' }
 ]
-//init SelectPage
+// init SelectPage
 $('#selectpage').selectPage({
   showField : 'desc',
   keyField : 'id',
@@ -160,7 +159,7 @@ The plugin initialize options
 - type: `string | object`
 - default: `undefined`
 
-data source (String：ajax search URL | Object：JSON format array)
+data source (string：ajax search URL | object：JSON format array)
 
 ```js
 // serverside request url address
@@ -191,140 +190,295 @@ plugin language
 | ja | japanse |
 | pt-br | Brazilian Portuguese |
 
-- **multiple** `boolean`  
-  default : false  
-  whether it is multi-select mode（use tags mode）
+### multiple
 
-- **pagination** `boolean`  
-  default : true  
-  paging or not
+- type: `boolean`
+- default: `false`
 
-- **listSize** `number`  
-  default : 10  
-  the list shows the number of items, and the other items are displayed in a scroll bar,it only work on `pagination : false`
+whether it is multi-select mode（use tags mode）
 
-- **multipleControlbar** `boolean`  
-  default : true  
-  whether to enable the multi-select mode control button area,only work on `multiple: true`
+### pagination
 
-- **maxSelectLimit** `number`  
-  default : 0  
-  maximum number of selections in multi-select mode，0 is unlimited
+- type: `boolean`
+- default: `true`
 
-- **selectToCloseList** `boolean`  
-  default : true  
-  is close list after item select,it only work on `multiple:true`
+paging or not
 
-- **initRecord** `string`  
-  default : undefined  
-  the initial value of the plugin, The value will match the option.keyField field, and if it matches, it will be automatically selected and highlighted
+### listSize
 
-- **dbTable** `string`  
-  default : 'tbl'  
-  use this parameter to set the corresponding data table name in server side(ajax) mode
+- type: `number`
+- default: `10`
 
-- **keyField** `string`  
-  default : 'id'  
-  value field, usually the contents of the field will be automatically saved in the hidden domain
+the list shows the number of items, and the other items are displayed in a scroll bar,it only work on `pagination : false`
 
-- **showField** `string`  
-  default : 'name'  
-  the result is used to display the name of the attribute
+### multipleControlbar
 
-- **searchField** `string`  
-  default : undefined  
-  query field, set server side query field when data source is server side mode, if not set default use of option.showField
+- type: `boolean`
+- default: `true`
 
-- **andOr** `string`  
-  default : 'AND'  
-  multiple keywords search type ('AND' or 'OR')
+whether to enable the multi-select mode control button area,only work on `multiple: true`
 
-- **orderBy** `array`  
-  default : undefined  
-  result data sort type, default use showField specified field  
-  **example**  
-  `orderBy : ['id desc']//use id field sort desc`
+### maxSelectLimit
 
-- **pageSize** `number`  
-  default : 10  
-  the number of records per page
+- type: `number`
+- default: `0`
 
-- **params** `function`  
-  default : undefined  
-  return : object  
-  send request params for server side data source(ajax)  
-  **example**  
-  `params : function(){return {'name':'aa','sex':1};}`
+maximum number of selections in multi-select mode，0 is unlimited
 
-- **formatItem** `function`  
-  default : undefined  
-  **param**  
-  *data* `object` row data object format  
-  *return* : string  
-  list item display content formatting  
-  **example**  
-  ```js
-  formatItem : function(data){
-    return data.a + '(' + data.b + ')';
+### selectToCloseList
+
+- type: `boolean`
+- default: `true`
+
+is close list after item select,it only work on `multiple:true`
+
+### initRecord
+
+- type: `string`
+- default: `undefined`
+
+the initial value of the plugin, The value will match the option.keyField field, and if it matches, it will be automatically selected and highlighted
+
+### dbTable
+
+- type: `string`
+- default: `'tbl'`
+
+use this parameter to set the corresponding data table name in server side(ajax) mode
+
+### keyField
+
+- type: `string`
+- default: `'id'`
+
+value field, usually the contents of the field will be automatically saved in the hidden domain
+
+### showField
+
+- type: `string`
+- default: `'name'`
+
+the result is used to display the name of the attribute
+
+### searchField
+
+- type: `string`
+- default: `undefined`
+
+query field, set server side query field when data source is server side mode, if not set default use of option.showField
+
+### andOr
+
+- type: `string`
+- default: `'AND'`
+
+multiple keywords search type ('AND' or 'OR')
+
+### orderBy
+
+- type: `string[]`
+- default: `undefined`
+
+result data sort type, default use showField specified field
+
+```js
+$('#selectpage').selectPage({
+  ...
+  orderBy : ['id desc'] // use id field sort desc
+})
+```
+
+### pageSize
+
+- type: `number`
+- default: `10`
+
+the number of records per page
+
+### params
+
+- type: `function`
+  - returnType: `object`
+- default: `undefined`
+
+send request params for server side data source(ajax)
+
+```js
+$('#selectpage').selectPage({
+  ...
+  params : function() {
+    return {
+      name: 'aa',
+      sex: 1
+    }
   }
-  ```
+})
+```
 
+### formatItem
 
-- **focusDropList** `boolean`  
-  default : true  
-  when input box get focus,drop the list
+- type: `function (data: object): string`
+  - data: `object` row data object format
+- default: `undefined`
 
-- **autoSelectFirst** `boolean`  
-  default : true  
-  whether to automatically select the first item in the list (enter the keyword query mode, use the mouse directly does not trigger)
+list item display content formatting
 
-- **autoFillResult** `boolean`  
-  default : true  
-  whether to automatically fill the content, if the list item is highlighted, in the focus away from the control, automatically set the item for the selected content
+```js
+$('#selectpage').selectPage({
+  ...
+  formatItem : function(data) {
+    return data.a + '(' + data.b + ')'
+  }
+})
+```
 
-- **noResultClean** `boolean`  
-  default : true  
-  enter the keyword to query and no item match,when focus leave plugin,whether to clear enter keywords
+### focusDropList
 
-- **selectOnly** `boolean`  
-  default : false  
-  select only mode,the input box can not enter any word
+- type: `boolean`
+- default: `true`
 
-- **inputDelay** `number`  
-  default : 0.5(second)  
-  enter the keyword query delay, work on server side(ajax) mode
+when input box get focus,drop the list
 
-- **eSelect** `function`  
-  default : undefined  
-  item selected callback  
-  **param**  
-  *data* `object | array` selected row or rows data(json)
+### autoSelectFirst
+
+- type: `boolean`
+- default: `true`
+
+whether to automatically select the first item in the list (enter the keyword query mode, use the mouse directly does not trigger)
+
+### autoFillResult
+
+- type: `boolean`
+- default: `true`
+
+whether to automatically fill the content, if the list item is highlighted, in the focus away from the control, automatically set the item for the selected content
+
+### noResultClean
+
+- type: `boolean`
+- default: `true`
+
+enter the keyword to query and no item match,when focus leave plugin,whether to clear enter keywords
+
+### selectOnly
+
+- type: `boolean`
+- default: `false`
+
+select only mode,the input box can not enter any word
+
+### inputDelay
+
+- type: `number`
+- default: `0.5(second)`
+
+enter the keyword query delay, work on server side(ajax) mode
+
+### eSelect
+
+- type: `function (data: object|object[]): void`
+  - data `object | array` selected row or rows data(json)
+- default: `undefined`
+
+item selected callback
+
+```js
+$('#selectpage').selectPage({
+  ...
+  eSelect : function(data) {
+    console.log(data)
+  }
+})
+```
+
+### eOpen
+
+- type: `function (self: object): void`
+  - self `object` plugin inner object
+- default: `undefined`
+
+before show up result list callback
+
+```js
+$('#selectpage').selectPage({
+  ...
+  eOpen : function(self) {
+    console.log(data)
+  }
+})
+```
+
+### eAjaxSuccess
+
+- type: `function (data: object): object`
+  - data `object` server side return data(json)
+  - return `object` convert to SelectPage required data format
+- default: `undefined`
+
+in server side mode, this is the callback function when request success, the role of the callback is used to custom processing of the return data
+
+server side return data for example
+
+```js
+{
+  "values": {
+    "gridResult": {
+      "pageSize": 10,
+      "pageNumber": 1,
+      "totalRow": 11,
+      "totalPage": 2,
+      "listData": [
+        { "name": "name1", "id": "1" },
+        { "name": "name2", "id": "2" },
+        { ... }
+      ]
+    }
+  }
+}
+```
+
+`eAjaxSuccess` required data format
+
+```js
+{
+  list: object[],  // rows data
+  totalRow: number // total record count number
+}
+```
+
+then `eAjaxSuccess` code for example below
+
+```js
+$('#selectpage').selectPage({
+  ...
+  data: 'https://some-site/some-route',
   
-- **eOpen** `function`  
-  default : undefined  
-  before show up result list callback  
-  **param**  
-  *self* `object` plugin object
-
-- **eAjaxSuccess** `function`  
-  default : undefined  
-  in server side mode,this is the callback function when request success,the role of the callback is used to custom processing of the return  data  
-  **param**  
-  *data* `object` server side return data(json)  
-  *return* `object` convert to SelectPage required data format  
-  **return data format**  
-  ```js
-  {
-    list : [{name:'aa',sex:1},{name:'bb',sex:1}...],
-    totalRow : 100
+  eAjaxSuccess : function(data) {
+    var dataNode = data.values.gridResult
+    return {
+      list : dataNode.listData,
+      totalRow : dataNode.totalRow
+    }
   }
-  ```
+})
+```
 
-- **eTagRemove** `function`  
-  default : undefined    
-  this callback function is used to close tag, when `multiple : true`  
-  **param**  
-  *removeCount* `number` removed tag count
+### eTagRemove
+
+- type: `function (removeCount: number): void`
+  - removeCount `number` removed tag count
+- default: `undefined`
+
+this callback function is used to close tag, when `multiple : true`
+
+```js
+$('#selectpage').selectPage({
+  ...
+  eTagRemove : function(removeCount) {
+    console.log(removeCount)
+  }
+})
+```
 
 <br><br>
 
@@ -354,7 +508,7 @@ plugin language
   **param**  
   *disabled* `boolean` set disabled stauts. `true` to disabled, `false` to enabled  
   ```js
-  if($('#selectpage').selectPageDisabled()){//get plugin disabled stuats
+  if($('#selectpage').selectPageDisabled()) {//get plugin disabled stuats
       $('#selectpage').selectPageDisabled(false);//set plugin to enabled
   }
   ```
