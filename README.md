@@ -297,8 +297,8 @@ the number of records per page
 
 ### params
 
-- type: `function`
-  - returnType: `object`
+- type: `function (): object`
+  - return `object`
 - default: `undefined`
 
 send request params for server side data source(ajax)
@@ -318,7 +318,8 @@ $('#selectpage').selectPage({
 ### formatItem
 
 - type: `function (data: object): string`
-  - data: `object` row data object format
+  - data `object` row data object format
+  - return `string`
 - default: `undefined`
 
 list item display content formatting
@@ -452,7 +453,6 @@ then `eAjaxSuccess` code for example below
 $('#selectpage').selectPage({
   ...
   data: 'https://some-site/some-route',
-  
   eAjaxSuccess : function(data) {
     var dataNode = data.values.gridResult
     return {
@@ -480,48 +480,81 @@ $('#selectpage').selectPage({
 })
 ```
 
-<br><br>
-
 ## API
-- **selectPageClear**  
-  clear all select items
 
-  ```js
-  $('#selectpage').selectPageClear();
+### selectPageClear
+
+- `selectPageClear(): void`
+
+clear all select items
+
+```js
+$('#selectpage').selectPageClear()
+```
+
+### selectPageRefresh
+
+- `selectPageRefresh(): void`
+
+refresh plugin selected items info
+
+```js
+$('#selectpage').val(20) // modify selected by id used javascript
+$('#selectpage').selectPageRefresh() // refresh selection item info
+```
+
+### selectPageData
+
+- `selectPageData(data: object): void`
+  - data `array` new data, the data format is same to plugin data source
+
+change plugin data source,only work on json data source mode
+
+```js
+var newdata = [
+  { a: 1, b: 11, c: 111 },
+  { a: 2, b: 22, c: 222 },
+  { ... }
+]
+$('#selectpage').selectPageData(newdata)
   ```
-- **selectPageRefresh**  
-  refresh plugin selected items info
-  ```js
-  $('#selectpage').val(20);//modify selected by id used javascript
-  $('#selectpage').selectPageRefresh();//refresh selection item info
-  ```
-- **selectPageData**  
-  change plugin data source,only work on json data source mode  
-  **param**  
-  *data* `array` new json data,the data format is same to plugin data source
-  ```js
-  var newdata = [{a:1,b:11,c:111},{a:2,b:22,c:222},{...}];
-  $('#selectpage').selectPageData(newdata);
-  ```
-- **selectPageDisabled**  
-  get plugin disabled status and set to `disabled` / `enabled`  
-  **param**  
-  *disabled* `boolean` set disabled stauts. `true` to disabled, `false` to enabled  
-  ```js
-  if($('#selectpage').selectPageDisabled()) {//get plugin disabled stuats
-      $('#selectpage').selectPageDisabled(false);//set plugin to enabled
-  }
-  ```
-- **selectPageText**  
-  get plugin selected items text
-  ```js
-  alert($('#selectpage').selectPageText());
-  ```
-- **selectPageSelectedData**  
-  get selected items raw data
-  ```js
-  console.log($('#selectpage').selectPageSelectedData())
-  ```
+
+### selectPageDisabled
+
+- `selectPageDisabled(status?: boolean): void`
+  - disabled `boolean(optional)` set disabled stauts. `true` to disabled, `false` to enabled
+
+get plugin disabled status or set plugin status to `disabled` / `enabled`
+
+```js
+// get plugin disabled stuats
+if($('#selectpage').selectPageDisabled()) {
+  // set plugin to enabled
+  $('#selectpage').selectPageDisabled(false)
+}
+```
+
+### selectPageText
+
+- `selectPageText(): string`
+  - return `string` selected items string content
+
+get plugin selected items text
+
+```js
+alert($('#selectpage').selectPageText())
+```
+
+### selectPageSelectedData
+
+- `selectPageSelectedData(): object[]`
+- return `object[]` selected items raw datas
+
+get selected items raw data
+
+```js
+console.log($('#selectpage').selectPageSelectedData())
+```
 
 ## License
 
