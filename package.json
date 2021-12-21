@@ -5,6 +5,9 @@
   "main": "selectpage.js",
   "dependencies": {
   },
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  },
   "scripts": {
     "test": "grunt eslint"
   },
