@@ -46,7 +46,7 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
 
 ## Examples and Documentation
 
-Explorer on 
+Explorer on
 
 - [English site](https://TerryZ.github.io/selectpage)（translation unfinished）
 - [国内站点](https://terryz.gitee.io/selectpage)
@@ -78,18 +78,17 @@ The Vuejs version: [v-selectpage](https://github.com/TerryZ/v-selectpage)
 
 ## Plugin Preview
 
-*Multiple Selection with Tags form*
+Multiple Selection with Tags form
 
 ![SelectPage1](https://terryz.github.io/image/SelectPage1.png)
 
-*Regular select mode ( single selection )*
+Regular select mode ( single selection )
 
 ![SelectPage](https://terryz.github.io/image/SelectPage.png)
 
-*List only ( pagination bar close, disable typing to quick search, select only )*
+List only ( pagination bar close, disable typing to quick search, select only )
 
 ![SelectPageList](https://terryz.github.io/image/SelectPageList.png)
-
 
 ## Installation
 
@@ -97,7 +96,7 @@ Download SelectPage plugin zip file by last release, or [click me](https://githu
 
 or use **NPM**
 
-```
+```sh
 npm install selectpage
 ```
 
@@ -111,7 +110,7 @@ As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html)
 - The JavaScript file `selectpage.js` (or its minified version `selectpage.min.js`)
 - The css file `selectpage.css`
 
-**Including files**
+### Including files
 
 ```html
 <!-- jQuery library -->
@@ -121,7 +120,7 @@ As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html)
 <script type="text/javascript" src="selectpage.js" ></script>
 ```
 
-**HTML input element set**
+### HTML input element set
 
 the SelectPage plugin just need put a input tag in the page  
 
@@ -129,7 +128,7 @@ the SelectPage plugin just need put a input tag in the page
 <input type="text" id="selectpage" >
 ```
 
-**Javascript init plugin**
+### Javascript init plugin
 
 ```js
 //defined a array (the server side returned data format was same like that)
@@ -154,16 +153,34 @@ $('#selectpage').selectPage({
 
 ## Options
 
-- **data** `string | object`  
-  default : undefined  
-  data source (String：ajax search URL | Object：JSON format array)  
-  **example**  
-  *string* : serverside request url address  
-  *object* : JSON format array，format like : `[{a:1,b:2,c:3},{...}]`
+The plugin initialize options
 
-- **lang** `string`  
-  default : 'cn'  
-  plugin language  
+### data
+
+- type: `string | object`
+- default: `undefined`
+
+data source (String：ajax search URL | Object：JSON format array)
+
+```js
+// serverside request url address
+$('#selectpage').selectPage({
+  data: 'https://some-site/some-route'
+})
+
+// JSON format array
+var data = [{a:1,b:2,c:3},{...}]
+$('#selectpage').selectPage({
+  data: data
+})
+```
+
+### lang
+
+- type: `string`
+- default: `cn`
+
+plugin language
 
 | code | language |
 | ------ | ------ |
@@ -345,6 +362,11 @@ $('#selectpage').selectPage({
   get plugin selected items text
   ```js
   alert($('#selectpage').selectPageText());
+  ```
+- **selectPageSelectedData**  
+  get selected items raw data
+  ```js
+  console.log($('#selectpage').selectPageSelectedData())
   ```
 
 ## License

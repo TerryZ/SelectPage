@@ -1,8 +1,8 @@
 ![SelectPageLogo](https://terryz.github.io/image/logo/SelectPage.png)
+
 # SelectPage
 
 > 支持autocomplete、键盘操作、分页、标签多选等多功能的选择器插件
-
 
 ## 插件运行效果预览
 
@@ -25,11 +25,9 @@
 
 [https://terryz.github.io](https://terryz.github.io)
 
-
 ### 如果您觉得项目还不错，还请给项目（ [Github](https://github.com/TerryZ/SelectPage) / [码云](https://gitee.com/TerryZ/selectpage) ）加个Star，同时欢迎Follow [Github个人主页](https://github.com/TerryZ)
 
 <br><br><br><br>
-
 
 ## 什么是SelectPage
 
@@ -37,24 +35,15 @@ SelectPage是一个基于jQuery开发的多功能下拉分页选择器，作为�
 
 ### 功能特点
 
-
-* 基于jQuery、Bootstrap2、3开发
-
-* 也可应用于无任何UI框架的原生HTML环境
-
-* Autocomplete输入自动查找功能
-
-* 结果列表分页展示
-
-* 允许使用静态json数据源或ajax动态请求的数据源
-
-* 使用键盘快速操作基本功能及分页功能
-
-* 多项选择以标签（Tag）形式展现
-
-* 结果列表自动判断屏幕边缘，避免内容超出可视范围
-
-* 丰富的参数设置及功能API调用
+- 基于jQuery、Bootstrap2、3开发
+- 也可应用于无任何UI框架的原生HTML环境
+- Autocomplete输入自动查找功能
+- 结果列表分页展示
+- 允许使用静态json数据源或ajax动态请求的数据源
+- 使用键盘快速操作基本功能及分页功能
+- 多项选择以标签（Tag）形式展现
+- 结果列表自动判断屏幕边缘，避免内容超出可视范围
+- 丰富的参数设置及功能API调用
 
 浏览器兼容：IE8+、Chrome、Firefox等
 
@@ -63,7 +52,6 @@ SelectPage是一个基于jQuery开发的多功能下拉分页选择器，作为�
 ## 为什么要有SelectPage
 
 有时候我们需要有一个插件，它可以输入关键字进行快速查找，可以下拉进行选择，可以在展示大量数据时进行分页显示，可以使用键盘进行快速操作，可以适应各种UI环境，可以被灵活定制，而上述的情况就真的出现在现实项目的需求里了
-
 
 ## 怎么使用SelectPage
 
@@ -106,4 +94,3 @@ $('#selectPage').selectPage({
     data : tag_data
 });
 ```
-
