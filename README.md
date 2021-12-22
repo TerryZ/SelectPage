@@ -404,7 +404,7 @@ before show up result list callback
 $('#selectpage').selectPage({
   ...
   eOpen : function(self) {
-    console.log(data)
+    console.log(self)
   }
 })
 ```
@@ -465,8 +465,8 @@ $('#selectpage').selectPage({
 
 ### eTagRemove
 
-- type: `function (removeCount: number): void`
-  - removeCount `number` removed tag count
+- type: `function (tags: object[]): void`
+  - tags `object[]` removed tags raw data
 - default: `undefined`
 
 this callback function is used to close tag, when `multiple : true`
@@ -474,8 +474,8 @@ this callback function is used to close tag, when `multiple : true`
 ```js
 $('#selectpage').selectPage({
   ...
-  eTagRemove : function(removeCount) {
-    console.log(removeCount)
+  eTagRemove : function(tags) {
+    console.log(tags)
   }
 })
 ```
@@ -521,8 +521,9 @@ $('#selectpage').selectPageData(newdata)
 
 ### selectPageDisabled
 
-- `selectPageDisabled(status?: boolean): void`
+- `selectPageDisabled(status?: boolean): void|boolean`
   - status `boolean(optional)` set disabled stauts. `true` to disabled, `false` to enabled
+  - return `boolean(optional)` plugin disabled status
 
 get plugin disabled status or set plugin status to `disabled` / `enabled`
 
