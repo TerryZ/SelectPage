@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  bootstrap: ^5.2.0
   eslint: ^8.0.1
   eslint-config-standard: ^17.0.0
   eslint-plugin-import: ^2.25.2
@@ -14,6 +15,7 @@ specifiers:
   vite: ^3.0.5
 
 devDependencies:
+  bootstrap: registry.npmmirror.com/bootstrap/5.2.0
   eslint: registry.npmmirror.com/eslint/8.21.0
   eslint-config-standard: registry.npmmirror.com/eslint-config-standard/17.0.0_dfwa53o44x4e5xhsfv5mvfhk5a
   eslint-plugin-import: registry.npmmirror.com/eslint-plugin-import/2.26.0_eslint@8.21.0
@@ -262,6 +264,14 @@ packages:
     name: binary-extensions
     version: 2.2.0
     engines: {node: '>=8'}
+    dev: true
+
+  registry.npmmirror.com/bootstrap/5.2.0:
+    resolution: {integrity: sha512-qlnS9GL6YZE6Wnef46GxGv1UpGGzAwO0aPL1yOjzDIJpeApeMvqV24iL+pjr2kU4dduoBA9fINKWKgMToobx9A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/bootstrap/-/bootstrap-5.2.0.tgz}
+    name: bootstrap
+    version: 5.2.0
+    peerDependencies:
+      '@popperjs/core': ^2.11.5
     dev: true
 
   registry.npmmirror.com/brace-expansion/1.1.11:
