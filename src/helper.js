@@ -1,4 +1,5 @@
 import { ASC } from './constants'
+import languages, { CN } from './language'
 
 /**
  * Set order field
@@ -20,4 +21,16 @@ export function parseOrder (orders, field) {
     // ['id'] === ['id asc']
     return fieldSort.length === 2 ? fieldSort : [fieldSort[0], ASC]
   })
+}
+
+export function getLanguage (language = CN) {
+  return languages[language]
+}
+
+export function query (selectors) {
+  return document.querySelector(selectors)
+}
+
+export function queryAll (selectors) {
+  return document.querySelectorAll(selectors)
 }

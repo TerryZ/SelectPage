@@ -3,6 +3,11 @@
  */
 const defaults = {
   /**
+   * Input element
+   * @type {string|HTMLInputElement}
+   */
+  element: undefined,
+  /**
    * Data source
    * @type {string|Object}
    *

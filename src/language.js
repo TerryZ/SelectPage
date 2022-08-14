@@ -1,6 +1,16 @@
-const language = {
+export const [
+  CN,
+  EN,
+  DE,
+  ES,
+  PT_BR,
+  JA,
+  TR
+] = ['cn', 'en', 'de', 'es', 'pt-br', 'ja', 'tr']
+
+export default {
   // 中文
-  cn: {
+  [CN]: {
     addButton: '添加按钮',
     addTitle: '添加区域',
     delButton: '删除按钮',
@@ -29,7 +39,7 @@ const language = {
     maxSelected: '最多只能选择 max_selected_limit 个项目'
   },
   // English
-  en: {
+  [EN]: {
     addButton: 'Add button',
     addTitle: 'add a box',
     delButton: 'Del button',
@@ -58,7 +68,7 @@ const language = {
     maxSelected: 'You can only select up to max_selected_limit items'
   },
   // German
-  de: {
+  [DE]: {
     addButton: 'Hinzufügen-Button',
     addTitle: 'Box hinzufügen',
     delButton: 'Löschen-Button',
@@ -87,7 +97,7 @@ const language = {
     maxSelected: 'Sie können nur bis zu max_selected_limit Elemente auswählen'
   },
   // Spanish
-  es: {
+  [ES]: {
     addButton: 'Agregar boton',
     addTitle: 'Agregar una opcion',
     delButton: 'Borrar boton',
@@ -116,7 +126,7 @@ const language = {
     maxSelected: 'Solo puedes seleccionar hasta max_selected_limit elementos'
   },
   // Brazilian Portuguese
-  'pt-br': {
+  [PT_BR]: {
     addButton: 'Adicionar botão',
     addTitle: 'Adicionar uma caixa',
     delButton: 'Apagar botão',
@@ -145,7 +155,7 @@ const language = {
     maxSelected: 'Você só pode selecionar até max_selected_limit itens'
   },
   // Japanese
-  ja: {
+  [JA]: {
     addButton: '追加ボタン',
     addTitle: '入力ボックスを追加します',
     delButton: '削除ボタン',
@@ -172,7 +182,34 @@ const language = {
     UnSelectAll: '移して当ページを割ります',
     clearAll: '選択した項目をクリアする',
     maxSelected: '最多で max_selected_limit のプロジェクトを選ぶことしかできません'
+  },
+  // Turkish
+  [TR]: {
+    addButton: 'Buton ekle',
+    addTitle: 'kutu ekle',
+    delButton: 'Buton sil',
+    delTitle: 'kutuyu sil',
+    next: 'sonraki',
+    nextTitle: 'Sonraki page_size (Sağ tuş)',
+    previous: 'Önceki',
+    previousTitle: 'Önceki page_size (Sol tuş)',
+    firstTitle: 'İlk (Shift + Sol tuş)',
+    lastTitle: 'Son (Shift + Sağ tuş)',
+    getAllButton: 'Tümünü Al (Alt tuş)',
+    getAllAlt: '(button)',
+    closeButton: 'kapat (Tab düğmesi)',
+    closeAlt: '(buton)',
+    loading: 'yükleniyor...',
+    loadingAlt: '(yükleniyor)',
+    pageInfo: 'Sayfa page_num / page_count',
+    selectNg: 'Uyarı: Lütfen listeden seçim yapın.',
+    selectOk: 'Tamam: Doğru seçildi.',
+    notFound: 'bulunamadı',
+    ajaxError: 'Sunucuya bağlanırken bir hata meydana geldi.',
+    clear: 'İçeriği temizle',
+    selectAll: 'Mevcut sayfayı seç',
+    unSelectAll: 'Mevcut sayfayı temizle',
+    clearAll: 'Seçili olanları temizle',
+    maxSelected: 'Yalnızca en fazla max_selected_limit öğe seçebilirsiniz'
   }
 }
-
-export default language

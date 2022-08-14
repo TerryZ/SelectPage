@@ -300,7 +300,8 @@
    * i18n
    */
   SelectPage.prototype.setLanguage = function () {
-    let message; const p = this.option
+    let message
+    const p = this.option
     switch (p.lang) {
       // German
       case 'de':
@@ -655,7 +656,9 @@
     const input = $(combo_input)
     let orgWidth = input.outerWidth()
     // fix input width in hidden situation
-    if (orgWidth <= 0) orgWidth = this.elementRealSize(input, 'outerWidth')
+    if (orgWidth <= 0) {
+      orgWidth = this.elementRealSize(input, 'outerWidth')
+    }
     if (orgWidth < 150) orgWidth = 150
 
     elem.combo_input = input
