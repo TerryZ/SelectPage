@@ -1,9 +1,8 @@
 import { query } from './helper'
 import { css } from './constants'
 
-export function initializeElements (options, language) {
+export function generateElements (options, language) {
   const { element } = options
-  const elements = {}
 
   let input
 
@@ -26,15 +25,19 @@ export function initializeElements (options, language) {
   //   if (p.multiple) elem.container.addClass(css.disabled)
   //   else elem.combo_input.addClass(css.input_off)
   // }
+  const hidden = document.createElement('input')
+  hidden.type = 'hidden'
 
-  elements.input = input
-  elements.container = container
-
-  return elements
+  return {
+    input,
+    container,
+    hidden
+  }
 }
 
-export function elementsSetup (elements) {
-  const { input, container } = elements
+export function setupElements (elements) {
+  const { input, container, hidden } = elements
   input.parentNode.insertBefore(container, input)
   container.append(input)
+  container.append(hidden)
 }
