@@ -3,7 +3,7 @@ import { AND, OR } from './constants'
 import { parseOrder } from './helper'
 
 export function optionMerge (options) {
-  const option = options
+  const option = Object.assign({}, defaults, options)
   // use showField by default
   option.searchField = option.searchField || option.showField
 
@@ -13,10 +13,10 @@ export function optionMerge (options) {
   }
 
   // support multiple field set
-  const arr = ['searchField']
-  for (let i = 0; i < arr.length; i++) {
-    option[arr[i]] = this.strToArray(option[arr[i]])
-  }
+  // const arr = ['searchField']
+  // for (let i = 0; i < arr.length; i++) {
+  //   option[arr[i]] = this.strToArray(option[arr[i]])
+  // }
 
   // set multiple order field
   // example: [['id ASC'], ['name DESC']]
