@@ -6,9 +6,11 @@ import './selectpage.sass'
 class SelectPage {
   constructor (options) {
     this.options = optionMerge(options)
-    this.language = getLanguage(options.language)
-    this.elements = generateElements(options)
+    const language = getLanguage(options.language)
+    this.elements = generateElements(options, language)
     setupElements(this.elements)
+
+    this.language = language
   }
 }
 

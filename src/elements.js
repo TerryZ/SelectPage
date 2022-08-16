@@ -36,6 +36,8 @@ export function generateElements (options, language) {
   </svg>
   `
   const clear = document.createElement('div')
+  clear.className = css.clear
+  clear.title = language.clear
   clear.style.display = 'inline-flex'
   clear.innerHTML = `
   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
@@ -61,6 +63,7 @@ export function setupElements (elements) {
     clear
   } = elements
 
+  // container wrap the input element
   input.parentNode.insertBefore(container, input)
   append.prepend(clear)
 

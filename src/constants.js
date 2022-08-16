@@ -4,5 +4,6 @@ export const [ASC, DESC] = ['ASC', 'DESC']
 export const css = {
   input: 'select-page-input',
   container: 'select-page-container',
-  append: 'select-page-append'
+  append: 'select-page-append',
+  clear: 'select-page-clear'
 }
