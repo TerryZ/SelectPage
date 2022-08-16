@@ -1,6 +1,7 @@
 import { optionMerge } from './options'
 import { getLanguage } from './helper'
 import { generateElements, setupElements } from './elements'
+import './selectpage.sass'
 
 class SelectPage {
   constructor (options) {
