@@ -45,12 +45,28 @@ export function generateElements (options, language) {
   </svg>
   `
 
+  const dropdown = document.createElement('div')
+  dropdown.className = css.dropdown
+
+  const header = document.createElement('div')
+  header.className = css.header
+
+  const results = document.createElement('div')
+  results.className = css.results
+
+  const page = document.createElement('div')
+  page.className = css.page
+
   return {
     input,
     container,
     hidden,
     append,
-    clear
+    clear,
+    dropdown,
+    header,
+    results,
+    page
   }
 }
 
