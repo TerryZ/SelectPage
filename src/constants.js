@@ -8,6 +8,7 @@ export const css = {
   clear: 'select-page-clear',
   dropdown: 'select-page-dropdown',
   header: 'select-page-header',
+  search: 'select-page-search',
   results: 'select-page-results',
   page: 'select-page-pagination'
 }

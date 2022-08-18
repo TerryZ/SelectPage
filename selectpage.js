@@ -785,8 +785,11 @@
    * <input data-init="key">
    */
   SelectPage.prototype.setInitRecord = function (refresh) {
-    const self = this; const p = self.option; const el = self.elem; let key = ''
-    if ($.type(el.combo_input.data('init')) != 'undefined') {
+    const self = this
+    const p = self.option
+    const el = self.elem
+    let key = ''
+    if ($.type(el.combo_input.data('init')) !== 'undefined') {
       p.initRecord = String(el.combo_input.data('init'))
     }
 
@@ -806,11 +809,11 @@
 
     if (key) {
       if (typeof p.data === 'object') {
-        let data = new Array()
+        let data = []
         const keyarr = key.split(',')
         $.each(keyarr, function (index, row) {
           for (let i = 0; i < p.data.length; i++) {
-            if (p.data[i][p.keyField] == row) {
+            if (p.data[i][p.keyField] === row) {
               data.push(p.data[i])
               break
             }

@@ -34,3 +34,11 @@ export function query (selectors) {
 export function queryAll (selectors) {
   return document.querySelectorAll(selectors)
 }
+
+export function create (elementTag, classNames) {
+  const element = document.createElement(elementTag)
+  if (classNames) {
+    element.className = classNames
+  }
+  return element
+}

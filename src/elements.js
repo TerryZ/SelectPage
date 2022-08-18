@@ -1,4 +1,4 @@
-import { query } from './helper'
+import { query, create } from './helper'
 import { css } from './constants'
 
 export function generateElements (options, language) {
@@ -12,31 +12,21 @@ export function generateElements (options, language) {
   if (element instanceof window.HTMLInputElement) {
     input = element
   }
-  input.classList.add(css.input)
-  input.autocomplete = 'off'
-  if (options.selectOnly) {
-    input.readOnly = true
-  }
-
-  const container = document.createElement('div')
-  container.className = css.container
 
   // if (elem.combo_input.prop('disabled')) {
   //   if (p.multiple) elem.container.addClass(css.disabled)
   //   else elem.combo_input.addClass(css.input_off)
   // }
-  const hidden = document.createElement('input')
+  const hidden = create('input')
   hidden.type = 'hidden'
 
-  const append = document.createElement('div')
-  append.className = css.append
+  const append = create('div', css.append)
   append.innerHTML = `
   <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
     <path d="M7,10L12,15L17,10H7Z"></path>
   </svg>
   `
-  const clear = document.createElement('div')
-  clear.className = css.clear
+  const clear = create('div', css.clear)
   clear.title = language.clear
   clear.style.display = 'inline-flex'
   clear.innerHTML = `
@@ -45,19 +35,22 @@ export function generateElements (options, language) {
   </svg>
   `
 
-  const dropdown = document.createElement('div')
-  dropdown.className = css.dropdown
-
-  const header = document.createElement('div')
-  header.className = css.header
-
-  const results = document.createElement('div')
-  results.className = css.results
-
-  const page = document.createElement('div')
-  page.className = css.page
-
   return {
+    input,
+    container: create('div', css.container),
+    hidden,
+    append,
+    clear,
+    dropdown: create('div', css.dropdown),
+    header: create('div', css.header),
+    search: create('div', css.search),
+    results: create('div', css.results),
+    page: create('div', css.page)
+  }
+}
+
+export function organizeElements (elements) {
+  const {
     input,
     container,
     hidden,
@@ -65,18 +58,9 @@ export function generateElements (options, language) {
     clear,
     dropdown,
     header,
+    search,
     results,
     page
-  }
-}
-
-export function setupElements (elements) {
-  const {
-    input,
-    container,
-    hidden,
-    append,
-    clear
   } = elements
 
   // container wrap the input element
@@ -86,4 +70,22 @@ export function setupElements (elements) {
   container.append(input)
   container.append(append)
   container.append(hidden)
+
+  dropdown.append(header)
+  dropdown.append(search)
+  dropdown.append(results)
+  dropdown.append(page)
+  document.body.append(dropdown)
+}
+
+export function initializeElements (elements, options) {
+  initializeInput(elements.input, options)
+}
+
+function initializeInput (el, options) {
+  el.classList.add(css.input)
+  el.autocomplete = 'off'
+  if (options.selectOnly) {
+    el.readOnly = true
+  }
 }
