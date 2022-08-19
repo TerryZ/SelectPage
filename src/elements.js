@@ -42,7 +42,6 @@ export function generateElements (options, language) {
     append,
     clear,
     dropdown: create('div', css.dropdown),
-    header: create('div', css.header),
     search: create('div', css.search),
     results: create('div', css.results),
     page: create('div', css.page)
@@ -57,7 +56,6 @@ export function organizeElements (elements) {
     append,
     clear,
     dropdown,
-    header,
     search,
     results,
     page
@@ -71,7 +69,6 @@ export function organizeElements (elements) {
   container.append(append)
   container.append(hidden)
 
-  dropdown.append(header)
   dropdown.append(search)
   dropdown.append(results)
   dropdown.append(page)

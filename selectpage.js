@@ -687,11 +687,15 @@
 
     // main box in multiple mode
     elem.element_box = $('<ul>').addClass(css.element_box)
-    if (p.multiple && p.multipleControlbar) { elem.control = $('<div>').addClass(css.control_box) }
+    if (p.multiple && p.multipleControlbar) {
+      elem.control = $('<div>').addClass(css.control_box)
+    }
     // result list box
     elem.result_area = $('<div>').addClass(css.re_area)
     // pagination bar
-    if (p.pagination) { elem.navi = $('<div>').addClass('sp_pagination').append('<ul>') }
+    if (p.pagination) {
+      elem.navi = $('<div>').addClass('sp_pagination').append('<ul>')
+    }
     elem.results = $('<ul>').addClass(css.results)
 
     const namePrefix = '_text'
