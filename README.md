@@ -1,4 +1,4 @@
-<a href="https://terryz.github.io/selectpage/" target="_blank">
+<a href="https://terryz.github.io/docs-jq/select-page/" target="_blank">
   <img src="https://terryz.github.io/image/SelectPage1.png" alt="SelectPage" align="right" valign="top" >
 </a>
 
@@ -47,7 +47,7 @@ A simple style and powerful selection jQuery plugin, <br>including ajax remote d
 
 Explorer on
 
-- [English site](https://TerryZ.github.io/selectpage)（translation unfinished）
+- [English site](https://terryz.github.io/docs-jq/select-page/)
 - [国内站点](https://terryz.gitee.io/selectpage)
 
 [简体中文文档](README-CN.md)
@@ -103,7 +103,7 @@ npm install selectpage
 
 ## Usage
 
-As you can see in the [Demo Page](https://terryz.github.io/selectpage/demo.html), you will need to include:
+As you can see in the [Demo Page](https://terryz.github.io/docs-jq/select-page/demo.html), you will need to include:
 
 - [jQuery library](http://jquery.com) (1.10.2+), untest on jquery2.x & 3.x
 - The JavaScript file `selectpage.js` (or its minified version `selectpage.min.js`)
